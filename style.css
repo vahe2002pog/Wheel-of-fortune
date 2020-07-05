@@ -1,0 +1,139 @@
+html{
+    height: 100%;
+}
+
+*:focus {
+    outline: none;
+}
+
+body{
+    display: flex;
+    height: 90%;
+    background-color: #1E1E1E;
+    color: #e6e6e6;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    align-items: center;
+    flex-direction: row;
+}
+
+#centerColumn{
+    display: flex;
+    flex: 9;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+#lefColumn{
+    display: flex;
+    flex: 5;
+    height: 70%;
+    align-items: center;
+    flex-direction: column;
+}
+
+#canvases{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#div1{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#spin{
+    position: absolute;
+    cursor: pointer;
+}
+
+#winnerField{
+    margin-bottom: 10px;
+    align-self: center;
+    text-align: center;
+    height: 38px;
+    border-radius: 20px;
+    font-size: 25pt;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+input{
+    border: 3px solid #3a3a3a;
+    border-radius: 20px;
+    min-height: 30px;
+    padding: 0 10px;
+    display: inherit;
+    color: black;
+    position: relative;
+    z-index: 2;
+}
+
+input:hover + .inputButton{
+    visibility: visible;
+}
+
+input:focus + .inputButton{
+    visibility: visible;
+}
+
+.inputButton:hover{
+    visibility: visible;
+}
+
+.inputButton{
+    height: 36px;
+    width: 36px;
+    margin-left: -40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    position: relative;
+}
+
+.cross{
+    background-image: url("./images/cross.png");
+}
+
+.arrow{
+    background-image: url("./images/arrow.png");
+}
+
+.playerItem{
+    display: flex;
+}
+
+#playerList{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#destroyedList{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#destroyedList input::-webkit-search-cancel-button{
+    -webkit-appearance:unset;
+    width: 12px;
+    height: 12px;
+    background-image: url("./images/ico.png");
+    background-size: 12px 12px;
+}

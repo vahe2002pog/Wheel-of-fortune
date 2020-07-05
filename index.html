@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Колесо удачи</title>
+    <link rel="stylesheet" href="style.css?1.6">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="https://gagikpog.ru/confirm/confirm.min.js"></script>
+</head>
+<body>
+    <div id="lefColumn">
+        <div style="display:flex; justify-content: center; align-items: center; flex-direction: row;">
+            <input type="checkbox" checked id="checkbox1"> <label for="checkbox1">На выбивание</label>
+        </div>
+        <h2 id="title">Игроки</h2>
+        <div id="playerList">
+            <div class="playerItem" id="playerItem0">
+                <input id="text0" class="nicksInput" maxlength="16" onchange="textChanged(0)" onkeydown="keyPressed(0, event)" type="text">
+                <span class="inputButton cross" onclick="removeByIndex(0, 0)"></span>
+            </div>
+        </div>
+        <h2>Выбившие</h2>
+        <div id="destroyedList"></div>
+    </div>
+
+    <div id="centerColumn">
+        <div id="div1">
+            <div id="canvases">
+                <canvas id="wheel" ></canvas>
+                <canvas id="spin" onclick="spinButton()" ></canvas>
+            </div>
+            <span id="winnerField"></span>
+        </div>
+    </div>
+
+    <script src="script.js?1.6"></script>
+</body>
+</html>
