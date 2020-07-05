@@ -1,8 +1,8 @@
 let canvas = document.getElementById("wheel");
 let ctx = canvas.getContext("2d");
-const W = document.getElementById("canvases").offsetHeight, H = W;
+const W = document.getElementById("canvases").offsetWidth, H = W;
 const wheelRadius = (W - 40) / 2;
-let textSize = 20;
+let textSize = W > 500 ? 20 : W / 30;
 let cW = W / 2, cH = H / 2
 ctx.canvas.width = W;
 ctx.canvas.height = H;
@@ -58,16 +58,17 @@ function drawSpin() {
     sctx.stroke();
 
     sctx.fillStyle = "orange"
-    sctx.font = "bold 20px Comic Sans MS";
+    sctx.font = "bold " + textSize + "px Comic Sans MS";
 
     sctx.beginPath();
     sctx.strokeStyle = "#3a3a3a";
     sctx.arc(cW, cH, wheelRadius / 6, 0, 2 * Math.PI);
     sctx.lineWidth = 5;
-    sctx.moveTo(cW + wheelRadius - 40, cH);
-    sctx.lineTo(cW + wheelRadius + 20, cH + 15);
-    sctx.lineTo(cW + wheelRadius + 20, cH - 15);
-    sctx.lineTo(cW + wheelRadius - 40, cH);
+    const size = W > 500 ? 40 : W / 12;
+    sctx.moveTo(cW + wheelRadius - size, cH);
+    sctx.lineTo(cW + wheelRadius + size / 2, cH + size * 3 / 8);
+    sctx.lineTo(cW + wheelRadius + size / 2, cH - size * 3 / 8);
+    sctx.lineTo(cW + wheelRadius - size, cH);
     sctx.stroke();
     sctx.fill();
     sctx.lineWidth = 5;
