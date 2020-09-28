@@ -4,26 +4,24 @@ const W = document.getElementById("canvases").offsetWidth, H = W;
 const wheelRadius = (W - 40) / 2;
 let textSize = W > 500 ? 20 : W / 30;
 let cW = W / 2, cH = H / 2
-ctx.canvas.width = W;
-ctx.canvas.height = H;
 let spin = document.getElementById("spin");
 let sctx = spin.getContext("2d");
-sctx.canvas.width = W;
-sctx.canvas.height = H;
 let winnerField = document.getElementById("winnerField");
-let interval, randNumber = 0;
 let playerCount, rowCount;
 let players = [];
 let desPlayers = [];
-let autoIncriment = 1;
-let ended = true;
 let params = getParameterByName("list", window.location.href);
+
+ctx.canvas.width = W;
+ctx.canvas.height = H;
+sctx.canvas.width = W;
+sctx.canvas.height = H;
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
+    results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
@@ -50,16 +48,16 @@ $("#checkbox1").prop("checked", params === null ? true : params === 'true');
 drawSpin();
 
 function drawSpin() {
-
+    
     sctx.beginPath();
     sctx.strokeStyle = "#3a3a3a";
     sctx.arc(cW, cH, wheelRadius - 3, 0, 2 * Math.PI);
     sctx.lineWidth = 8;
     sctx.stroke();
-
+    
     sctx.fillStyle = "orange"
     sctx.font = "bold " + textSize + "px Comic Sans MS";
-
+    
     sctx.beginPath();
     sctx.strokeStyle = "#3a3a3a";
     sctx.arc(cW, cH, wheelRadius / 6, 0, 2 * Math.PI);
@@ -85,7 +83,7 @@ function drawWheel(players) {
     ctx.clearRect(0, 0, W, H);
     ctx.font = "bold " + textSize + "px Comic Sans MS";
     ctx.strokeStyle = "black";
-
+    
     for (let i = 0; i < playerCount; i++) {
         ctx.fillStyle = players[i].color;
         ctx.beginPath();
@@ -112,16 +110,26 @@ function drawWheel(players) {
     }
 }
 
-let a = 0;
+let ended = true, added = false;
+let interval;
+let randNumber, noneRandNumber, a = 0;
 function rotate() {
-    let delta = randNumber / 800;
+    let delta = noneRandNumber / 800;
     canvas.style.transform = `rotate(${a}deg)`;
-    a += randNumber;
-    if(randNumber > 0.001)
-        randNumber -= delta;
-    if (delta < 0.00001) {
+    if(noneRandNumber > 20){
+        a += 30 - noneRandNumber;
+    }
+    else{
+        a += noneRandNumber;
+    }
+    if(noneRandNumber < 20.5 && noneRandNumber > 19.5 && !added){
+        a += randNumber;
+        added = true;
+    }
+    noneRandNumber -= delta;
+    if(noneRandNumber < 0.01) {
         clearInterval(interval);
-        randNumber = 0;
+        noneRandNumber = 0;
         ended = true;
         $("#lefColumn input").prop('disabled', false);
     }
@@ -130,8 +138,10 @@ function rotate() {
 function spinButton() {
     if (ended && players.length > 1) {
         interval = setInterval(rotate, 1);
-        randNumber = Math.random() * 40 + 10;
+        randNumber = Math.floor(Math.random() * Math.floor(360));
+        noneRandNumber = 30;
         ended = false;
+        added = false;
         $("#lefColumn input").prop('disabled', true);
     }
 }
@@ -147,22 +157,6 @@ function getWinner(value) {
                 removeByIndex(players[id].id, 1);
                 $("#destroyedList").append(getNewItem(desPlayers[desPlayers.length-1].id, 1, winnder));
                 drawWheel(players)
-                if (players.length == 1) {
-                    // config = {
-                    //     MBOK: true,
-                    //     theme: 'dark'
-                    // };
-                    // showConfirm("Победил ", players[0].text, config);
-                }
-            }, 800);
-        }
-        else {
-            setTimeout(function () {
-                // config = {
-                //     MBOK: true,
-                //     theme: 'dark'
-                // };
-                // showConfirm("Победил ", winnder, config);
             }, 800);
         }
     }
@@ -181,10 +175,10 @@ function getNewItem(id, param = 0, text = ""){
     let className = ["cross", "arrow"];
     let methodName = ["removeByIndex", "returnItem"]
     let div = `
-        <div class="playerItem" id="playerItem${id}">
-            <input id="text${id}" class="nicksInput"  maxlength="16" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text">
-            <span class="inputButton ${className[param]}" onclick="${methodName[param]}(${id})"></span>
-        </div>`;
+    <div class="playerItem" id="playerItem${id}">
+    <input id="text${id}" class="nicksInput"  maxlength="16" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text">
+    <span class="inputButton ${className[param]}" onclick="${methodName[param]}(${id})"></span>
+    </div>`;
     return div;
 }
 
@@ -198,7 +192,7 @@ function textChanged(id){
                     element.text = text;
                 }
                 else
-                    r++;
+                r++;
             });
             if (r == players.length) {
                 players.push({
@@ -230,11 +224,12 @@ function keyPressed(id, event) {
     }
 }
 
+let autoIncriment = 1;
 function newItem(id){
     let table = $("#playerList");
     let rows = $("#playerList input");
     rowCount = rows.length;
-
+    
     if ($(rows[rowCount - 1]).attr('id') == `text${id}`) {
         table.append(getNewItem(autoIncriment));
         autoIncriment++;
