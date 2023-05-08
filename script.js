@@ -1,21 +1,49 @@
 let canvas = document.getElementById("wheel");
 let ctx = canvas.getContext("2d");
-const W = document.getElementById("canvases").offsetWidth, H = W;
-const wheelRadius = (W - 40) / 2;
-let textSize = W > 500 ? 20 : W / 30;
-let cW = W / 2, cH = H / 2
+let W = null;
+let H = null;
+let wheelRadius = null;
+let textSize = null;
+let cW = null;
+let cH = null;
 let spin = document.getElementById("spin");
 let sctx = spin.getContext("2d");
+let spinAngle = window.innerWidth <= 800 ? 90 : 0;
 let winnerField = document.getElementById("winnerField");
 let playerCount, rowCount;
 let players = [];
 let desPlayers = [];
 let params = getParameterByName("list", window.location.href);
 
-ctx.canvas.width = W;
-ctx.canvas.height = H;
-sctx.canvas.width = W;
-sctx.canvas.height = H;
+resize();
+
+window.addEventListener('resize', resize);
+
+function resize() {
+    if (window.innerWidth > 800) {
+        const inputsWidth = 220;
+        const winnerFieldWidth = 150;
+        const width = window.innerWidth - inputsWidth - winnerFieldWidth;
+        W = Math.min(window.innerHeight * 0.9 , width * 0.8);
+    } else {
+        W = Math.min(window.innerWidth, window.innerHeight) * 0.8;
+    }
+    H = W;
+
+    wheelRadius = (W - 40) / 2;
+    textSize = W > 500 ? 20 : W / 30;
+
+    cW = W / 2;
+    cH = H / 2;
+
+    spinAngle = window.innerWidth <= 800 ? 90 : 0;
+    ctx.canvas.width = W;
+    ctx.canvas.height = H;
+    sctx.canvas.width = W;
+    sctx.canvas.height = H;
+    
+    drawSpin();
+};
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -45,7 +73,6 @@ params = getParameterByName("checked", window.location.href);
 
 $("#checkbox1").prop("checked", params === null ? true : params === 'true');
 
-drawSpin();
 
 function drawSpin() {
     
@@ -63,12 +90,20 @@ function drawSpin() {
     sctx.arc(cW, cH, wheelRadius / 6, 0, 2 * Math.PI);
     sctx.lineWidth = 5;
     const size = W > 500 ? 40 : W / 12;
+
+    sctx.save();
+    sctx.translate(cW, cH);
+    sctx.rotate(-Math.PI * spinAngle / 180);
+    sctx.translate(-cW, -cH);
+
     sctx.moveTo(cW + wheelRadius - size, cH);
     sctx.lineTo(cW + wheelRadius + size / 2, cH + size * 3 / 8);
     sctx.lineTo(cW + wheelRadius + size / 2, cH - size * 3 / 8);
     sctx.lineTo(cW + wheelRadius - size, cH);
     sctx.stroke();
     sctx.fill();
+    sctx.restore();
+
     sctx.lineWidth = 5;
     sctx.fillStyle = "black";
     sctx.strokeStyle = "white";
@@ -133,7 +168,7 @@ function rotate() {
         ended = true;
         $("#lefColumn input").prop('disabled', false);
     }
-    getWinner(a);
+    getWinner(a + spinAngle);
 }
 function spinButton() {
     if (ended && players.length > 1) {

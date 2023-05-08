@@ -1,4 +1,10 @@
-html{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
     height: 100%;
 }
 
@@ -6,34 +12,37 @@ html{
     outline: none;
 }
 
-body{
+body {
     display: flex;
-    height: 90%;
+    height: 100%;
+    width: 100%;
     background-color: #1E1E1E;
     color: #e6e6e6;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     align-items: center;
-    flex-direction: row;
+    overflow: hidden;
 }
 
-#centerColumn{
+#centerColumn {
     display: flex;
-    flex: 9;
-    height: 100%;
+    flex: 1;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
 }
 
-#lefColumn{
+#lefColumn {
     display: flex;
-    flex: 5;
-    height: 70%;
+    flex: 1;
     align-items: center;
     flex-direction: column;
+    max-height: 100%;
+    max-width: 220px;
+    overflow: auto;
+    padding: 12px;
 }
 
-#canvases{
+#canvases {
     display: flex;
     flex: 1;
     height: 100%;
@@ -44,7 +53,7 @@ body{
     max-width: 90vh;
 }
 
-#div1{
+#div1 {
     display: flex;
     height: 100%;
     width: 100%;
@@ -53,12 +62,12 @@ body{
     flex-direction: row;
 }
 
-#spin{
+#spin {
     position: absolute;
     cursor: pointer;
 }
 
-#winnerField{
+#winnerField {
     margin-bottom: 10px;
     align-self: center;
     text-align: center;
@@ -83,19 +92,19 @@ input{
     z-index: 2;
 }
 
-input:hover + .inputButton{
+input:hover:not(:disabled) + .inputButton {
     visibility: visible;
 }
 
-input:focus + .inputButton{
+input:focus:not(:disabled) + .inputButton {
     visibility: visible;
 }
 
-.inputButton:hover{
+.inputButton:hover {
     visibility: visible;
 }
 
-.inputButton{
+.inputButton {
     height: 36px;
     width: 36px;
     margin-left: -40px;
@@ -107,6 +116,10 @@ input:focus + .inputButton{
     left: 0;
     visibility: hidden;
     position: relative;
+}
+
+#playerList .playerItem:last-child .inputButton {
+    visibility: hidden;
 }
 
 .cross{
@@ -149,7 +162,7 @@ input:focus + .inputButton{
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
     body {
         flex-direction: column;
     }
@@ -159,5 +172,8 @@ input:focus + .inputButton{
     #winnerField {
         font-size: 4vw;
         width: 30%;
+    }
+    #div1 {
+        flex-direction: column-reverse;
     }
 }
