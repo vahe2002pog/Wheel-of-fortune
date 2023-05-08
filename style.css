@@ -25,7 +25,6 @@ body {
 
 #centerColumn {
     display: flex;
-    flex: 1;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
@@ -33,13 +32,13 @@ body {
 
 #lefColumn {
     display: flex;
-    flex: 1;
     align-items: center;
     flex-direction: column;
     max-height: 100%;
     max-width: 220px;
-    overflow: auto;
+    overflow: hidden auto;
     padding: 12px;
+    margin: 0 auto;
 }
 
 #canvases {
@@ -173,7 +172,20 @@ input:focus:not(:disabled) + .inputButton {
         font-size: 4vw;
         width: 100%;
     }
+    #lefColumn {
+        margin-bottom: auto;
+    }
     #div1 {
         flex-direction: column-reverse;
     }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #ffffff49;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
