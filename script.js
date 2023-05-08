@@ -14,6 +14,7 @@ let playerCount, rowCount;
 let players = [];
 let desPlayers = [];
 let params = getParameterByName("list", window.location.href);
+let autoIncrement = 1;
 
 resize();
 
@@ -259,15 +260,14 @@ function keyPressed(id, event) {
     }
 }
 
-let autoIncriment = 1;
 function newItem(id){
     let table = $("#playerList");
     let rows = $("#playerList input");
     rowCount = rows.length;
     
     if ($(rows[rowCount - 1]).attr('id') == `text${id}`) {
-        table.append(getNewItem(autoIncriment));
-        autoIncriment++;
+        table.append(getNewItem(autoIncrement));
+        autoIncrement++;
     }
 }
 
@@ -291,9 +291,9 @@ function returnItem(id){
     $(`#playerItem${id}`).remove();
     for (let i = 0; i < desPlayers.length; i++) {
         if (desPlayers[i].id == id) {
-            desPlayers[i].id = autoIncriment-1;
-            $(`#text${autoIncriment-1}`).val(desPlayers[i].text);
-            newItem(autoIncriment-1);
+            desPlayers[i].id = autoIncrement-1;
+            $(`#text${autoIncrement-1}`).val(desPlayers[i].text);
+            newItem(autoIncrement-1);
             players.push(desPlayers[i]);
             desPlayers.splice(i, 1);
             drawWheel(players)
