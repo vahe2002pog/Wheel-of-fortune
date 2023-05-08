@@ -171,7 +171,7 @@ input:focus:not(:disabled) + .inputButton {
     }
     #winnerField {
         font-size: 4vw;
-        width: 30%;
+        width: 100%;
     }
     #div1 {
         flex-direction: column-reverse;
