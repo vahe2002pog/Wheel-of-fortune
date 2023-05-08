@@ -42,8 +42,9 @@ function resize() {
     ctx.canvas.height = H;
     sctx.canvas.width = W;
     sctx.canvas.height = H;
-    
+
     drawSpin();
+    drawWheel(players);
 };
 
 function getParameterByName(name, url) {
