@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^gagikpog.ru [nc]
+RewriteRule ^(.*)$ https://fortune.gagikpog.ru/$1 [r=301,nc]
