@@ -66,6 +66,20 @@ if(params != null){
     });
 }
 
+params = getParameterByName("des", window.location.href);
+if (params){
+    params = params.split('$_$');
+    const start = players.length;
+    params.forEach((element, index) => {
+        desPlayers.push({id: start + index + 1, text: element, color: getRandomColor()});
+    });
+
+    desPlayers.forEach((item) => {
+        $("#destroyedList").append(getNewItem(item.id, 1, item.text));
+    });
+}
+
+
 params = getParameterByName("title", window.location.href);
 if(params != "null"){
     $("#title").text(params);
@@ -74,16 +88,15 @@ if(params != "null"){
 params = getParameterByName("checked", window.location.href);
 
 $("#checkbox1").prop("checked", params === null ? true : params === 'true');
-
+$("#checkbox1").change(updateUrl);
 
 function drawSpin() {
-    
     sctx.beginPath();
     sctx.strokeStyle = "#3a3a3a";
     sctx.arc(cW, cH, wheelRadius - 3, 0, 2 * Math.PI);
     sctx.lineWidth = 8;
     sctx.stroke();
-    
+
     sctx.fillStyle = "orange"
     sctx.font = "bold " + textSize + "px Comic Sans MS";
     
@@ -193,7 +206,8 @@ function getWinner(value) {
             setTimeout(function () {
                 removeByIndex(players[id].id, 1);
                 $("#destroyedList").append(getNewItem(desPlayers[desPlayers.length-1].id, 1, winnder));
-                drawWheel(players)
+                drawWheel(players);
+                updateUrl();
             }, 800);
         }
     }
@@ -238,7 +252,8 @@ function textChanged(id){
                     color: getRandomColor()
                 })
             }
-            drawWheel(players)
+            drawWheel(players);
+            updateUrl();
         }
         else {
             removeByIndex(id);
@@ -281,7 +296,8 @@ function removeByIndex(id, param = 0) {
                     desPlayers.push(players[i]);
                 }
                 players.splice(i, 1);
-                drawWheel(players)
+                drawWheel(players);
+                updateUrl();
                 break;
             }
         }
@@ -298,7 +314,14 @@ function returnItem(id){
             players.push(desPlayers[i]);
             desPlayers.splice(i, 1);
             drawWheel(players)
+            updateUrl();
             break;
         }
     }
+}
+
+function updateUrl() {
+    try {
+        window.history.replaceState('', '', getUrlParams());
+    } catch (error) {}
 }

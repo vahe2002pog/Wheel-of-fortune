@@ -1,8 +1,14 @@
 function copyLink() {
     const hostname = `${window.location.protocol}//${window.location.hostname}`;
-    const checked = document.querySelector('#checkbox1') && document.querySelector('#checkbox1').checked;
-    const list = players.map((item) => item.text).join('$_$');
-    copyTextToClipboard(`${hostname}/?checked=${checked}&list=${list}`);
+    const params = getUrlParams();
+    copyTextToClipboard(`${hostname}/${params}`);
+}
+
+function getUrlParams() {
+    const checked = $("#checkbox1").prop('checked');
+    const list = players.map((item) => item.text).filter(Boolean).join('$_$');
+    const des = desPlayers.map((item) => item.text).filter(Boolean).join('$_$');
+    return `?checked=${checked}&list=${list}&des=${des}`;
 }
 
 function copyTextToClipboard(text) {
