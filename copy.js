@@ -1,6 +1,6 @@
 function copyLink() {
     const hostname = `${window.location.protocol}//${window.location.hostname}`;
-    const checked = $("#checkbox1").val() === 'on';
+    const checked = document.querySelector('#checkbox1') && document.querySelector('#checkbox1').checked;
     const list = players.map((item) => item.text).join('$_$');
     copyTextToClipboard(`${hostname}/?checked=${checked}&list=${list}`);
 }
