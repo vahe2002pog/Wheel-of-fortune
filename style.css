@@ -189,3 +189,19 @@ input:focus:not(:disabled) + .inputButton {
     background-color: #ffffff49;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+/* Copy button */
+.copy-link-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.copy-link {
+    fill: #0000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.copy-link:hover {
+    color: #bdbdbd;
+}
