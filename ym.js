@@ -5,7 +5,8 @@ k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNo
 (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
 ym(93554896, "init", {
-    clickmap:true,
-    trackLinks:true,
-    accurateTrackBounce:true
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: true
 });
