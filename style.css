@@ -19,8 +19,23 @@ body {
     background-color: #1E1E1E;
     color: #e6e6e6;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    align-items: center;
     overflow: hidden;
+    flex-direction: column;
+}
+
+header {
+    padding: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    align-items: center;
+    min-height: 0;
 }
 
 #centerColumn {
@@ -162,7 +177,7 @@ input:focus:not(:disabled) + .inputButton {
 }
 
 @media (max-width: 800px) {
-    body {
+    main {
         flex-direction: column;
     }
     #centerColumn {
@@ -194,6 +209,7 @@ input:focus:not(:disabled) + .inputButton {
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 1;
 }
 
 .copy-link {

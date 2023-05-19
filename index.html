@@ -1,45 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Колесо удачи</title>
-    <link rel="stylesheet" href="style.css?1.12">
+    <link rel="stylesheet" href="style.css?1.13">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta name="keywords" content="колесо удачи">
+    <meta name="keywords" content="колесо фортуны">
+    <meta name="keywords" content="колесо на выбывание">
+    <meta name="keywords" content="рулетка на выбывание">
+    <meta name="keywords" content="колесо аукцион">
+    <meta name="keywords" content="исключения вариантов">
+    <meta name="description" content="Колесо удачи или фортуны онлайн. Простой способ не делать выбор самому и надеется на случай. Выбор из нескольких вариантов или выбор с помощью исключения вариантов">
     <script src="jquery-3.5.0.min.js?1.7"></script>
     <script src="https://gagikpog.ru/confirm/confirm.min.js"></script>
 </head>
 <body>
-    <div class="copy-link-wrapper">
-        <svg class="copy-link" onclick="copyLink()" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <title>Скопировать</title>
-            <path d="M17.5 14H19C20.1046 14 21 13.1046 21 12V5C21 3.89543 20.1046 3 19 3H12C10.8954 3 10 3.89543 10 5V6.5M5 10H12C13.1046 10 14 10.8954 14 12V19C14 20.1046 13.1046 21 12 21H5C3.89543 21 3 20.1046 3 19V12C3 10.8954 3.89543 10 5 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <div id="lefColumn">
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <input type="checkbox" checked id="checkbox1"> <label for="checkbox1" style="margin-left: 8px;">На выбивание</label>
+    <noindex>
+        <div class="copy-link-wrapper">
+            <svg class="copy-link" onclick="copyLink()" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <title>Скопировать</title>
+                <path d="M17.5 14H19C20.1046 14 21 13.1046 21 12V5C21 3.89543 20.1046 3 19 3H12C10.8954 3 10 3.89543 10 5V6.5M5 10H12C13.1046 10 14 10.8954 14 12V19C14 20.1046 13.1046 21 12 21H5C3.89543 21 3 20.1046 3 19V12C3 10.8954 3.89543 10 5 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
-        <h2 id="title">Игроки</h2>
-        <div id="playerList">
-            <div class="playerItem" id="playerItem0">
-                <input id="text0" class="nicksInput" maxlength="16" onchange="textChanged(0)" onkeydown="keyPressed(0, event)" type="text">
-                <span class="inputButton cross" onclick="removeByIndex(0, 0)"></span>
-            </div>
-        </div>
-        <h2>Выбившие</h2>
-        <div id="destroyedList"></div>
-    </div>
+    </noindex>
 
-    <div id="centerColumn">
-        <div id="div1">
-            <div id="canvases">
-                <canvas id="wheel" ></canvas>
-                <canvas id="spin" onclick="spinButton()" ></canvas>
+    <header>Фортуна</header>
+    <main>
+        <div id="lefColumn">
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <input type="checkbox" checked id="checkbox1"> <label for="checkbox1" style="margin-left: 8px;">На выбивание</label>
             </div>
-            <span id="winnerField"></span>
+            <h2 id="title">Игроки</h2>
+            <div id="playerList">
+                <div class="playerItem" id="playerItem0">
+                    <input id="text0" class="nicksInput" maxlength="16" onchange="textChanged(0)" onkeydown="keyPressed(0, event)" type="text">
+                    <span class="inputButton cross" onclick="removeByIndex(0, 0)"></span>
+                </div>
+            </div>
+            <h2>Выбившие</h2>
+            <div id="destroyedList"></div>
         </div>
-    </div>
+
+        <div id="centerColumn">
+            <div id="div1">
+                <div id="canvases">
+                    <canvas id="wheel" ></canvas>
+                    <canvas id="spin" onclick="spinButton()" ></canvas>
+                </div>
+                <span id="winnerField"></span>
+            </div>
+        </div>
+    </main>
 
     <script src="script.js?1.13"></script>
     <script src="copy.js?1.02"></script>
