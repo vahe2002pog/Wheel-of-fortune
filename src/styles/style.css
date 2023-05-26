@@ -99,7 +99,7 @@ main {
     word-break: break-word;
 }
 
-input{
+input {
     border: 3px solid #3a3a3a;
     border-radius: 20px;
     min-height: 30px;
@@ -110,16 +110,20 @@ input{
     z-index: 2;
 }
 
-input:hover:not(:disabled) + .inputButton {
+.is-hover-devise input:hover:not(:disabled)+.inputButton {
     visibility: visible;
 }
 
-input:focus:not(:disabled) + .inputButton {
+.is-hover-devise input:focus:not(:disabled)+.inputButton {
     visibility: visible;
 }
 
-.inputButton:hover {
+.is-hover-devise .inputButton:hover {
     visibility: visible;
+}
+
+.is-hover-devise .inputButton {
+    visibility: hidden;
 }
 
 .inputButton {
@@ -132,7 +136,6 @@ input:focus:not(:disabled) + .inputButton {
     z-index: 9;
     top: 0;
     left: 0;
-    visibility: hidden;
     position: relative;
 }
 
@@ -140,34 +143,34 @@ input:focus:not(:disabled) + .inputButton {
     visibility: hidden;
 }
 
-.cross{
+.cross {
     background-image: url("/images/cross.png");
 }
 
-.arrow{
+.arrow {
     background-image: url("/images/arrow.png");
 }
 
-.playerItem{
+.playerItem {
     display: flex;
 }
 
-#playerList{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#destroyedList{
+#playerList {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-#destroyedList input::-webkit-search-cancel-button{
-    -webkit-appearance:unset;
+#destroyedList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#destroyedList input::-webkit-search-cancel-button {
+    -webkit-appearance: unset;
     width: 12px;
     height: 12px;
     background-image: url("/images/ico.png");
@@ -175,7 +178,7 @@ input:focus:not(:disabled) + .inputButton {
 }
 
 @media (max-width: 1250px) {
-    #winnerField{
+    #winnerField {
         width: 150px;
     }
 }
@@ -184,16 +187,20 @@ input:focus:not(:disabled) + .inputButton {
     main {
         flex-direction: column;
     }
+
     #centerColumn {
         width: 100%;
     }
+
     #winnerField {
         font-size: 4vw;
         width: 100%;
     }
+
     #lefColumn {
         margin-bottom: auto;
     }
+
     #div1 {
         flex-direction: column-reverse;
     }
@@ -208,6 +215,7 @@ input:focus:not(:disabled) + .inputButton {
     background-color: #ffffff49;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
+
 /* Copy button */
 .copy-link-wrapper {
     position: absolute;

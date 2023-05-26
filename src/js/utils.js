@@ -8,6 +8,16 @@ function isPhone() {
     return check;
 }
 
+function isTouchDevise() {
+    try {
+        return window.matchMedia('(pointer: coarse)').matches;
+    } catch (error) {
+        return false;
+    }
+}
+
+document.body.classList.add(isTouchDevise() ? 'is-touch-devise' : 'is-hover-devise');
+
 if (isPhone() && 'visualViewport' in window) {
     let fullWindowHeight = window.innerHeight;
 
