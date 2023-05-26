@@ -199,10 +199,20 @@ input {
 
     #lefColumn {
         margin-bottom: auto;
+        width: 100%;
+        max-width: 100%
     }
 
     #div1 {
         flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 400px) {
+    #playerList,
+    .playerItem,
+    .nicksInput {
+        width: 100%;
     }
 }
 

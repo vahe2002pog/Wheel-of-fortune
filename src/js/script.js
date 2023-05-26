@@ -15,7 +15,7 @@ let players = [];
 let desPlayers = [];
 let params = getParameterByName("list", window.location.href);
 let autoIncrement = 1;
-
+let fortuneTextMaxLength = 16;
 resize();
 
 window.addEventListener('resize', resize);
@@ -42,6 +42,7 @@ function resize() {
     ctx.canvas.height = H;
     sctx.canvas.width = W;
     sctx.canvas.height = H;
+    fortuneTextMaxLength = window.innerWidth > 1200 || window.innerWidth <= 800 && window.innerWidth > 780 ? 16 : 12;
 
     drawSpin();
     drawWheel(players);
@@ -153,8 +154,11 @@ function drawWheel(players) {
             ctx.fillStyle = "black";
             ctx.strokeStyle = "white";
             ctx.textAlign = "center";
-            ctx.strokeText(players[i].text, wheelRadius / 1.8, textSize / 2 - 6);
-            ctx.fillText(players[i].text, wheelRadius / 1.8, textSize / 2 - 6);
+            const text = players[i].text.substring(0, fortuneTextMaxLength) + (
+                players[i].text.length > fortuneTextMaxLength ? '...' : ''
+            );
+            ctx.strokeText(text, wheelRadius / 1.8, textSize / 2 - 6);
+            ctx.fillText(text, wheelRadius / 1.8, textSize / 2 - 6);
             ctx.restore();
         }
     }
@@ -227,7 +231,7 @@ function getNewItem(id, param = 0, text = ""){
     let methodName = ["removeByIndex", "returnItem"]
     let div = `
     <div class="playerItem" id="playerItem${id}">
-    <input id="text${id}" class="nicksInput"  maxlength="16" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text">
+    <input id="text${id}" class="nicksInput"  maxlength="50" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text">
     <span class="inputButton ${className[param]}" onclick="${methodName[param]}(${id})"></span>
     </div>`;
     return div;
