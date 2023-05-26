@@ -38,6 +38,10 @@ main {
     min-height: 0;
 }
 
+.keyboard-opened #centerColumn {
+    display: none;
+}
+
 #centerColumn {
     display: flex;
     justify-content: center;
