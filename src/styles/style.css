@@ -141,11 +141,11 @@ input:focus:not(:disabled) + .inputButton {
 }
 
 .cross{
-    background-image: url("./images/cross.png");
+    background-image: url("/images/cross.png");
 }
 
 .arrow{
-    background-image: url("./images/arrow.png");
+    background-image: url("/images/arrow.png");
 }
 
 .playerItem{
@@ -170,7 +170,7 @@ input:focus:not(:disabled) + .inputButton {
     -webkit-appearance:unset;
     width: 12px;
     height: 12px;
-    background-image: url("./images/ico.png");
+    background-image: url("/images/ico.png");
     background-size: 12px 12px;
 }
 
