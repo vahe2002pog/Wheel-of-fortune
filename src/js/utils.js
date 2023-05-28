@@ -18,14 +18,25 @@ function isTouchDevise() {
 
 document.body.classList.add(isTouchDevise() ? 'is-touch-devise' : 'is-hover-devise');
 
-if (isPhone() && 'visualViewport' in window) {
+if (isPhone()) {
     let fullWindowHeight = window.innerHeight;
 
-    window.visualViewport.addEventListener('resize', function() {
-        if(fullWindowHeight * 0.8 > window.visualViewport.height) {
-            document.body.classList.add('keyboard-opened');
+    window.addEventListener('resize', function() {
+
+        const viewPortDetectOpen = 'visualViewport' in window ? fullWindowHeight * 0.8 > window.visualViewport.height
+            : false;
+        const resizeDetectOpen = fullWindowHeight * 0.8 > window.innerHeight;
+
+        const opened = document.body.classList.contains('keyboard-opened');
+
+        if (viewPortDetectOpen || resizeDetectOpen) {
+            if (!opened) {
+                document.body.classList.add('keyboard-opened');
+            }
         } else {
-            document.body.classList.remove('keyboard-opened');
+            if (opened) {
+                document.body.classList.remove('keyboard-opened');
+            }
         }
     });
 }

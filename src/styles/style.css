@@ -197,6 +197,7 @@ input {
         width: 100%;
     }
 
+    #destroyedList,
     #lefColumn {
         margin-bottom: auto;
         width: 100%;
