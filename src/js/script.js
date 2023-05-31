@@ -16,18 +16,22 @@ let desPlayers = [];
 let params = getParameterByName("list", window.location.href);
 let autoIncrement = 1;
 let fortuneTextMaxLength = 16;
+const headerHeight = 50;
+const spinnerPadding = 40;
 resize();
 
 window.addEventListener('resize', resize);
 
 function resize() {
-    if (window.innerWidth > 800) {
-        const inputsWidth = 220;
+    const isVertical = window.innerHeight > window.innerWidth * 1;
+    setOrientation(isVertical ? 'vertical' : 'horizontal');
+    if (!isVertical) {
+        const inputMinWidth = 220;
         const winnerFieldWidth = 150;
-        const width = window.innerWidth - inputsWidth - winnerFieldWidth;
-        W = Math.min(window.innerHeight * 0.9 , width * 0.8);
+        const width = window.innerWidth - inputMinWidth - winnerFieldWidth;
+        W = Math.min(window.innerHeight - spinnerPadding - headerHeight, width * 0.8);
     } else {
-        W = Math.min(window.innerWidth, window.innerHeight) * 0.8;
+        W = Math.min(window.innerWidth - spinnerPadding, window.innerHeight * 0.6);
     }
     H = W;
 
@@ -37,7 +41,7 @@ function resize() {
     cW = W / 2;
     cH = H / 2;
 
-    spinAngle = window.innerWidth <= 800 ? 90 : 0;
+    spinAngle = isVertical ? 90 : 0;
     ctx.canvas.width = W;
     ctx.canvas.height = H;
     sctx.canvas.width = W;
@@ -328,4 +332,14 @@ function updateUrl() {
     try {
         window.history.replaceState('', '', getUrlParams());
     } catch (error) {}
+}
+
+function setOrientation(orientation) {
+    if (orientation === 'vertical') {
+        addClass('vertical');
+        removeClass('horizontal');
+    } else {
+        addClass('horizontal');
+        removeClass('vertical');
+    }
 }

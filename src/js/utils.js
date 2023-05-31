@@ -40,3 +40,15 @@ if (isPhone()) {
         }
     });
 }
+
+function addClass(className) {
+    if (!document.body.classList.contains(className)) {
+        document.body.classList.add(className);
+    }
+}
+
+function removeClass(className) {
+    if (document.body.classList.contains(className)) {
+        document.body.classList.remove(className);
+    }
+}

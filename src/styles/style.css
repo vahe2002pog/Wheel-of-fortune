@@ -54,10 +54,11 @@ main {
     align-items: center;
     flex-direction: column;
     max-height: 100%;
-    max-width: 220px;
+    max-width: 400px;
     overflow: hidden auto;
     padding: 12px;
     margin: 0 auto;
+    width: 100%;
 }
 
 #canvases {
@@ -153,6 +154,7 @@ input {
 
 .playerItem {
     display: flex;
+    width: 100%;
 }
 
 #playerList {
@@ -160,6 +162,11 @@ input {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+}
+
+.nicksInput {
+    width: 100%;
 }
 
 #destroyedList {
@@ -167,6 +174,8 @@ input {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    max-width: 400px;
+    width: 100%;
 }
 
 #destroyedList input::-webkit-search-cancel-button {
@@ -183,39 +192,34 @@ input {
     }
 }
 
-@media (max-width: 800px) {
-    main {
-        flex-direction: column;
-    }
-
-    #centerColumn {
-        width: 100%;
-    }
-
-    #winnerField {
-        font-size: 4vw;
-        width: 100%;
-    }
-
-    #destroyedList,
-    #lefColumn {
-        margin-bottom: auto;
-        width: 100%;
-        max-width: 100%
-    }
-
-    #div1 {
-        flex-direction: column-reverse;
-    }
+/* vertical orientation */
+.vertical main {
+    flex-direction: column;
 }
 
-@media (max-width: 400px) {
-    #playerList,
-    .playerItem,
-    .nicksInput {
-        width: 100%;
-    }
+.vertical #centerColumn {
+    width: 100%;
 }
+
+.vertical #winnerField {
+    font-size: 4vw;
+    width: 100%;
+}
+
+.vertical #destroyedList {
+    margin-bottom: auto;
+    width: 100%;
+    max-width: 100%
+}
+
+.vertical #lefColumn {
+    margin-bottom: auto;
+}
+
+.vertical #div1 {
+    flex-direction: column-reverse;
+}
+
 
 ::-webkit-scrollbar {
     width: 8px;
