@@ -5,7 +5,7 @@ function copyLink() {
 }
 
 function getUrlParams() {
-    const checked = $("#checkbox1").prop('checked');
+    const checked = $('#checkbox1').prop('checked');
     const list = players.map((item) => item.text).filter(Boolean).join('$_$');
     const des = desPlayers.map((item) => item.text).filter(Boolean).join('$_$');
     return `?checked=${checked}&list=${list}&des=${des}`;
@@ -23,13 +23,13 @@ function copyTextToClipboard(text) {
 }
 
 function fallbackCopyTextToClipboard(text) {
-    const textArea = document.createElement("textarea");
+    const textArea = document.createElement('textarea');
     textArea.value = text;
 
     // Avoid scrolling to bottom
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
 
     document.body.appendChild(textArea);
     textArea.focus();
@@ -44,4 +44,30 @@ function fallbackCopyTextToClipboard(text) {
     }
 
     document.body.removeChild(textArea);
+}
+
+function pastFromBuffer() {
+    if (navigator.clipboard) {
+        navigator.clipboard.readText().then((text) => {
+            pasteByString(text);
+        }).catch((error) => {
+            console.error(error);
+        });
+    } else {
+        // fallback
+        const textArea = document.createElement('textarea');
+        textArea.value = '';
+
+        // Avoid scrolling to bottom
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.position = 'fixed';
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('paste');
+        pasteByString(textArea.value);
+        document.body.removeChild(textArea);
+    }
 }

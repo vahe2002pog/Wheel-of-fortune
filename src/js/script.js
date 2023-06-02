@@ -1,4 +1,4 @@
-let canvas = document.getElementById("wheel");
+let canvas = document.getElementById('wheel');
 let ctx = canvas.getContext("2d");
 let W = null;
 let H = null;
@@ -10,17 +10,23 @@ let spin = document.getElementById("spin");
 let sctx = spin.getContext("2d");
 let spinAngle = window.innerWidth <= 800 ? 90 : 0;
 let winnerField = document.getElementById("winnerField");
-let playerCount, rowCount;
+let rowCount;
 let players = [];
 let desPlayers = [];
-let params = getParameterByName("list", window.location.href);
 let autoIncrement = 1;
 let fortuneTextMaxLength = 16;
 const headerHeight = 50;
 const spinnerPadding = 40;
+let ended = true, added = false;
+let interval;
+let randNumber, noneRandNumber, a = 0;
+let pastItems = null;
+
 resize();
+readFromParams();
 
 window.addEventListener('resize', resize);
+$('#checkbox1').change(updateUrl);
 
 function resize() {
     const isVertical = window.innerHeight > window.innerWidth * 1;
@@ -52,48 +58,37 @@ function resize() {
     drawWheel(players);
 };
 
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+function readFromParams() {
+    const listItems = getParameterByName('list');
+    if (listItems !== null){
+        listItems.split('$_$').filter(Boolean).forEach((element,index) => {
+            $(`#text${index}`).val(element);
+            keyPressed(index,{code:'null'});
+            textChanged(index);
+        });
+    }
+
+    const desItems = getParameterByName('des');
+    if (desItems !== null){
+        const start = players.length;
+        desItems.split('$_$').filter(Boolean).forEach((text, index) => {
+            const id = start + index + 1;
+            desPlayers.push({id: id, text: text, color: getRandomColor()});
+            $('#destroyedList').append(getNewItem(id, 1, text));
+        });
+    }
+
+    const titleParam = getParameterByName('title');
+    if(titleParam !== 'null' && titleParam){
+        $('#title').text(titleParam);
+    }
+
+    const checkedParams = getParameterByName('checked');
+
+    if (checkedParams) {
+        $('#checkbox1').prop('checked', checkedParams === 'true');
+    }
 }
-
-if(params != null){
-    params = params.split('$_$');
-    params.forEach((element,index) => {
-        $(`#text${index}`).val(element);
-        keyPressed(index,{code:"null"});
-        textChanged(index);
-    });
-}
-
-params = getParameterByName("des", window.location.href);
-if (params){
-    params = params.split('$_$');
-    const start = players.length;
-    params.forEach((element, index) => {
-        desPlayers.push({id: start + index + 1, text: element, color: getRandomColor()});
-    });
-
-    desPlayers.forEach((item) => {
-        $("#destroyedList").append(getNewItem(item.id, 1, item.text));
-    });
-}
-
-
-params = getParameterByName("title", window.location.href);
-if(params != "null"){
-    $("#title").text(params);
-}
-
-params = getParameterByName("checked", window.location.href);
-
-$("#checkbox1").prop("checked", params === null ? true : params === 'true');
-$("#checkbox1").change(updateUrl);
 
 function drawSpin() {
     sctx.beginPath();
@@ -133,7 +128,7 @@ function drawSpin() {
 }
 
 function drawWheel(players) {
-    playerCount = players.length;
+    const playerCount = players.length;
     let angle = (2 / playerCount) * Math.PI;
     ctx.clearRect(0, 0, W, H);
     ctx.font = "bold " + textSize + "px Comic Sans MS";
@@ -168,9 +163,7 @@ function drawWheel(players) {
     }
 }
 
-let ended = true, added = false;
-let interval;
-let randNumber, noneRandNumber, a = 0;
+
 function rotate() {
     let delta = noneRandNumber / 800;
     canvas.style.transform = `rotate(${a}deg)`;
@@ -193,6 +186,7 @@ function rotate() {
     }
     getWinner(a + spinAngle);
 }
+
 function spinButton() {
     if (ended && players.length > 1) {
         interval = setInterval(rotate, 1);
@@ -205,6 +199,7 @@ function spinButton() {
 }
 
 function getWinner(value) {
+    const playerCount = players.length;
     let angle = value - (Math.floor(value / 360) * 360);
     let id = playerCount - Math.floor(angle / (360 / playerCount)) - 1;
     let winnder = players[id].text;
@@ -235,7 +230,7 @@ function getNewItem(id, param = 0, text = ""){
     let methodName = ["removeByIndex", "returnItem"]
     let div = `
     <div class="playerItem" id="playerItem${id}">
-    <input id="text${id}" class="nicksInput"  maxlength="50" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text">
+    <input id="text${id}" class="nicksInput"  maxlength="50" onchange="textChanged(${id})" value="${text}" onkeydown="keyPressed(${id}, event)" type="text" onPaste="onPaste(event)">
     <span class="inputButton ${className[param]}" onclick="${methodName[param]}(${id})"></span>
     </div>`;
     return div;
@@ -341,5 +336,66 @@ function setOrientation(orientation) {
     } else {
         addClass('horizontal');
         removeClass('vertical');
+    }
+}
+
+/**
+ * @param {string[]} items
+ */
+function pushPlayers(items) {
+    players.splice(0);
+    $("#playerList").empty();
+
+    items.forEach((text, index) => {
+        players.push({
+            id: index,
+            text: text,
+            color: getRandomColor()
+        });
+        $("#playerList").append(getNewItem(index, 0, text));
+    });
+}
+
+function onPaste(event) {
+    if (players.length === 0 && autoIncrement < 3) {
+        const pastString = event.clipboardData.getData('text/plain');
+        return pasteByString(pastString);
+    }
+};
+
+function pasteByString(pastString) {
+    if (!pastString) {
+        return;
+    }
+
+    const clear = (items) => {
+        return items.map((item) => {
+            return item.trim();
+        }).filter(Boolean);
+    };
+
+    if (pastString.search(/\n/) !== -1) {
+        pastItems = clear(pastString.split(/\n/));
+    } else {
+        pastItems = clear(pastString.split(/\s/));
+    }
+
+    pastItems.forEach((item) => {
+        $('#pastList').append(`<div class="past-item">${item}</div>`);
+    });
+
+    if (pastItems.length > 1) {
+        pastDialog.showModal();
+        return false;
+    }
+}
+
+function applyPast() {
+    pastDialog.close();
+    if (pastItems && pastItems.length) {
+        pushPlayers(pastItems);
+        drawWheel(players);
+        updateUrl();
+        keyPressed($("#playerList input").length - 1, { code: 'null' });
     }
 }
