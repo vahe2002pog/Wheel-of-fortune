@@ -19,7 +19,7 @@ function isTouchDevise() {
 document.body.classList.add(isTouchDevise() ? 'is-touch-devise' : 'is-hover-devise');
 
 if (isPhone()) {
-    let fullWindowHeight = window.innerHeight;
+    let fullWindowHeight = window.visualViewport && window.visualViewport.height || window.innerHeight;
 
     window.addEventListener('resize', function() {
 

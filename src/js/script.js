@@ -54,8 +54,13 @@ function resize() {
     sctx.canvas.height = H;
     fortuneTextMaxLength = window.innerWidth > 1200 || window.innerWidth <= 800 && window.innerWidth > 780 ? 16 : 12;
 
-    drawSpin();
-    drawWheel(players);
+    try {
+        drawSpin();
+        drawWheel(players);
+    } catch (error) {
+        console.warn(error);
+    }
+
 };
 
 function readFromParams() {
