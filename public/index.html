@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Колесо фортуны «Колесо удачи»</title>
+    <meta name="description" content="Колесо удачи или фортуны онлайн. Простой способ не делать выбор самому и надеется на случай. Выбор из нескольких вариантов или выбор с помощью исключения вариантов">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1E1E1E" />
+
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/icon-16x16.png">
+    <link rel="mask-icon" href="%PUBLIC_URL%/favicon.svg">
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" type="image/svg+xml">
+
+    <meta name="keywords" content="колесо удачи">
+    <meta name="keywords" content="колесо фортуны">
+    <meta name="keywords" content="колесо на выбывание">
+    <meta name="keywords" content="рулетка на выбывание">
+    <meta name="keywords" content="колесо аукцион">
+    <meta name="keywords" content="исключения вариантов">
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+        <noindex>
+            <div class="links-wrapper">
+                <svg class="svg-icon" onclick="pastFromBuffer()" width="24px" height="24px" viewBox="0 0 1024 1024"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Вставить текст из буфера</title>
+                    <path stroke="currentColor"
+                        d="M837.818182 93.090909H642.327273c-18.618182-55.854545-69.818182-93.090909-130.327273-93.090909-60.509091 0-111.709091 37.236364-130.327273 93.090909H186.181818c-51.2 0-93.090909 41.890909-93.090909 93.090909v744.727273c0 51.2 41.890909 93.090909 93.090909 93.090909h651.636364c51.2 0 93.090909-41.890909 93.090909-93.090909V186.181818c0-51.2-41.890909-93.090909-93.090909-93.090909z m-325.818182 0c27.927273 0 46.545455 18.618182 46.545455 46.545455S539.927273 186.181818 512 186.181818 465.454545 167.563636 465.454545 139.636364 484.072727 93.090909 512 93.090909zM837.818182 930.909091H186.181818V186.181818h93.090909v139.636364h465.454546V186.181818h93.090909v744.727273z" />
+                </svg>
+
+                <svg onclick="copyLink()" class="svg-icon" width="24px" height="24px" viewBox="0 0 1024 1024"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <title>Скопировать ссылку</title>
+                    <path
+                        d="M851.025513 737.324862 400.356301 737.324862c-62.219566 0-112.666535-50.444902-112.666535-112.662943L287.689766 174.012196c0-62.217017 50.446969-112.662943 112.666535-112.662943l450.670235 0c62.219566 0 112.666535 50.444902 112.666535 112.662943l0 450.650747C963.692048 686.879959 913.245079 737.324862 851.025513 737.324862zM907.35878 174.012196c0-31.108508-25.223485-56.33096-56.333268-56.33096L400.356301 117.681236c-31.109783 0-56.334291 25.222451-56.334291 56.33096l0 450.650747c0 31.108508 25.223485 56.331983 56.334291 56.331983l450.670235 0c31.10876 0 56.333268-25.222451 56.333268-56.331983L907.359804 174.012196zM118.687916 399.337057 118.687916 849.988828c0 31.107485 25.223485 56.33096 56.333268 56.33096l450.669212 0c31.109783 0 56.334291-25.222451 56.334291-56.33096l0-56.331983 56.333268 0 0 56.331983c0 62.217017-50.446969 112.660896-112.667559 112.660896L175.021184 962.649723c-62.219566 0-112.667559-50.443879-112.667559-112.660896L62.353625 399.337057c0-62.217017 50.446969-112.662943 112.667559-112.662943l56.334291 0 0 56.33096-56.334291 0C143.9114 343.005075 118.687916 368.228549 118.687916 399.337057z" />
+                </svg>
+            </div>
+        </noindex>
+
+        <header>Фортуна</header>
+        <main>
+            <div id="lefColumn">
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <input type="checkbox" checked id="checkbox1"> <label for="checkbox1" style="margin-left: 8px;">На
+                        выбивание</label>
+                </div>
+                <h2 id="title">Игроки</h2>
+                <div id="playerList">
+                    <div class="playerItem" id="playerItem0">
+                        <input id="text0" class="nicksInput" maxlength="50" onchange="textChanged(0)"
+                            onkeydown="keyPressed(0, event)" onPaste="onPaste(event)" type="text">
+                        <span class="inputButton cross" onclick="removeByIndex(0, 0)"></span>
+                    </div>
+                </div>
+                <h2>Выбившие</h2>
+                <div id="destroyedList"></div>
+            </div>
+
+            <div id="centerColumn">
+                <div id="div1">
+                    <div id="canvases">
+                        <canvas id="wheel"></canvas>
+                        <canvas id="spin" onclick="spinButton()"></canvas>
+                    </div>
+                    <span id="winnerField"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+    <dialog id="pastDialog" class="past-dialog">
+        <div>
+            <div>Вставить элементы?</div>
+            <div id="pastList" class="past-list"></div>
+            <div class="past-dialog-footer">
+                <button class="past-dialog-button" onclick="applyPast()">Да</button>
+                <button class="past-dialog-button" onclick="pastDialog.close()">Нет</button>
+            </div>
+        </div>
+    </dialog>
+</body>
+
+</html>
