@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, memo} from "react";
 const textMaxLength = 16;
 
 function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number, start: number, end: number, text: string}) {
@@ -38,13 +38,14 @@ function getPoints(cx: number, cy: number, r: number, start: number, end: number
 interface IProps {
     items: IPlayer[];
     className?: string;
+    style?: object;
 }
 
-export default function SpinnerBackSvg({items, className}: IProps) {
+export default memo(function SpinnerBackSvg({items, className, style}: IProps) {
     const angle = Math.PI * 2 / items.length || 1;
 
     return (
-        <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ userSelect: 'none' }}>
+        <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ userSelect: 'none', ...(style || {}) }}>
             {
                 items.map((item, index) => {
                     const points = getPoints(120, 120, 110, index * angle, (index + 1) * angle );
@@ -59,4 +60,4 @@ export default function SpinnerBackSvg({items, className}: IProps) {
             <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" strokeWidth="2"/>
         </svg>
     );
-}
+});
