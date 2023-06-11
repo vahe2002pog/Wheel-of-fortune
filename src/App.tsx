@@ -1,53 +1,18 @@
-import React from "react";
-// import logo from './logo.svg';
-// <img src={logo} className="App-logo" alt="logo" />
-import "./App.css";
+import React from 'react';
+import './App.css';
+import './styles/tailwind.min.css';
+import Header from './components/header';
+import Menu from './components/menu';
+import Spinner from './components/spinner';
 
-function App() {
-  return (
-    <>
-        <div className="links-wrapper">
-            <svg className="svg-icon" width="24px" height="24px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" >
-                <title>Вставить текст из буфера</title>
-                <path stroke="currentColor" d="M837.818182 93.090909H642.327273c-18.618182-55.854545-69.818182-93.090909-130.327273-93.090909-60.509091 0-111.709091 37.236364-130.327273 93.090909H186.181818c-51.2 0-93.090909 41.890909-93.090909 93.090909v744.727273c0 51.2 41.890909 93.090909 93.090909 93.090909h651.636364c51.2 0 93.090909-41.890909 93.090909-93.090909V186.181818c0-51.2-41.890909-93.090909-93.090909-93.090909z m-325.818182 0c27.927273 0 46.545455 18.618182 46.545455 46.545455S539.927273 186.181818 512 186.181818 465.454545 167.563636 465.454545 139.636364 484.072727 93.090909 512 93.090909zM837.818182 930.909091H186.181818V186.181818h93.090909v139.636364h465.454546V186.181818h93.090909v744.727273z"/>
-            </svg>
-
-            <svg className="svg-icon" width="24px" height="24px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" >
-                <title>Скопировать ссылку</title>
-                <path d="M851.025513 737.324862 400.356301 737.324862c-62.219566 0-112.666535-50.444902-112.666535-112.662943L287.689766 174.012196c0-62.217017 50.446969-112.662943 112.666535-112.662943l450.670235 0c62.219566 0 112.666535 50.444902 112.666535 112.662943l0 450.650747C963.692048 686.879959 913.245079 737.324862 851.025513 737.324862zM907.35878 174.012196c0-31.108508-25.223485-56.33096-56.333268-56.33096L400.356301 117.681236c-31.109783 0-56.334291 25.222451-56.334291 56.33096l0 450.650747c0 31.108508 25.223485 56.331983 56.334291 56.331983l450.670235 0c31.10876 0 56.333268-25.222451 56.333268-56.331983L907.359804 174.012196zM118.687916 399.337057 118.687916 849.988828c0 31.107485 25.223485 56.33096 56.333268 56.33096l450.669212 0c31.109783 0 56.334291-25.222451 56.334291-56.33096l0-56.331983 56.333268 0 0 56.331983c0 62.217017-50.446969 112.660896-112.667559 112.660896L175.021184 962.649723c-62.219566 0-112.667559-50.443879-112.667559-112.660896L62.353625 399.337057c0-62.217017 50.446969-112.662943 112.667559-112.662943l56.334291 0 0 56.33096-56.334291 0C143.9114 343.005075 118.687916 368.228549 118.687916 399.337057z" />
-            </svg>
-        </div>
-
-        <header>Фортуна</header>
-        <main>
-            <div id="lefColumn">
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
-                <input type="checkbox" id="checkbox1" />
-                <label htmlFor="checkbox1" style={{ marginLeft: "8px" }}>На выбивание</label>
-            </div>
-            <h2 id="title">Игроки</h2>
-            <div id="playerList">
-                <div className="playerItem" id="playerItem0">
-                    <input id="text0" className="nicksInput" maxLength={50} type="text" />
-                    <span className="inputButton cross"></span>
-                </div>
-            </div>
-                <h2>Выбившие</h2>
-                <div id="destroyedList"></div>
-            </div>
-
-            <div id="centerColumn">
-                <div id="div1">
-                    <div id="canvases">
-                        <canvas id="wheel"></canvas>
-                        <canvas id="spin"></canvas>
-                    </div>
-                    <span id="winnerField"></span>
-                </div>
-            </div>
-        </main>
-    </>
-  );
+export default function App() {
+    return (
+        <>
+            <Header />
+            <main>
+                <Menu />
+                <Spinner/>
+            </main>
+        </>
+    );
 }
-
-export default App;
