@@ -5,7 +5,8 @@ import Header from './components/header';
 import Menu from './components/menu';
 import Spinner from './components/spinner';
 import { convertToUrl, readFromParams } from './helpers/urlParams';
-import { replaceEdited } from './helpers/player';
+import { createPlayer, replaceEdited } from './helpers/player';
+import { copyLink, getPasteData } from './helpers/clipboard';
 
 const initData = readFromParams();
 
@@ -52,11 +53,23 @@ export default function App() {
         try {
             window.history.replaceState('', '', convertToUrl(players, defeatPlayers, defeatMode));
         } catch (error) {}
-    }, [players, defeatPlayers, defeatMode])
+    }, [players, defeatPlayers, defeatMode]);
+
+    const onCopy = useCallback(() => {
+        copyLink(players, defeatPlayers, defeatMode);
+    }, [players, defeatPlayers, defeatMode]);
+
+    const onPaste = useCallback(() => {
+        getPasteData().then((items) => {
+            if (items.length) {
+                setPlayers(items.map((text) => createPlayer({text})));
+            }
+        });
+    }, []);
 
     return (
         <>
-            <Header />
+            <Header onCopy={onCopy} onPaste={onPaste}/>
             <main className='tw-flex tw-flex-1 tw-w-full tw-items-center'>
                 <Menu
                     players={players}

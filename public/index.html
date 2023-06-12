@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="utf-8" />
@@ -37,11 +37,11 @@
                 <div class="tw-flex tw-justify-center tw-items-center"><input type="checkbox" id=":r1:" checked=""><label
                         for=":r1:" style="margin-left: 8px;">На выбивание</label></div>
                 <h2 class="menu-caption">Игроки</h2>
-                <div class="player-list">
-                    <div class="player-item tw-w-full tw-relative"><input class="editor-input tw-w-full" maxlength="50"
-                            type="text" value=""></div>
+                <div class="player-list" id="players">
+                    <div class="player-item tw-w-full tw-relative"><input id="input-0" class="editor-input tw-w-full"
+                            maxlength="50" type="text" value=""></div>
                 </div>
-                <div class="player-list"></div>
+                <div class="player-list" id="defeatPlayers"></div>
             </div>
             <div class="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
                 <div class="winner-field tw-truncate tw-w-full tw-flex-shrink-0"></div>
@@ -69,8 +69,8 @@
             <div>Вставить элементы?</div>
             <div id="pastList" class="past-list"></div>
             <div class="past-dialog-footer">
-                <button class="past-dialog-button" onclick="applyPast()">Да</button>
-                <button class="past-dialog-button" onclick="pastDialog.close()">Нет</button>
+                <button id="paste-btn-yes" class="past-dialog-button">Да</button>
+                <button id="paste-btn-no" class="past-dialog-button">Нет</button>
             </div>
         </div>
     </dialog>
