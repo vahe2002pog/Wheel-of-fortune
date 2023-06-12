@@ -31,16 +31,20 @@ export default function Spinner(props: IProps) {
         });
     }
 
+    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+
     const runSpinner = useCallback(() => {
-        if (items.length > 1) {
+        if (displayItems.length > 1) {
             onRunSpinner?.();
         }
-    }, [items, onRunSpinner]);
+    }, [displayItems, onRunSpinner]);
+
 
     const winnerName = useMemo(() => {
-        const index = getWinnerIndex(angle, items.length);
-        return items[index]?.text;
-    }, [angle, items]);
+        const index = getWinnerIndex(angle, displayItems.length);
+        return displayItems[index]?.text;
+    }, [angle, displayItems]);
+
 
     return (
         <div className="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
@@ -48,7 +52,7 @@ export default function Spinner(props: IProps) {
                 {winnerName}
             </div>
             <div className="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden" style={{'--spinner-angle': `${angle}deg`} as React.CSSProperties}>
-                <SpinnerBackSvg className="spinner-back tw-absolute tw-h-full tw-w-full" items={items} />
+                <SpinnerBackSvg className="spinner-back tw-absolute tw-h-full tw-w-full" items={displayItems} />
                 <SpinnerFrontSvg className="spinner-front tw-absolute tw-h-full tw-w-full" runSpinner={runSpinner} />
             </div>
         </div>

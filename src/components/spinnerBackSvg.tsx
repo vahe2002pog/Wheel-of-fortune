@@ -43,14 +43,12 @@ interface IProps {
 
 export default memo(function SpinnerBackSvg({items, className, style}: IProps) {
 
-    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
-
-    const angle = Math.PI * 2 / displayItems.length || 1;
+    const angle = Math.PI * 2 / items.length || 1;
 
     return (
         <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ userSelect: 'none', ...(style || {}) }}>
             {
-                displayItems.map((item, index) => {
+                items.map((item, index) => {
                     const points = getPoints(120, 120, 110, index * angle, (index + 1) * angle );
                     return (
                         <g key={item.id}>
