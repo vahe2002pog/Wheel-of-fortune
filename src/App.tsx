@@ -35,7 +35,18 @@ export default function App() {
     }, []);
 
     const runSpinner = useCallback(() => setSpinnerRunning(true), [setSpinnerRunning]);
-    const stopSpinner = useCallback(() => setSpinnerRunning(false), [setSpinnerRunning]);
+    const stopSpinner = useCallback((winner: IPlayer) => {
+        setSpinnerRunning((val) => {
+            if (!val) {
+                console.error('Double stop spinner');
+            }
+            return false;
+        });
+        if (defeatMode) {
+            setPlayers((items) => items.filter(({id}) => id !== winner.id));
+            setDefeatPlayers((items) => [winner, ...items]);
+        }
+    }, [setSpinnerRunning, defeatMode]);
 
     useEffect(() => {
         try {

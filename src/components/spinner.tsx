@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState}  from "react";
+import React, {useCallback, useEffect, useMemo, useState}  from "react";
 import SpinnerFrontSvg from "./spinnerFrontSvg";
 import SpinnerBackSvg from "./spinnerBackSvg";
 import { getAngelRunner } from "../helpers/angelRunner";
@@ -8,37 +8,48 @@ interface IProps {
     spinnerRunning: boolean;
     items: IPlayer[];
     runSpinner?: () => void;
-    stopSpinner?: () => void;
+    stopSpinner?: (winner: IPlayer) => void;
 }
 
 export default function Spinner(props: IProps) {
 
     const {spinnerRunning, runSpinner: onRunSpinner, items } = props;
-
+    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+    const requestRef = React.useRef(0);
+    const rotateRef = React.useRef(getAngelRunner());
     const [angle, setAngle] = useState(0);
 
-    const rotate = useCallback(getAngelRunner(), [spinnerRunning]);
+    const animate = () => {
+        setAngle((val) => rotateRef.current.next(val));
 
-    if (spinnerRunning) {
-        requestAnimationFrame((timeStamp) => {
-            setAngle((val) => {
-                const {ended, angle} = rotate(val);
-                if (ended) {
-                    props.stopSpinner?.();
-                }
-                return angle;
-            });
-        });
+        if (!rotateRef.current.ended) {
+            requestRef.current = requestAnimationFrame(animate);
+        } else {
+            cancelAnimationFrame(requestRef.current);
+        }
     }
 
-    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+    useEffect(() => {
+        if (spinnerRunning) {
+            rotateRef.current = getAngelRunner();
+            requestRef.current = requestAnimationFrame(animate);
+        }
+        return () => cancelAnimationFrame(requestRef.current);
+    }, [spinnerRunning]);
+
+    useEffect(() => {
+        if (requestRef.current && rotateRef.current.ended) {
+            const index = getWinnerIndex(angle, displayItems.length);
+            const winner = displayItems[index];
+            props.stopSpinner?.(winner);
+        }
+    }, [rotateRef.current, rotateRef.current.ended]);
 
     const runSpinner = useCallback(() => {
         if (displayItems.length > 1) {
             onRunSpinner?.();
         }
     }, [displayItems, onRunSpinner]);
-
 
     const winnerName = useMemo(() => {
         const index = getWinnerIndex(angle, displayItems.length);
