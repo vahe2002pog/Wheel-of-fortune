@@ -1,21 +1,31 @@
 import React from "react";
+import List from "./list";
+import Defeat from "./defeat";
 
-export default function Menu() {
+interface IProps {
+    players: IPlayer[];
+    defeatPlayers: IPlayer[];
+    defeatMode: boolean;
+    disabled: boolean;
+    onDefeatChange: (defeatMode: boolean) => void;
+    onPlayerChange: (item: IPlayer) => void;
+    onDefeatPlayerChange: (item: IPlayer) => void;
+}
+
+export default function Menu(props: IProps) {
     return (
         <div className="menu tw-flex-1">
-            <div className="tw-flex tw-justify-center tw-items-center">
-                <input type="checkbox" id="checkbox1" />
-                <label htmlFor="checkbox1" style={{ marginLeft: "8px" }}>На выбивание</label>
-            </div>
-            <h2 id="title">Игроки</h2>
-            <div id="playerList">
-                <div className="playerItem" id="playerItem0">
-                    <input id="text0" className="nicksInput" maxLength={50} type="text" />
-                    <span className="inputButton cross"></span>
-                </div>
-            </div>
-            <h2>Выбившие</h2>
-            <div id="destroyedList"></div>
+            <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
+
+            <h2>Игроки</h2>
+
+            <List items={props.players} disabled={props.disabled} onItemChange={props.onPlayerChange}/>
+
+            {
+                props.defeatPlayers.length ? <h2>Выбившие</h2> : null
+            }
+
+            <List items={props.defeatPlayers} disabled={props.disabled} onItemChange={props.onDefeatPlayerChange}/>
         </div>
     );
 }

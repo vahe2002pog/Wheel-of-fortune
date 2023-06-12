@@ -1,12 +1,12 @@
 import React, {useMemo, memo} from "react";
-const textMaxLength = 16;
+const textMaxLength = 19;
 
 function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number, start: number, end: number, text: string}) {
 
     const props = useMemo(() => {
         const angle = (start + (end - start) / 2) * 180 / Math.PI;
         const transform = `rotate(${angle} ${cx} ${cy})`;
-        return { x: cx + 25, y: cy + 4, fontSize: '10px', fontFamily: 'Comic Sans MS', transform };
+        return { x: cx + 25, y: cy + 4, fontSize: '6px', fontFamily: 'MonospaceBold', transform };
     }, [cx, cy, start, end]);
 
     const displayText = useMemo(() => {
@@ -42,12 +42,15 @@ interface IProps {
 }
 
 export default memo(function SpinnerBackSvg({items, className, style}: IProps) {
-    const angle = Math.PI * 2 / items.length || 1;
+
+    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+
+    const angle = Math.PI * 2 / displayItems.length || 1;
 
     return (
         <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{ userSelect: 'none', ...(style || {}) }}>
             {
-                items.map((item, index) => {
+                displayItems.map((item, index) => {
                     const points = getPoints(120, 120, 110, index * angle, (index + 1) * angle );
                     return (
                         <g key={item.id}>

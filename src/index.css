@@ -8,6 +8,11 @@ html {
   height: 100%;
 }
 
+@font-face {
+  font-family: 'MonospaceBold';
+  src: url('/src/font/MonospaceBold.ttf');
+}
+
 body {
   background-color: #1E1E1E;
   color: #e6e6e6;
@@ -24,11 +29,12 @@ main {
 }
 
 input {
-  border: 3px solid #3a3a3a;
+  border: 1px solid #3a3a3a;
   border-radius: 20px;
   min-height: 30px;
   padding: 0 10px;
   color: black;
+  margin-bottom: 2px;
 }
 
 
