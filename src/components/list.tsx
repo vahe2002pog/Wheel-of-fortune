@@ -2,6 +2,7 @@ import React from "react";
 import Editor from "./editor";
 
 interface IProps {
+    id?: string;
     items: IPlayer[];
     disabled: boolean;
     onItemChange: (item: IPlayer) => void;
@@ -14,7 +15,7 @@ interface IProps {
 
 export default function List(props: IProps) {
     return (
-        <div className="player-list">
+        <div className="player-list" id={props.id}>
             {
                 props.items.map((item, index) => {
                     return (

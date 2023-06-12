@@ -28,8 +28,8 @@ export default function Menu(props: IProps) {
         return items;
     }, [props.players]);
 
-    const focusPlayer = useCallback((item: IPlayer) => focusNext(players, item), [players]);
-    const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext(props.defeatPlayers, item), [props.defeatPlayers]);
+    const focusPlayer = useCallback((item: IPlayer) => focusNext('players', item), []);
+    const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('defeatPlayers', item), []);
 
     return (
         <div className="menu tw-flex-1 tw-overflow-x-scroll">
@@ -38,6 +38,7 @@ export default function Menu(props: IProps) {
             <h2 className="menu-caption" >Игроки</h2>
 
             <List
+                id="players"
                 items={players}
                 disabled={props.disabled}
                 onItemChange={props.onPlayerChange}
@@ -53,6 +54,7 @@ export default function Menu(props: IProps) {
             }
 
             <List
+                id="defeatPlayers"
                 items={props.defeatPlayers}
                 disabled={props.disabled}
                 onItemChange={props.onDefeatPlayerChange}

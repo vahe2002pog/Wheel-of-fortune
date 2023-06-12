@@ -17,10 +17,12 @@ export default function Editor(props: IProps) {
     const { item, onChange: onChangeProps, onComplete } = props;
 
     const changeText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        onChangeProps({
-            ...item,
-            text: event.target.value
-        });
+        if (item.text !== event.target.value) {
+            onChangeProps({
+                ...item,
+                text: event.target.value
+            });
+        }
     }, [onChangeProps, item]);
 
     const onChangeDebounce = useCallback(debounce(changeText, 500), [changeText]);

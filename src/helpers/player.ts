@@ -18,21 +18,28 @@ export function isPlayerEmpty(player: IPlayer): boolean {
 }
 
 export function replaceEdited(items: IPlayer[], player: IPlayer) {
+    let hasChange = false;
     const newItems = [...items];
     const index = items.findIndex(({id}) => id === player.id);
     if (index === -1) {
         newItems.push(player);
+        hasChange = true;
     } else {
-        newItems[index] = player;
+        hasChange = newItems[index].text !== player.text;
+        if (hasChange) {
+            newItems[index] = player;
+        }
     }
-    return newItems;
+    return hasChange ? newItems : items;
 }
 
-export function focusNext(items: IPlayer[], item: IPlayer): void {
-    const index = items.findIndex(({id}) => id === item.id);
-    if (index !== -1 && index + 1 < items.length) {
-        const id = `#input-${items[index + 1].id}`;
-        const input = document.querySelector(id) as HTMLInputElement;
-        input?.focus();
-    }
+export function focusNext(itemsContainer: string, item: IPlayer): void {
+    setTimeout(() => {
+        const items = document.querySelectorAll(`#${itemsContainer} input`) || [];
+        const index = [...items as unknown as Array<HTMLInputElement>].findIndex(({id}) => id === `input-${item.id}`);
+        if (index !== -1 && index + 1 < items.length) {
+            const input = items[index + 1] as HTMLInputElement;
+            input?.focus();
+        }
+    }, 20);
 }
