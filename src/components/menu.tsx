@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Menu() {
     return (
-        <div id="lefColumn">
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} >
+        <div className="menu tw-flex-1">
+            <div className="tw-flex tw-justify-center tw-items-center">
                 <input type="checkbox" id="checkbox1" />
                 <label htmlFor="checkbox1" style={{ marginLeft: "8px" }}>На выбивание</label>
             </div>

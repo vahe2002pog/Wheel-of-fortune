@@ -43,14 +43,12 @@ export default function Spinner(props: IProps) {
     }, [angle, items]);
 
     return (
-        <div className="spinner tw-flex tw-flex-col tw-h-full tw-w-full">
-            <div className="winder-field tw-truncate tw-w-full">
+        <div className="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
+            <div className="winner-field tw-truncate tw-w-full tw-flex-shrink-0">
                 {winnerName}
             </div>
-            <div className="tw-relative">
-                <div style={{transform: `rotate(${angle}deg)`}}>
-                    <SpinnerBackSvg className="spinner-back" items={items} />
-                </div>
+            <div className="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden" style={{'--spinner-angle': `${angle}deg`} as React.CSSProperties}>
+                <SpinnerBackSvg className="spinner-back tw-absolute tw-h-full tw-w-full" items={items} />
                 <SpinnerFrontSvg className="spinner-front tw-absolute tw-h-full tw-w-full" runSpinner={runSpinner} />
             </div>
         </div>

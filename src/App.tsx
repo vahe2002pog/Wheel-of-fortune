@@ -29,7 +29,7 @@ export default function App() {
     return (
         <>
             <Header />
-            <main>
+            <main className='tw-flex tw-flex-1 tw-w-full tw-items-center'>
                 <Menu />
                 <Spinner
                     spinnerRunning={spinnerRunning}

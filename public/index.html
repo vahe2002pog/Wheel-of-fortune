@@ -23,19 +23,19 @@
     <meta name="keywords" content="исключения вариантов">
 </head>
 
-<body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root">
-        <header><span>Фортуна</span>
+<body class="tw-h-full tw-w-full">
+    <div id="root" class="tw-h-full tw-flex tw-flex-col">
+        <header class="tw-flex"><span>Фортуна</span>
             <div class="links-wrapper"><img src="/static/media/paste.cf5459828d3112cc806511b3f0c37325.svg"
-                    class="svg-icon" alt="paste icon" width="24px" height="24px" title="Вставить текст из буфера"><img
-                    src="/static/media/copy.715c9ca3fc85e120659038a4b7d5726c.svg" class="svg-icon" alt="copy icon"
-                    width="24px" height="24px" title="Скопировать ссылку"></div>
+                    class="svg-icon tw-cursor-pointer" alt="paste icon" width="24px" height="24px"
+                    title="Вставить текст из буфера"><img src="/static/media/copy.715c9ca3fc85e120659038a4b7d5726c.svg"
+                    class="svg-icon tw-cursor-pointer" alt="copy icon" width="24px" height="24px"
+                    title="Скопировать ссылку"></div>
         </header>
-        <main>
-            <div id="lefColumn">
-                <div style="display: flex; justify-content: center; align-items: center;"><input type="checkbox"
-                        id="checkbox1"><label for="checkbox1" style="margin-left: 8px;">На выбивание</label></div>
+        <main class="tw-flex tw-flex-1 tw-w-full tw-items-center">
+            <div class="menu tw-flex-1">
+                <div class="tw-flex tw-justify-center tw-items-center"><input type="checkbox" id="checkbox1"><label
+                        for="checkbox1" style="margin-left: 8px;">На выбивание</label></div>
                 <h2 id="title">Игроки</h2>
                 <div id="playerList">
                     <div class="playerItem" id="playerItem0"><input id="text0" class="nicksInput" maxlength="50"
@@ -44,25 +44,25 @@
                 <h2>Выбившие</h2>
                 <div id="destroyedList"></div>
             </div>
-            <div class="spinner tw-flex tw-flex-col tw-h-full tw-w-full">
-                <div class="winder-field tw-truncate tw-w-full"></div>
-                <div class="tw-relative">
-                    <div style="transform: rotate(0deg);"><svg class="spinner-back" viewBox="0 0 240 240" version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" style="user-select: none;">
-                            <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" stroke-width="2"></circle>
-                        </svg></div><svg class="spinner-front tw-absolute tw-h-full tw-w-full" viewBox="0 0 240 240"
-                        version="1.1" xmlns="http://www.w3.org/2000/svg" style="user-select: none;">
+            <div class="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
+                <div class="winner-field tw-truncate tw-w-full tw-flex-shrink-0"></div>
+                <div class="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden"
+                    style="--spinner-angle: 0deg;"><svg
+                        class="spinner-back tw-absolute tw-h-full tw-w-full" viewBox="0 0 240 240" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" style="user-select: none;">
+                        <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" stroke-width="2"></circle>
+                    </svg><svg class="spinner-front tw-absolute tw-h-full tw-w-full" viewBox="0 0 240 240" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" style="user-select: none;">
                         <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" stroke-width="1"></circle>
                         <g cursor="pointer">
-                            <circle fill="orange" cx="120" cy="120" r="20" stroke="#3a3a3a" stroke-width="1"></circle>
-                            <text x="103" y="124" stroke="#fff" stroke-width="3" font-size="16px"
+                            <circle fill="orange" cx="120" cy="120" r="20" stroke="#3a3a3a" stroke-width="1"></circle><text
+                                x="103" y="124" stroke="#fff" stroke-width="3" font-size="16px"
                                 font-family="Comic Sans MS">Spin</text><text x="103" y="124" font-size="16px"
                                 font-family="Comic Sans MS">Spin</text>
                         </g>
                         <polygon points="110,0 130,0 120,30"
                             style="fill: orange; stroke: rgb(58, 58, 58); stroke-width: 1;"></polygon>
-                    </svg>
-                </div>
+                    </svg></div>
             </div>
         </main>
     </div>

@@ -8,89 +8,19 @@ html {
   height: 100%;
 }
 
-*:focus {
-  outline: none;
-}
-
 body {
-  display: flex;
-  height: 100%;
-  width: 100%;
   background-color: #1E1E1E;
   color: #e6e6e6;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   overflow: hidden;
-  flex-direction: column;
 }
 
-header {
-  padding: 20px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 25px;
+*:focus {
+  outline: none;
 }
 
 main {
-  display: flex;
-  flex: 1;
-  width: 100%;
-  align-items: center;
   min-height: 0;
-}
-
-.keyboard-opened #centerColumn {
-  display: none;
-}
-
-#centerColumn {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-}
-
-#lefColumn {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  max-height: 100%;
-  max-width: 400px;
-  overflow: hidden auto;
-  padding: 12px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-#canvases {
-  display: flex;
-  flex: 1;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  max-width: 90vh;
-}
-
-
-
-#spin {
-  position: absolute;
-  cursor: pointer;
-}
-
-#winnerField {
-  margin-bottom: 10px;
-  align-self: center;
-  text-align: center;
-  height: 38px;
-  border-radius: 20px;
-  font-size: 25pt;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  font-weight: bold;
-  margin-left: 10px;
-  width: 200px;
-  word-break: break-word;
 }
 
 input {
@@ -98,119 +28,7 @@ input {
   border-radius: 20px;
   min-height: 30px;
   padding: 0 10px;
-  display: inherit;
   color: black;
-  position: relative;
-  z-index: 2;
-}
-
-.is-hover-devise input:hover:not(:disabled)+.inputButton {
-  visibility: visible;
-}
-
-.is-hover-devise input:focus:not(:disabled)+.inputButton {
-  visibility: visible;
-}
-
-.is-hover-devise .inputButton:hover {
-  visibility: visible;
-}
-
-.is-hover-devise .inputButton {
-  visibility: hidden;
-}
-
-.inputButton {
-  height: 36px;
-  width: 36px;
-  margin-left: -40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-  z-index: 9;
-  top: 0;
-  left: 0;
-  position: relative;
-}
-
-#playerList .playerItem:last-child .inputButton {
-  visibility: hidden;
-}
-
-.cross {
-  background-image: url("/images/cross.png");
-}
-
-.arrow {
-  background-image: url("/images/arrow.png");
-}
-
-.playerItem {
-  display: flex;
-  width: 100%;
-}
-
-#playerList {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-}
-
-.nicksInput {
-  width: 100%;
-}
-
-#destroyedList {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  max-width: 400px;
-  width: 100%;
-}
-
-#destroyedList input::-webkit-search-cancel-button {
-  -webkit-appearance: unset;
-  width: 12px;
-  height: 12px;
-  /* background-image: url("/images/ico.png"); */
-  background-size: 12px 12px;
-}
-
-@media (max-width: 1250px) {
-  #winnerField {
-      width: 150px;
-  }
-}
-
-/* vertical orientation */
-.vertical main {
-  flex-direction: column;
-}
-
-.vertical #centerColumn {
-  width: 100%;
-}
-
-.vertical #winnerField {
-  font-size: 4vw;
-  width: 100%;
-}
-
-.vertical #destroyedList {
-  margin-bottom: auto;
-  width: 100%;
-  max-width: 100%
-}
-
-.vertical #lefColumn {
-  margin-bottom: auto;
-}
-
-.vertical #div1 {
-  flex-direction: column-reverse;
 }
 
 
@@ -222,24 +40,6 @@ input {
   border-radius: 5px;
   background-color: #ffffff49;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
-/* links */
-.svg-icon {
-  fill: #fff;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.svg-icon:hover {
-  fill: #bdbdbd;
-}
-
-.links-wrapper {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  z-index: 1;
 }
 
 /* past dialog */
@@ -287,12 +87,56 @@ input {
 
 
 /* refactored */
-.winder-field {
-  text-align: center;
-  padding-bottom: 10px;
+
+/* Header */
+header {
+  padding: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 25px;
 }
 
+.links-wrapper {
+  margin-left: auto;
+}
+
+.svg-icon {
+  margin-left: 10px;
+}
+
+/* /Header */
+
+/* Spinner */
+.winner-field {
+  text-align: center;
+  padding: 0 20px 10px;
+  font-size: 25px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  height: 45px;
+}
+
+.spinner-wrapper {
+  min-height: 0;
+  min-width: 0;
+}
+
+.spinner-back {
+  transform: rotate(var(--spinner-angle, 0));
+}
+
+.spinner-back,
 .spinner-front {
   top: 0;
   left: 0;
+}
+/* /Spinner */
+
+@media (orientation: portrait) {
+  main {
+    flex-direction: column;
+  }
+  .spinner {
+    max-height: 50vh;
+  }
 }
