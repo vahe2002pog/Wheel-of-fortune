@@ -45,5 +45,5 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
         res.push(`des=${des}`);
     }
 
-    return res.length ? `?${res.join('&')}` : '';
+    return res.length ? `?${res.join('&')}` : '/';
 }

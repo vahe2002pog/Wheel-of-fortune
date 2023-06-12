@@ -1,4 +1,4 @@
-import React, { useCallback, ChangeEvent } from "react";
+import React, { useCallback, ChangeEvent, KeyboardEvent } from "react";
 import { debounce } from "../helpers/debounce";
 
 interface IProps {
@@ -9,26 +9,45 @@ interface IProps {
     actionIcon?: string;
     actionTitle?: string;
     onActionClick?: (item: IPlayer) => void;
+    onComplete: (item: IPlayer) => void;
 }
 
 export default function Editor(props: IProps) {
 
-    const onChange = useCallback(debounce((event: ChangeEvent<HTMLInputElement>) => {
-        props.onChange({
-            ...props.item,
+    const { item, onChange: onChangeProps, onComplete } = props;
+
+    const changeText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        onChangeProps({
+            ...item,
             text: event.target.value
         });
-    }, 500), []);
+    }, [onChangeProps, item]);
+
+    const onChangeDebounce = useCallback(debounce(changeText, 500), [changeText]);
+
+    const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            const changeEvent = event as unknown as ChangeEvent<HTMLInputElement>;
+            changeText(changeEvent);
+            onComplete({
+                ...item,
+                text: changeEvent.target.value
+            });
+            return false;
+        }
+    }, [item, changeText, onComplete]);
 
     return (
         <div className="player-item tw-w-full tw-relative" >
             <input
+                id={`input-${props.item.id}`}
                 className="editor-input tw-w-full"
                 maxLength={50}
                 type="text"
                 defaultValue={props.item.text}
                 disabled={props.disabled}
-                onChange={onChange}
+                onChange={onChangeDebounce}
+                onKeyDown={onKeyDown}
             />
 
             {
@@ -41,7 +60,7 @@ export default function Editor(props: IProps) {
                         height="16px"
                         title={props.actionTitle}
                         onClick={() => props.onActionClick?.(props.item)}
-                        /> :
+                    /> :
                     null
             }
 

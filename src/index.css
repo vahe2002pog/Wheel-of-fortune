@@ -20,27 +20,6 @@ body {
   overflow: hidden;
 }
 
-*:focus {
-  outline: none;
-}
-
-main {
-  min-height: 0;
-}
-
-
-
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  background-color: #ffffff49;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-}
-
 /* past dialog */
 .past-dialog {
   left: 50%;
@@ -84,9 +63,7 @@ main {
   cursor: pointer;
 }
 
-
 /* refactored */
-
 /* Header */
 header {
   padding: 20px;
@@ -104,8 +81,32 @@ header {
 }
 
 /* /Header */
-
+/* Content */
+main {
+  min-height: 0;
+}
+/* /Content */
+/* Menu */
+.menu {
+  padding: 20px;
+  max-height: 100%;
+}
+/* /Menu */
 /* Editor */
+.menu-caption {
+  padding: 10px 0 4px;
+}
+
+.menu-caption,
+.player-item {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.cursor-devise .editor-input:focus + .editor-action,
+.cursor-devise .player-item:hover .editor-action {
+  visibility: visible;
+}
 
 .editor-input {
   border: 1px solid #3a3a3a;
@@ -116,11 +117,18 @@ header {
   margin-bottom: 2px;
 }
 
+.editor-input:focus {
+  outline: none;
+}
+
+.cursor-devise .editor-action {
+  visibility: hidden;
+}
+
 .editor-action {
   top: 8px;
   right: 8px;
 }
-
 
 /*/ Editor */
 /* Spinner */
@@ -156,4 +164,17 @@ header {
   .spinner {
     max-height: 50vh;
   }
+  .menu {
+    width: 100%;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: #ffffff49;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }

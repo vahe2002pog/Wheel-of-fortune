@@ -9,6 +9,7 @@ interface IProps {
     actionIcon?: string;
     actionTitle?: string;
     onActionClick?: (item: IPlayer) => void;
+    onComplete: (item: IPlayer) => void;
 }
 
 export default function List(props: IProps) {
@@ -26,6 +27,7 @@ export default function List(props: IProps) {
                             actionIcon={props.actionIcon}
                             actionTitle={props.actionTitle}
                             onActionClick={props.onActionClick}
+                            onComplete={props.onComplete}
                         />
                     );
                 })

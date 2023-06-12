@@ -33,21 +33,19 @@
                     title="Скопировать ссылку"></div>
         </header>
         <main class="tw-flex tw-flex-1 tw-w-full tw-items-center">
-            <div class="menu tw-flex-1">
-                <div class="tw-flex tw-justify-center tw-items-center"><input type="checkbox" id="checkbox1"><label
-                        for="checkbox1" style="margin-left: 8px;">На выбивание</label></div>
-                <h2 id="title">Игроки</h2>
-                <div id="playerList">
-                    <div class="playerItem" id="playerItem0"><input id="text0" class="nicksInput" maxlength="50"
-                            type="text"><span class="inputButton cross"></span></div>
+            <div class="menu tw-flex-1 tw-overflow-x-scroll">
+                <div class="tw-flex tw-justify-center tw-items-center"><input type="checkbox" id=":r1:" checked=""><label
+                        for=":r1:" style="margin-left: 8px;">На выбивание</label></div>
+                <h2 class="menu-caption">Игроки</h2>
+                <div class="player-list">
+                    <div class="player-item tw-w-full tw-relative"><input class="editor-input tw-w-full" maxlength="50"
+                            type="text" value=""></div>
                 </div>
-                <h2>Выбившие</h2>
-                <div id="destroyedList"></div>
+                <div class="player-list"></div>
             </div>
             <div class="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
                 <div class="winner-field tw-truncate tw-w-full tw-flex-shrink-0"></div>
-                <div class="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden"
-                    style="--spinner-angle: 0deg;"><svg
+                <div class="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden" style="--spinner-angle: 0deg;"><svg
                         class="spinner-back tw-absolute tw-h-full tw-w-full" viewBox="0 0 240 240" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" style="user-select: none;">
                         <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" stroke-width="2"></circle>

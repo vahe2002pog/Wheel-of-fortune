@@ -5,17 +5,7 @@ import Header from './components/header';
 import Menu from './components/menu';
 import Spinner from './components/spinner';
 import { convertToUrl, readFromParams } from './helpers/urlParams';
-
-function edit(items: IPlayer[], player: IPlayer) {
-    const newItems = [...items];
-    const index = items.findIndex(({id}) => id === player.id);
-    if (index === -1) {
-        newItems.push(player);
-    } else {
-        newItems[index] = player;
-    }
-    return newItems;
-}
+import { replaceEdited } from './helpers/player';
 
 const initData = readFromParams();
 
@@ -28,7 +18,7 @@ export default function App() {
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), []);
     const onPlayerChange = useCallback((player: IPlayer) => {
-        setPlayers((items) => edit(items, player));
+        setPlayers((items) => replaceEdited(items, player));
     }, []);
 
     const onRemovePlayer = useCallback((player: IPlayer) => {
@@ -36,7 +26,7 @@ export default function App() {
     }, []);
 
     const onDefeatPlayerChange = useCallback((player: IPlayer) => {
-        setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
+        setDefeatPlayers((items) => replaceEdited(items, player));
     }, []);
 
     const onRemoveDefeatPlayer = useCallback((player: IPlayer) => {

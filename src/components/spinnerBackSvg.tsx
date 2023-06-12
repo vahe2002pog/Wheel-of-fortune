@@ -15,7 +15,7 @@ function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number,
 
     return (
         <>
-            <text {...props} stroke="#fff" strokeWidth="3" >{displayText}</text>
+            <text {...props} stroke="#fff" strokeWidth="1" >{displayText}</text>
             <text {...props}>{displayText}</text>
         </>
     );
