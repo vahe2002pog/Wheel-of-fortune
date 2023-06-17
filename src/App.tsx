@@ -7,15 +7,22 @@ import Spinner from './components/spinner';
 import { convertToUrl, readFromParams } from './helpers/urlParams';
 import { createPlayer, replaceEdited } from './helpers/player';
 import { copyLink, getPasteData } from './helpers/clipboard';
+import Message from './components/message';
 
 const initData = readFromParams();
 
 export default function App() {
 
     const [spinnerRunning, setSpinnerRunning] = useState(false);
+    const [message, setMessage] = useState('');
     const [defeatMode, setDefeatMode] = useState(initData.defeatMode);
     const [players, setPlayers] = useState(initData.players);
     const [defeatPlayers, setDefeatPlayers] = useState(initData.defeatPlayers);
+
+    const showMessage = useCallback((msg: string) => {
+        setMessage(msg);
+        setTimeout(setMessage, 3000, '');
+    }, [setMessage])
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), []);
     const onPlayerChange = useCallback((player: IPlayer) => {
@@ -56,16 +63,20 @@ export default function App() {
     }, [players, defeatPlayers, defeatMode]);
 
     const onCopy = useCallback(() => {
-        copyLink(players, defeatPlayers, defeatMode);
-    }, [players, defeatPlayers, defeatMode]);
+        copyLink(players, defeatPlayers, defeatMode).then(() => {
+            showMessage('Ссылка скопирована');
+        }).catch(() => {
+            showMessage('Не удалось скопировать ссылку');
+        });
+    }, [players, defeatPlayers, defeatMode, showMessage]);
 
     const onPaste = useCallback(() => {
         getPasteData().then((items) => {
-            if (items.length) {
-                setPlayers(items.map((text) => createPlayer({text})));
-            }
+            setPlayers(items.map((text) => createPlayer({text})));
+        }).catch(() => {
+            showMessage('Не удалось вставить из буфера');
         });
-    }, []);
+    }, [showMessage]);
 
     return (
         <>
@@ -90,6 +101,7 @@ export default function App() {
                     stopSpinner={stopSpinner}
                 />
             </main>
+            { message ? <Message text={message} /> : null}
         </>
     );
 }

@@ -1,25 +1,19 @@
 import { convertToUrl } from "./urlParams";
 
-export function copyLink(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): void {
+export function copyLink(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): Promise<void> {
     const hostname = `${window.location.protocol}//${window.location.hostname}`;
     const params = convertToUrl(players, defeatPlayers, defeatMode);
-    copyTextToClipboard(`${hostname}/${params}`);
+    return copyTextToClipboard(`${hostname}/${params}`);
 }
 
-function copyTextToClipboard(text: string): Promise<boolean> {
+function copyTextToClipboard(text: string): Promise<void> {
     if (!navigator.clipboard) {
         return fallbackCopyTextToClipboard(text);
     }
-    return navigator.clipboard.writeText(text).then(() => {
-        console.log('Async: Copying to clipboard was successful!');
-        return true;
-    }, function(err) {
-        console.error('Async: Could not copy text: ', err);
-        return false;
-    });
+    return navigator.clipboard.writeText(text);
 }
 
-async function fallbackCopyTextToClipboard(text: string): Promise<boolean> {
+async function fallbackCopyTextToClipboard(text: string): Promise<void> {
     const textArea = document.createElement('textarea');
     textArea.value = text;
 
@@ -32,15 +26,12 @@ async function fallbackCopyTextToClipboard(text: string): Promise<boolean> {
     textArea.focus();
     textArea.select();
 
-    return new Promise((resolve: (val: boolean) => void) => {
-        try {
-            const successful = document.execCommand('copy');
-            const msg = successful ? 'successful' : 'unsuccessful';
-            console.log('Fallback: Copying text command was ' + msg);
-            resolve(true);
-        } catch (err) {
-            console.error('Fallback: Oops, unable to copy', err);
-            resolve(false);
+    return new Promise<void>((resolve, reject) => {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            resolve(undefined);
+        } else {
+            reject();
         }
     }).finally(() => {
         document.body.removeChild(textArea);
@@ -73,9 +64,9 @@ export function getPasteData(): Promise<string[]> {
 
     return pastFromBuffer().then((pastString) => {
         if (!pastString) {
-            return [];
+            throw new Error('Empty buffer');
         }
-    
+
         const clear = (items: string[]) => {
             return items.map((item) => {
                 return item.trim();
@@ -100,13 +91,14 @@ export function getPasteData(): Promise<string[]> {
 
 
             if (pastItems.length > 1) {
-                return new Promise((resolve) => {
+                return new Promise((resolve, reject) => {
                     pastDialog.showModal();
                     const close = () => {
                         yesBtn.removeEventListener('click', onYes);
                         noBtn.removeEventListener('click', onNo);
                         pastDialog.close();
                     }
+
                     const onYes = () => {
                         close();
                         resolve(pastItems);
@@ -114,14 +106,15 @@ export function getPasteData(): Promise<string[]> {
 
                     const onNo = () => {
                         close();
-                        resolve([]);
+                        reject('Cancel past');
                     };
                     yesBtn.addEventListener('click', onYes);
                     noBtn.addEventListener('click', onNo);
 
                 });
             }
+            throw new Error('One item in buffer');
         }
-        return [];
+        throw new Error('Dialog not found');
     });
 }
