@@ -166,6 +166,23 @@ main {
   border-radius: 20px 20px 4px;
 }
 /* /Message */
+/* Keyboard */
+.keyboard-opened {
+  background-color: #222;
+}
+
+.keyboard-opened .winner-field {
+  display: none;
+}
+
+.keyboard-opened .spinner {
+  width: 50px;
+  max-height: 50px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+/* /Keyboard */
 
 @media (orientation: portrait) {
   main {

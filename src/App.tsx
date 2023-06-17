@@ -8,6 +8,7 @@ import { convertToUrl, readFromParams } from './helpers/urlParams';
 import { createPlayer, replaceEdited } from './helpers/player';
 import { copyLink, getPasteData } from './helpers/clipboard';
 import Message from './components/message';
+import { useKeyboardOpen } from './hook/keyboard';
 
 const initData = readFromParams();
 
@@ -18,11 +19,12 @@ export default function App() {
     const [defeatMode, setDefeatMode] = useState(initData.defeatMode);
     const [players, setPlayers] = useState(initData.players);
     const [defeatPlayers, setDefeatPlayers] = useState(initData.defeatPlayers);
+    const isKeyboardOpen = useKeyboardOpen();
 
     const showMessage = useCallback((msg: string) => {
         setMessage(msg);
         setTimeout(setMessage, 3000, '');
-    }, [setMessage])
+    }, [setMessage]);
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), []);
     const onPlayerChange = useCallback((player: IPlayer) => {
@@ -81,7 +83,7 @@ export default function App() {
     return (
         <>
             <Header onCopy={onCopy} onPaste={onPaste}/>
-            <main className='tw-flex tw-flex-1 tw-w-full tw-items-center'>
+            <main className={`tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ${isKeyboardOpen ? 'keyboard-opened' : ''}`}>
                 <Menu
                     players={players}
                     defeatPlayers={defeatPlayers}

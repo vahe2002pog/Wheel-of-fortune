@@ -58,7 +58,7 @@ export default memo(function SpinnerBackSvg({items, className, style}: IProps) {
                     );
                 })
             }
-            <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" strokeWidth="2"/>
+            <circle fill={ items?.length ? '#0000' : '#555'} cx="120" cy="120" r="110" stroke="#3a3a3a" strokeWidth="2"/>
         </svg>
     );
 });
