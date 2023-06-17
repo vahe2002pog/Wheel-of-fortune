@@ -146,10 +146,14 @@ main {
   min-width: 0;
 }
 
+.spinner {
+  right: 10px;
+  top: 50%;
+}
+
 .spinner-back {
   transform: rotate(var(--spinner-angle, 0));
 }
-
 .spinner-back,
 .spinner-front {
   top: 0;
@@ -181,6 +185,8 @@ main {
   position: absolute;
   right: 10px;
   top: 10px;
+  transition: all 0.5s;
+  pointer-events: none;
 }
 /* /Keyboard */
 

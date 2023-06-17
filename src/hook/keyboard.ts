@@ -1,45 +1,39 @@
 import { useState, useEffect } from 'react'
 import { isTouchDevise } from '../helpers/utils';
+import { debounce } from '../helpers/debounce';
 export function useKeyboardOpen() {
 
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
 
-        function detectBlur(event: Event) {
-            activeElementChanged();
-        }
+        const setOpenDebounce = debounce((val: boolean) => {
+            setIsOpen(val);
+        }, 50);
 
-        function activeElementChanged() {
+        const activeElementChanged = () => {
             let element = document.activeElement as HTMLInputElement;
-
-            if (element?.tagName === 'INPUT' && element?.type === 'text') {
-                setIsOpen(true);
-                console.log('keyboardOpened');
-            } else {
-                setIsOpen(false);
-                console.log('keyboardClosed');
-            }
-        }
-
-        function detectFocus(event: Event) {
-            activeElementChanged();
+            setOpenDebounce(element?.tagName === 'INPUT' && element?.type === 'text');
         }
 
         if (isTouchDevise()) {
-            // @ts-ignore
-            window.addEventListener ? window.addEventListener('focus', detectFocus, true) : window.attachEvent('onfocusout', detectFocus);
-            // @ts-ignore
-            window.addEventListener ? window.addEventListener('blur', detectBlur, true) : window.attachEvent('onblur', detectBlur);
+            window.addEventListener ? window.addEventListener('focus', activeElementChanged, true) :
+                // @ts-ignore
+                window.attachEvent('onfocusout', activeElementChanged);
+            window.addEventListener ? window.addEventListener('blur', activeElementChanged, true) :
+                // @ts-ignore
+                window.attachEvent('onblur', activeElementChanged);
 
             return () => {
-                // @ts-ignore
-                window.removeEventListener ? window.removeEventListener('focus', detectFocus, true) : window.detachEvent('onfocusout', detectFocus);
-                // @ts-ignore
-                window.removeEventListener ? window.removeEventListener('blur', detectBlur, true) : window.detachEvent('onblur', detectBlur);
+                window.removeEventListener ? window.removeEventListener('focus', activeElementChanged, true) :
+                    // @ts-ignore
+                    window.detachEvent('onfocusout', activeElementChanged);
+                window.removeEventListener ? window.removeEventListener('blur', activeElementChanged, true) :
+                    // @ts-ignore
+                    window.detachEvent('onblur', activeElementChanged);
             };
         }
-    }, [])
+    }, []);
 
     return isOpen;
 }
