@@ -11,8 +11,23 @@ export function useHistoryStatePlayer(paramName: string): [IPlayer[], React.Disp
     useEffect(() => {
 
         const onChange = (event: PopStateEvent) => {
-            const newItems = window.history.state?.[paramName] || readPlayerFromParams(paramName);
-            setPlayer(newItems);
+            let newItems = window.history.state?.[paramName];
+
+            if (newItems) {
+                setPlayer(newItems);
+            } else {
+                newItems = readPlayerFromParams(paramName);
+                setPlayer((items) => {
+                    if (items.length !== newItems.length) {
+                        return newItems;
+                    }
+                    const hasChange = items.some((item, index) => item.text !== newItems[index].text);
+                    if (hasChange) {
+                        return newItems;
+                    }
+                    return items;
+                });
+            }
         };
 
         window.addEventListener('popstate', onChange);

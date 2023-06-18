@@ -1,3 +1,4 @@
+import { collector } from "./collector";
 import { createPlayer } from "./player";
 
 function getParameterByName(name: string): string {
@@ -41,13 +42,13 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
     return res.length ? `?${res.join('&')}` : '/';
 }
 
-export function updateUrlPartial({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void {
+export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void => {
     const players = list || readPlayerFromParams('list');
     const defeatPlayers = des || readPlayerFromParams('des');
     const defeatMode = checked ?? readDefeatModeFromParams();
     const newState = convertToUrl(players, defeatPlayers, defeatMode);
     const hasChange = window.location.search !== newState;
     if (hasChange) {
-        window.history.pushState({...(window.history.state || {}), list, des}, '', newState);
+        window.history.pushState({ list, des }, '', newState);
     }
-}
+}, 40);
