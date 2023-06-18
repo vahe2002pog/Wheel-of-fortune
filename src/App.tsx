@@ -1,24 +1,22 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import './styles/tailwind.min.css';
 import Header from './components/header';
 import Menu from './components/menu';
 import Spinner from './components/spinner';
-import { convertToUrl, readFromParams } from './helpers/urlParams';
 import { createPlayer, replaceEdited } from './helpers/player';
-import { copyLink, getPasteData } from './helpers/clipboard';
+import { copyLink, confirmDialog, pastFromBuffer, splitText } from './helpers/clipboard';
 import Message from './components/message';
 import { useKeyboardOpen } from './hook/keyboard';
-
-const initData = readFromParams();
+import { useHistoryStateDefeatMode, useHistoryStatePlayer } from './hook/historyState';
 
 export default function App() {
 
     const [spinnerRunning, setSpinnerRunning] = useState(false);
     const [message, setMessage] = useState('');
-    const [defeatMode, setDefeatMode] = useState(initData.defeatMode);
-    const [players, setPlayers] = useState(initData.players);
-    const [defeatPlayers, setDefeatPlayers] = useState(initData.defeatPlayers);
+    const [defeatMode, setDefeatMode] = useHistoryStateDefeatMode();
+    const [players, setPlayers] = useHistoryStatePlayer('list');
+    const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
     const isKeyboardOpen = useKeyboardOpen();
 
     const showMessage = useCallback((msg: string) => {
@@ -26,23 +24,23 @@ export default function App() {
         setTimeout(setMessage, 3000, '');
     }, [setMessage]);
 
-    const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), []);
+    const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), [setDefeatMode]);
     const onPlayerChange = useCallback((player: IPlayer) => {
         setPlayers((items) => replaceEdited(items, player));
-    }, []);
+    }, [setPlayers]);
 
     const onRemovePlayer = useCallback((player: IPlayer) => {
         setPlayers((items) => items.filter(({id}) => id !== player.id));
-    }, []);
+    }, [setPlayers]);
 
     const onDefeatPlayerChange = useCallback((player: IPlayer) => {
         setDefeatPlayers((items) => replaceEdited(items, player));
-    }, []);
+    }, [setDefeatPlayers]);
 
     const onRemoveDefeatPlayer = useCallback((player: IPlayer) => {
         setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
         setPlayers((items) => [player, ...items]);
-    }, []);
+    }, [setPlayers, setDefeatPlayers]);
 
     const runSpinner = useCallback(() => setSpinnerRunning(true), [setSpinnerRunning]);
     const stopSpinner = useCallback((winner: IPlayer) => {
@@ -56,13 +54,7 @@ export default function App() {
             setPlayers((items) => items.filter(({id}) => id !== winner.id));
             setDefeatPlayers((items) => [winner, ...items]);
         }
-    }, [setSpinnerRunning, defeatMode]);
-
-    useEffect(() => {
-        try {
-            window.history.replaceState('', '', convertToUrl(players, defeatPlayers, defeatMode));
-        } catch (error) {}
-    }, [players, defeatPlayers, defeatMode]);
+    }, [setSpinnerRunning, defeatMode, setPlayers, setDefeatPlayers]);
 
     const onCopy = useCallback(() => {
         copyLink(players, defeatPlayers, defeatMode).then(() => {
@@ -72,13 +64,24 @@ export default function App() {
         });
     }, [players, defeatPlayers, defeatMode, showMessage]);
 
-    const onPaste = useCallback(() => {
-        getPasteData().then((items) => {
-            setPlayers(items.map((text) => createPlayer({text})));
+    const onPaste = useCallback((player?: IPlayer, str?: string) => {
+        const inputData = str ? splitText(str, false) : [];
+        const dataResolver = str ? confirmDialog(inputData, true) : pastFromBuffer().then(splitText).then(confirmDialog);
+        Promise.resolve(dataResolver).then((items) => {
+            if (str) {
+                setPlayers((cur) => [...cur, ...items.map((text) => createPlayer({text}))]);
+            } else {
+                setPlayers(items.map((text) => createPlayer({text})));
+            }
         }).catch(() => {
-            showMessage('Не удалось вставить из буфера');
+            if (!str) {
+                showMessage('Не удалось вставить из буфера');
+            } else if (player) {
+                setPlayers((items) => replaceEdited(items, {...player, text: player.text + str}));
+            }
         });
-    }, [showMessage]);
+        return inputData.length > 1;
+    }, [showMessage, setPlayers]);
 
     return (
         <>
@@ -94,6 +97,7 @@ export default function App() {
                     onDefeatPlayerChange={onDefeatPlayerChange}
                     onRemovePlayer={onRemovePlayer}
                     onRemoveDefeatPlayer={onRemoveDefeatPlayer}
+                    onPaste={onPaste}
                 />
 
                 <Spinner

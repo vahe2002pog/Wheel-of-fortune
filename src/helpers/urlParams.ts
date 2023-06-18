@@ -9,24 +9,17 @@ function getParameterByName(name: string): string {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-export function readFromParams() {
-    const playersStr = getParameterByName('list');
+export function readPlayerFromParams(paramName: string): IPlayer[] {
+    const playersStr = getParameterByName(paramName);
 
-    const players = playersStr !== null ? playersStr.split('$_$').filter(Boolean).map((text) => {
+    return playersStr !== null ? playersStr.split('$_$').filter(Boolean).map((text) => {
         return createPlayer({text});
     }) : [];
+}
 
-    players.push(createPlayer());
-
-    const desPlayersStr = getParameterByName('des');
-    const defeatPlayers = desPlayersStr !== null ? desPlayersStr.split('$_$').filter(Boolean).map((text) => {
-        return createPlayer({text});
-    }) : [];
-
+export function readDefeatModeFromParams(): boolean {
     const checkedParams = getParameterByName('checked');
-    const defeatMode = checkedParams ? checkedParams === 'true' : true;
-
-    return { players, defeatPlayers, defeatMode };
+    return checkedParams ? checkedParams === 'true' : true;
 }
 
 export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): string {
@@ -46,4 +39,15 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
     }
 
     return res.length ? `?${res.join('&')}` : '/';
+}
+
+export function updateUrlPartial({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void {
+    const players = list || readPlayerFromParams('list');
+    const defeatPlayers = des || readPlayerFromParams('des');
+    const defeatMode = checked ?? readDefeatModeFromParams();
+    const newState = convertToUrl(players, defeatPlayers, defeatMode);
+    const hasChange = window.location.search !== newState;
+    if (hasChange) {
+        window.history.pushState({...(window.history.state || {}), list, des}, '', newState);
+    }
 }

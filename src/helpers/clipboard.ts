@@ -38,7 +38,7 @@ async function fallbackCopyTextToClipboard(text: string): Promise<void> {
     });
 }
 
-function pastFromBuffer(): Promise<string> {
+export function pastFromBuffer(): Promise<string> {
     if (navigator.clipboard) {
         return navigator.clipboard.readText();
     } else {
@@ -60,61 +60,65 @@ function pastFromBuffer(): Promise<string> {
     }
 }
 
-export function getPasteData(): Promise<string[]> {
+export async function confirmDialog(pastItems: string[], fromInput?: boolean): Promise<string[]> {
 
-    return pastFromBuffer().then((pastString) => {
-        if (!pastString) {
-            throw new Error('Empty buffer');
-        }
+    const dialogTitle = document.querySelector('#dialogTitle');
+    const pastList = document.querySelector('#pastList');
+    const pastDialog = document.querySelector('#pastDialog') as HTMLDialogElement;
+    const yesBtn = document.querySelector('#paste-btn-yes') as HTMLButtonElement;
+    const noBtn = document.querySelector('#paste-btn-no') as HTMLButtonElement;
 
-        const clear = (items: string[]) => {
-            return items.map((item) => {
-                return item.trim();
-            }).filter(Boolean);
-        };
+    if (pastList && pastDialog && yesBtn && noBtn && dialogTitle) {
 
-        const pastItems = clear(pastString.search(/\n/) !== -1 ? pastString.split(/\n/) : pastString.split(/\s/));
+        dialogTitle.textContent = fromInput ? 'Вставить элементы?' : 'Заменить элементы?';
+        pastList.innerHTML = '';
+        pastItems.forEach((item) => {
+            const div = document.createElement('div');
+            div.classList.add('past-item');
+            div.textContent = item;
+            pastList.append(div);
+        });
 
-        const pastList = document.querySelector('#pastList');
-        const pastDialog = document.querySelector('#pastDialog') as HTMLDialogElement;
-        const yesBtn = document.querySelector('#paste-btn-yes') as HTMLButtonElement;
-        const noBtn = document.querySelector('#paste-btn-no') as HTMLButtonElement;
+        if (pastItems.length > 1) {
+            return new Promise((resolve, reject) => {
+                pastDialog.showModal();
+                const close = () => {
+                    yesBtn.removeEventListener('click', onYes);
+                    noBtn.removeEventListener('click', onNo);
+                    pastDialog.close();
+                }
 
-        if (pastList && pastDialog && yesBtn && noBtn) {
-            pastList.innerHTML = '';
-            pastItems.forEach((item) => {
-                const div = document.createElement('div');
-                div.classList.add('past-item');
-                div.textContent = item;
-                pastList.append(div);
+                const onYes = () => {
+                    close();
+                    resolve(pastItems);
+                };
+
+                const onNo = () => {
+                    close();
+                    reject('Cancel past');
+                };
+                yesBtn.addEventListener('click', onYes);
+                noBtn.addEventListener('click', onNo);
+
             });
-
-
-            if (pastItems.length > 1) {
-                return new Promise((resolve, reject) => {
-                    pastDialog.showModal();
-                    const close = () => {
-                        yesBtn.removeEventListener('click', onYes);
-                        noBtn.removeEventListener('click', onNo);
-                        pastDialog.close();
-                    }
-
-                    const onYes = () => {
-                        close();
-                        resolve(pastItems);
-                    };
-
-                    const onNo = () => {
-                        close();
-                        reject('Cancel past');
-                    };
-                    yesBtn.addEventListener('click', onYes);
-                    noBtn.addEventListener('click', onNo);
-
-                });
-            }
-            throw new Error('One item in buffer');
         }
-        throw new Error('Dialog not found');
-    });
+        throw new Error('One item in buffer');
+    }
+    throw new Error('Dialog not found');
+}
+
+export function splitText(text: string, spaces: boolean = true): string[] {
+    const clear = (items: string[]) => {
+        return items.map((item) => {
+            return item.trim();
+        }).filter(Boolean);
+    };
+
+    if (text.search(/\n/) !== -1) {
+        return clear(text.split(/\n/));
+    } else if (spaces) {
+        return clear(text.split(/\s/));
+    }
+
+    return [text];
 }

@@ -11,6 +11,7 @@ interface IProps {
     actionTitle?: string;
     onActionClick?: (item: IPlayer) => void;
     onComplete: (item: IPlayer) => void;
+    onPaste?: (item: IPlayer, text: string) => boolean;
 }
 
 export default function List(props: IProps) {
@@ -29,6 +30,7 @@ export default function List(props: IProps) {
                             actionTitle={props.actionTitle}
                             onActionClick={props.onActionClick}
                             onComplete={props.onComplete}
+                            onPaste={props.onPaste}
                         />
                     );
                 })

@@ -16,6 +16,7 @@ interface IProps {
     onDefeatPlayerChange: (item: IPlayer) => void;
     onRemovePlayer: (item: IPlayer) => void;
     onRemoveDefeatPlayer: (item: IPlayer) => void;
+    onPaste?: (item: IPlayer, text: string) => boolean;
 }
 
 export default function Menu(props: IProps) {
@@ -47,6 +48,7 @@ export default function Menu(props: IProps) {
                 actionTitle="Удалить"
                 onActionClick={props.onRemovePlayer}
                 onComplete={focusPlayer}
+                onPaste={props.onPaste}
             />
 
             {

@@ -1,5 +1,5 @@
-import React, { useCallback, ChangeEvent, KeyboardEvent } from "react";
-import { debounce } from "../helpers/debounce";
+import React, { useCallback, ChangeEvent, KeyboardEvent, ClipboardEvent, useState, useEffect } from 'react';
+import { debounce } from '../helpers/debounce';
 
 interface IProps {
     item: IPlayer;
@@ -10,11 +10,14 @@ interface IProps {
     actionTitle?: string;
     onActionClick?: (item: IPlayer) => void;
     onComplete: (item: IPlayer) => void;
+    onPaste?: (item: IPlayer, text: string) => boolean;
 }
 
 export default function Editor(props: IProps) {
 
-    const { item, onChange: onChangeProps, onComplete } = props;
+    const { item, onChange: onChangeProps, onComplete, onPaste } = props;
+
+    const [value, setValue] = useState(props.item.text || '');
 
     const changeText = useCallback((event: ChangeEvent<HTMLInputElement>) => {
         if (item.text !== event.target.value) {
@@ -26,6 +29,11 @@ export default function Editor(props: IProps) {
     }, [onChangeProps, item]);
 
     const onChangeDebounce = useCallback(debounce(changeText, 500), [changeText]);
+
+    const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+        onChangeDebounce(event);
+    }, [onChangeDebounce, setValue]);
 
     const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -39,6 +47,13 @@ export default function Editor(props: IProps) {
         }
     }, [item, changeText, onComplete]);
 
+    useEffect(() => setValue(item.text), [item, setValue]);
+
+    const onPasteHandler = useCallback((event: ClipboardEvent<HTMLInputElement>) => {
+        const pastString = event.clipboardData.getData('text/plain');
+        return onPaste?.(item, pastString);
+    }, [onPaste, item]);
+
     return (
         <div className="player-item tw-w-full tw-relative" >
             <input
@@ -46,10 +61,11 @@ export default function Editor(props: IProps) {
                 className="editor-input tw-w-full"
                 maxLength={50}
                 type="text"
-                defaultValue={props.item.text}
                 disabled={props.disabled}
-                onChange={onChangeDebounce}
+                value={value}
+                onChange={onChange}
                 onKeyDown={onKeyDown}
+                onPaste={onPasteHandler}
             />
 
             {
