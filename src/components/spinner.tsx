@@ -11,11 +11,13 @@ interface IProps {
     stopSpinner?: (winner: IPlayer) => void;
 }
 
+const SPINNER_TIME = 10;
+
 export default function Spinner(props: IProps) {
 
     const {spinnerRunning, runSpinner: onRunSpinner, items } = props;
     const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
-    const requestRef = React.useRef(0);
+    const requestRef = React.useRef(0 as unknown as ReturnType<typeof setTimeout>);
     const rotateRef = React.useRef(getAngelRunner());
     const [angle, setAngle] = useState(180);
 
@@ -23,18 +25,18 @@ export default function Spinner(props: IProps) {
         setAngle((val) => rotateRef.current.next(val));
 
         if (!rotateRef.current.ended) {
-            requestRef.current = requestAnimationFrame(animate);
+            requestRef.current = setTimeout(animate, SPINNER_TIME);
         } else {
-            cancelAnimationFrame(requestRef.current);
+            clearTimeout(requestRef.current);
         }
     }
 
     useEffect(() => {
         if (spinnerRunning) {
             rotateRef.current = getAngelRunner();
-            requestRef.current = requestAnimationFrame(animate);
+            requestRef.current = setTimeout(animate, SPINNER_TIME);
         }
-        return () => cancelAnimationFrame(requestRef.current);
+        return () => clearTimeout(requestRef.current);
     }, [spinnerRunning]);
 
     useEffect(() => {

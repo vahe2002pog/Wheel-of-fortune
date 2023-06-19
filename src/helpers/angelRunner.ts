@@ -11,7 +11,7 @@ export function getAngelRunner() {
                 return angle;
             }
 
-            let delta = noneRandNumber / 300;
+            let delta = noneRandNumber / 200;
             noneRandNumber -= delta;
 
             if (noneRandNumber < 0.02) {
