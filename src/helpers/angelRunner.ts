@@ -1,5 +1,5 @@
 export function getAngelRunner() {
-    const randNumber = Math.floor(Math.random() * Math.floor(360));
+    const randNumber = Math.floor(Math.random() * 360);
     let noneRandNumber = 30;
     let added = false;
 
@@ -11,7 +11,7 @@ export function getAngelRunner() {
                 return angle;
             }
 
-            let delta = noneRandNumber / 800;
+            let delta = noneRandNumber / 300;
             noneRandNumber -= delta;
 
             if (noneRandNumber < 0.02) {
