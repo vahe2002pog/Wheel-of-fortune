@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import './App.css';
 import './styles/tailwind.min.css';
 import Header from './components/header';
 import Menu from './components/menu';
