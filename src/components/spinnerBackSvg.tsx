@@ -4,9 +4,9 @@ const textMaxLength = 19;
 function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number, start: number, end: number, text: string}) {
 
     const props = useMemo(() => {
-        const angle = (start + (end - start) / 2) * 180 / Math.PI;
+        const angle = 180 + (start + (end - start) / 2) * 180 / Math.PI;
         const transform = `rotate(${angle} ${cx} ${cy})`;
-        return { x: cx + 25, y: cy + 4, fontSize: '6px', fontFamily: 'MonospaceBold', transform };
+        return { x: cx - 105, y: cy + 1, fontSize: '6px', fontFamily: 'MonospaceBold', transform };
     }, [cx, cy, start, end]);
 
     const displayText = useMemo(() => {

@@ -19,7 +19,7 @@ export default function Spinner(props: IProps) {
     const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
     const requestRef = React.useRef(0 as unknown as ReturnType<typeof setTimeout>);
     const rotateRef = React.useRef(getAngelRunner());
-    const [angle, setAngle] = useState(180);
+    const [angle, setAngle] = useState(0);
 
     const animate = () => {
         setAngle((val) => rotateRef.current.next(val));
