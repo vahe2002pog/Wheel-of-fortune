@@ -15,6 +15,8 @@ interface IProps {
     onPlayerChange: (item: IPlayer) => void;
     onDefeatPlayerChange: (item: IPlayer) => void;
     onRemovePlayer: (item: IPlayer) => void;
+    onClearPlayers: () => void;
+    onClearDefeatPlayers: () => void;
     onRemoveDefeatPlayer: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -36,7 +38,12 @@ export default function Menu(props: IProps) {
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
             <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
 
-            <h2 className="menu-caption" >Игроки</h2>
+            <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
+                <h2>Игроки</h2>
+                {
+                    props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">Очистить</div> : null
+                }
+            </div>
 
             <List
                 id="players"
@@ -52,7 +59,10 @@ export default function Menu(props: IProps) {
             />
 
             {
-                props.defeatPlayers.length ? <h3 className="menu-caption">Выбившие</h3> : null
+                props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
+                    <h3>Выбившие</h3>
+                    <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">Очистить</div>
+                </div> : null
             }
 
             {

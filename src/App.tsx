@@ -32,6 +32,8 @@ export default function App() {
         setPlayers((items) => items.filter(({id}) => id !== player.id));
     }, [setPlayers]);
 
+    const onClearPlayers = useCallback(() => setPlayers([]), [setPlayers]);
+
     const onDefeatPlayerChange = useCallback((player: IPlayer) => {
         setDefeatPlayers((items) => replaceEdited(items, player));
     }, [setDefeatPlayers]);
@@ -40,6 +42,8 @@ export default function App() {
         setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
         setPlayers((items) => [player, ...items]);
     }, [setPlayers, setDefeatPlayers]);
+
+    const onClearDefeatPlayers = useCallback(() => setDefeatPlayers([]), [setDefeatPlayers]);
 
     const runSpinner = useCallback(() => setSpinnerRunning(true), [setSpinnerRunning]);
     const stopSpinner = useCallback((winner: IPlayer) => {
@@ -95,6 +99,8 @@ export default function App() {
                     onPlayerChange={onPlayerChange}
                     onDefeatPlayerChange={onDefeatPlayerChange}
                     onRemovePlayer={onRemovePlayer}
+                    onClearPlayers={onClearPlayers}
+                    onClearDefeatPlayers={onClearDefeatPlayers}
                     onRemoveDefeatPlayer={onRemoveDefeatPlayer}
                     onPaste={onPaste}
                 />
