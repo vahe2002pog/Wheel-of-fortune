@@ -7,4 +7,14 @@ export function initApplication() {
         ymScript.src = '/ym.js';
         document.body.append(ymScript);
     }
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then((reg) => {
+                console.log('Registration succeeded. Scope is ' + reg.scope);
+            }).catch((error) => {
+                console.log('Registration failed with ' + error);
+            });
+    }
+
 }
