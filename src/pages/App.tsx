@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import './styles/tailwind.min.css';
-import Header from './components/header';
-import Menu from './components/menu';
-import Spinner from './components/spinner';
-import { createPlayer, replaceEdited } from './helpers/player';
-import { copyLink, confirmDialog, pastFromBuffer, splitText } from './helpers/clipboard';
-import Message from './components/message';
-import { useKeyboardOpen } from './hook/keyboard';
-import { useHistoryStateDefeatMode, useHistoryStatePlayer } from './hook/historyState';
+import '../styles/tailwind.min.css';
+import Header from '../components/header';
+import Menu from '../components/menu';
+import Spinner from '../components/spinner';
+import { createPlayer, replaceEdited } from '../helpers/player';
+import { copyLink, confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
+import Message from '../components/message';
+import { useKeyboardOpen } from '../hook/keyboard';
+import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
 
 export default function App() {
 

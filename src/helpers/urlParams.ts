@@ -39,7 +39,7 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
         res.push(`des=${des}`);
     }
 
-    return res.length ? `?${res.join('&')}` : '/';
+    return res.length ? `${window.location.pathname}?${res.join('&')}` : window.location.pathname;
 }
 
 export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void => {
@@ -47,7 +47,7 @@ export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer
     const defeatPlayers = des || readPlayerFromParams('des');
     const defeatMode = checked ?? readDefeatModeFromParams();
     const newState = convertToUrl(players, defeatPlayers, defeatMode);
-    const hasChange = window.location.search !== newState;
+    const hasChange = `${window.location.pathname}${window.location.search}` !== newState;
     if (hasChange) {
         window.history.pushState({ list, des }, '', newState);
     }
