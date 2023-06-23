@@ -1,4 +1,5 @@
-import { convertToUrl } from "./urlParams";
+import { t } from 'i18next';
+import { convertToUrl } from './urlParams';
 
 export function copyLink(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): Promise<void> {
     const hostname = `${window.location.protocol}//${window.location.hostname}`;
@@ -70,7 +71,9 @@ export async function confirmDialog(pastItems: string[], fromInput?: boolean): P
 
     if (pastList && pastDialog && yesBtn && noBtn && dialogTitle) {
 
-        dialogTitle.textContent = fromInput ? 'Вставить элементы?' : 'Заменить элементы?';
+        dialogTitle.textContent = fromInput ? t('clipboard.paste-end-msg') : t('clipboard.paste-replace-msg');
+        yesBtn.textContent = t('clipboard.dialog-yes-btn');
+        noBtn.textContent = t('clipboard.dialog-no-btn');
         pastList.innerHTML = '';
         pastItems.forEach((item) => {
             const div = document.createElement('div');

@@ -15,8 +15,8 @@ export default function Header(props: IProps) {
         <header className="tw-flex">
             <span>{t('header.title')}</span>
             <div className="links-wrapper">
-                <img src={pasteIcon} onClick={() => props.onPaste()} className="svg-icon tw-cursor-pointer" alt="paste icon" width="24px" height="24px" title="Вставить текст из буфера" />
-                <img src={copyIcon} onClick={props.onCopy} className="svg-icon tw-cursor-pointer" alt="copy icon" width="24px" height="24px" title="Скопировать ссылку" />
+                <img src={pasteIcon} onClick={() => props.onPaste()} className="svg-icon tw-cursor-pointer" alt="paste icon" width="24px" height="24px" title={t('header.paste')} />
+                <img src={copyIcon} onClick={props.onCopy} className="svg-icon tw-cursor-pointer" alt="copy icon" width="24px" height="24px" title={t('header.copy')} />
             </div>
         </header>
     );

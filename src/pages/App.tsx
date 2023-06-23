@@ -8,6 +8,7 @@ import { copyLink, confirmDialog, pastFromBuffer, splitText } from '../helpers/c
 import Message from '../components/message';
 import { useKeyboardOpen } from '../hook/keyboard';
 import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
 
@@ -17,6 +18,7 @@ export default function App() {
     const [players, setPlayers] = useHistoryStatePlayer('list');
     const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
     const isKeyboardOpen = useKeyboardOpen();
+    const { t } = useTranslation();
 
     const showMessage = useCallback((msg: string) => {
         setMessage(msg);
@@ -61,11 +63,11 @@ export default function App() {
 
     const onCopy = useCallback(() => {
         copyLink(players, defeatPlayers, defeatMode).then(() => {
-            showMessage('Ссылка скопирована');
+            showMessage(t('main.copy-success'));
         }).catch(() => {
-            showMessage('Не удалось скопировать ссылку');
+            showMessage(t('main.copy-error'));
         });
-    }, [players, defeatPlayers, defeatMode, showMessage]);
+    }, [players, defeatPlayers, defeatMode, showMessage, t]);
 
     const onPaste = useCallback((player?: IPlayer, str?: string) => {
         const inputData = str ? splitText(str, false) : [];
@@ -78,13 +80,13 @@ export default function App() {
             }
         }).catch(() => {
             if (!str) {
-                showMessage('Не удалось вставить из буфера');
+                showMessage(t('main.paste-error'));
             } else if (player) {
                 setPlayers((items) => replaceEdited(items, {...player, text: player.text + str}));
             }
         });
         return inputData.length > 1;
-    }, [showMessage, setPlayers]);
+    }, [showMessage, setPlayers, t]);
 
     return (
         <>
