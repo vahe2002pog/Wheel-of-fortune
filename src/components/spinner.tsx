@@ -11,32 +11,30 @@ interface IProps {
     stopSpinner?: (winner: IPlayer) => void;
 }
 
-const SPINNER_TIME = 10;
-
 export default function Spinner(props: IProps) {
 
     const {spinnerRunning, runSpinner: onRunSpinner, items } = props;
-    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
-    const requestRef = React.useRef(0 as unknown as ReturnType<typeof setTimeout>);
-    const rotateRef = React.useRef(getAngelRunner());
     const [angle, setAngle] = useState(0);
+    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+    const requestRef = React.useRef(0);
+    const rotateRef = React.useRef(getAngelRunner(angle));
 
-    const animate = () => {
-        setAngle((val) => rotateRef.current.next(val));
+    const animate = (timeStamp: number) => {
+        setAngle((val) => rotateRef.current.next(timeStamp));
 
         if (!rotateRef.current.ended) {
-            requestRef.current = setTimeout(animate, SPINNER_TIME);
+            requestRef.current = requestAnimationFrame(animate);
         } else {
-            clearTimeout(requestRef.current);
+            cancelAnimationFrame(requestRef.current);
         }
     }
 
     useEffect(() => {
         if (spinnerRunning) {
-            rotateRef.current = getAngelRunner();
-            requestRef.current = setTimeout(animate, SPINNER_TIME);
+            rotateRef.current = getAngelRunner(angle);
+            requestRef.current = requestAnimationFrame(animate);
         }
-        return () => clearTimeout(requestRef.current);
+        return () => cancelAnimationFrame(requestRef.current);
     }, [spinnerRunning]);
 
     useEffect(() => {
