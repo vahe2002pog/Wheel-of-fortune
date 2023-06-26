@@ -16,3 +16,15 @@ export function isTouchDevise(): boolean {
         return false;
     }
 }
+
+export function loadScript(path: string): Promise<boolean> {
+    const script = document.createElement('script');
+    script.type = "text/javascript";
+
+    return new Promise((resolve) => {
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        script.src = path;
+        document.body.append(script);
+    });
+}

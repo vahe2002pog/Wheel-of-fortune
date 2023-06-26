@@ -14,9 +14,10 @@ function log(msg) {
  * @param {string} url
  * @returns {boolean}
  */
-function isYm(url) {
-    return /^https?:\/\/mc\.yandex.*/.test(url);
-}
+function isSameOrigin(url) {
+    const urlOrigin = (new URL(url)).origin;
+    return urlOrigin === self.location.origin;
+  }
 
 function loadFromOrigin(request) {
     log('load file: ' + request.url);
@@ -55,7 +56,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     // ignore chrome extensions
     const isExtensions = event.request.url.startsWith('chrome');
-    if (!isExtensions && !isYm(event.request.url)) {
+    if (!isExtensions && isSameOrigin(event.request.url)) {
         event.respondWith(
             loadFromOrigin(event.request)
             .then((response) => addToCache(event.request, response))
