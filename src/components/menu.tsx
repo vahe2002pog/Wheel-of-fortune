@@ -17,6 +17,7 @@ interface IProps {
     onRemovePlayer: (item: IPlayer) => void;
     onClearPlayers: () => void;
     onClearDefeatPlayers: () => void;
+    onBackDefeatPlayers: () => void;
     onRemoveDefeatPlayer: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -63,7 +64,18 @@ export default function Menu(props: IProps) {
             {
                 props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
                     <h3>{t('menu.defeat-players')}</h3>
-                    <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div>
+                    <div className="tw-flex">
+                        <img
+                            src={arrowUpIcon}
+                            className="menu-back-button tw-cursor-pointer"
+                            alt="action"
+                            width="16px"
+                            height="16px"
+                            title={t('menu.backAll')}
+                            onClick={() => props.onBackDefeatPlayers?.()}
+                        />
+                        <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div>
+                    </div>
                 </div> : null
             }
 

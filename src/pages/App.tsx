@@ -46,6 +46,14 @@ export default function App() {
     }, [setPlayers, setDefeatPlayers]);
 
     const onClearDefeatPlayers = useCallback(() => setDefeatPlayers([]), [setDefeatPlayers]);
+    const onBackDefeatPlayers = useCallback(() => {
+        setDefeatPlayers((defeatPlayers) => {
+            setPlayers((players) => {
+                return [...defeatPlayers, ...players];
+            });
+            return [];
+        });
+    }, [setDefeatPlayers, setPlayers]);
 
     const runSpinner = useCallback(() => setSpinnerRunning(true), [setSpinnerRunning]);
     const stopSpinner = useCallback((winner: IPlayer) => {
@@ -104,6 +112,7 @@ export default function App() {
                     onClearPlayers={onClearPlayers}
                     onClearDefeatPlayers={onClearDefeatPlayers}
                     onRemoveDefeatPlayer={onRemoveDefeatPlayer}
+                    onBackDefeatPlayers={onBackDefeatPlayers}
                     onPaste={onPaste}
                 />
 
