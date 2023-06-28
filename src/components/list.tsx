@@ -7,9 +7,7 @@ interface IProps {
     disabled: boolean;
     onItemChange: (item: IPlayer) => void;
     hideLastAction?: boolean;
-    actionIcon?: string;
-    actionTitle?: string;
-    onActionClick?: (item: IPlayer) => void;
+    actions: IAction[];
     onComplete: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -24,11 +22,8 @@ export default function List(props: IProps) {
                             key={item.id}
                             item={item}
                             disabled={props.disabled}
-                            hideAction={ props.hideLastAction && index === props.items.length - 1}
+                            actions={ props.hideLastAction && index === props.items.length - 1 ? [] : props.actions}
                             onChange={props.onItemChange}
-                            actionIcon={props.actionIcon}
-                            actionTitle={props.actionTitle}
-                            onActionClick={props.onActionClick}
                             onComplete={props.onComplete}
                             onPaste={props.onPaste}
                         />

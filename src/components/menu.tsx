@@ -18,6 +18,7 @@ interface IProps {
     onClearPlayers: () => void;
     onClearDefeatPlayers: () => void;
     onBackDefeatPlayers: () => void;
+    onBackDefeatPlayer: (item: IPlayer) => void;
     onRemoveDefeatPlayer: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -37,6 +38,30 @@ export default function Menu(props: IProps) {
     const focusPlayer = useCallback((item: IPlayer) => focusNext('players', item), []);
     const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('defeatPlayers', item), []);
 
+    const playersActions = useMemo((): IAction[] => {
+        return [{
+            id: 'remove',
+            title: t('menu.remove'),
+            icon: rmIcon,
+            handler: props.onRemovePlayer
+        }]
+    }, [t, props.onRemovePlayer])
+
+    const defeatPlayersActions = useMemo((): IAction[] => {
+        return [{
+            id: 'back',
+            title: t('menu.back'),
+            icon: arrowUpIcon,
+            handler: props.onBackDefeatPlayer
+        }, {
+            id: 'remove',
+            title: t('menu.remove'),
+            icon: rmIcon,
+            handler: props.onRemoveDefeatPlayer
+        }]
+    }, [t, props.onRemoveDefeatPlayer, props.onBackDefeatPlayer]);
+
+
     return (
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
             <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
@@ -54,9 +79,7 @@ export default function Menu(props: IProps) {
                 disabled={props.disabled}
                 onItemChange={props.onPlayerChange}
                 hideLastAction={true}
-                actionIcon={rmIcon}
-                actionTitle={t('menu.remove')}
-                onActionClick={props.onRemovePlayer}
+                actions={playersActions}
                 onComplete={focusPlayer}
                 onPaste={props.onPaste}
             />
@@ -85,9 +108,7 @@ export default function Menu(props: IProps) {
                     items={props.defeatPlayers}
                     disabled={props.disabled}
                     onItemChange={props.onDefeatPlayerChange}
-                    actionIcon={arrowUpIcon}
-                    actionTitle={t('menu.back')}
-                    onActionClick={props.onRemoveDefeatPlayer}
+                    actions={defeatPlayersActions}
                     onComplete={focusDefeatPlayer}
                 /> : null
             }

@@ -5,10 +5,7 @@ interface IProps {
     item: IPlayer;
     disabled: boolean;
     onChange: (item: IPlayer) => void;
-    hideAction?: boolean;
-    actionIcon?: string;
-    actionTitle?: string;
-    onActionClick?: (item: IPlayer) => void;
+    actions: IAction[];
     onComplete: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -58,6 +55,7 @@ export default function Editor(props: IProps) {
         <div className="player-item tw-w-full tw-relative" >
             <input
                 id={`input-${props.item.id}`}
+                style={{ '--actions-count': props.actions.length } as React.CSSProperties}
                 className="editor-input tw-w-full"
                 maxLength={50}
                 type="text"
@@ -68,19 +66,24 @@ export default function Editor(props: IProps) {
                 onPaste={onPasteHandler}
             />
 
-            {
-                props.onActionClick && props.actionIcon && !props.disabled && !props.hideAction ?
-                    <img
-                        src={props.actionIcon}
-                        className="editor-action tw-cursor-pointer tw-absolute"
-                        alt="action"
-                        width="16px"
-                        height="16px"
-                        title={props.actionTitle}
-                        onClick={() => props.onActionClick?.(props.item)}
-                    /> :
-                    null
-            }
+            <div className='tw-flex editor-actions tw-absolute'>
+                {
+                    props.actions.map((action) => {
+                        return (
+                            <img
+                                key={action.id}
+                                src={action.icon}
+                                className="editor-action tw-cursor-pointer"
+                                alt="action"
+                                width="16px"
+                                height="16px"
+                                title={action.title}
+                                onClick={() => action.handler(props.item)}
+                            />
+                        );
+                    })
+                }
+            </div>
 
         </div>
     );

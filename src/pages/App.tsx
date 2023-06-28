@@ -40,10 +40,14 @@ export default function App() {
         setDefeatPlayers((items) => replaceEdited(items, player));
     }, [setDefeatPlayers]);
 
-    const onRemoveDefeatPlayer = useCallback((player: IPlayer) => {
+    const onBackDefeatPlayer = useCallback((player: IPlayer) => {
         setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
         setPlayers((items) => [player, ...items]);
     }, [setPlayers, setDefeatPlayers]);
+
+    const onRemoveDefeatPlayer = useCallback((player: IPlayer) => {
+        setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
+    }, [setDefeatPlayers]);
 
     const onClearDefeatPlayers = useCallback(() => setDefeatPlayers([]), [setDefeatPlayers]);
     const onBackDefeatPlayers = useCallback(() => {
@@ -112,6 +116,7 @@ export default function App() {
                     onClearPlayers={onClearPlayers}
                     onClearDefeatPlayers={onClearDefeatPlayers}
                     onRemoveDefeatPlayer={onRemoveDefeatPlayer}
+                    onBackDefeatPlayer={onBackDefeatPlayer}
                     onBackDefeatPlayers={onBackDefeatPlayers}
                     onPaste={onPaste}
                 />
