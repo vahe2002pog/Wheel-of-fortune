@@ -37,7 +37,7 @@ i18n
                     'header.title': 'Фортуна',
                     'header.copy': 'Скопировать ссылку',
                     'header.paste': 'Вставить текст из буфера',
-                    'menu.checkbox-label': 'На выбивание',
+                    'menu.checkbox-label': 'На выбывание',
                     'menu.players': 'Игроки',
                     'menu.clear': 'Очистить',
                     'menu.remove': 'Удалить',

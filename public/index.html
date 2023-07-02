@@ -30,23 +30,25 @@
 
 <body class="tw-h-full tw-w-full">
     <div id="root" class="tw-h-full tw-flex tw-flex-col">
-        <header class="tw-flex"><span>Фортуна</span>
+        <header class="tw-flex"><span>Фортуна</span><!--noindex-->
             <div class="links-wrapper"><img src="/static/media/paste.cf5459828d3112cc806511b3f0c37325.svg"
                     class="svg-icon tw-cursor-pointer" alt="paste icon" width="24px" height="24px"
                     title="Вставить текст из буфера"><img src="/static/media/copy.715c9ca3fc85e120659038a4b7d5726c.svg"
                     class="svg-icon tw-cursor-pointer" alt="copy icon" width="24px" height="24px"
-                    title="Скопировать ссылку"></div>
+                    title="Скопировать ссылку"></div><!--/noindex-->
         </header>
         <main class="tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ">
             <div class="menu tw-flex-1 tw-overflow-y-scroll">
                 <div class="tw-flex tw-justify-center tw-items-center"><input type="checkbox" id=":r0:" checked=""><label
-                        for=":r0:" style="margin-left: 8px;">На выбивание</label></div>
+                        for=":r0:" style="margin-left: 8px;">На выбывание</label></div>
                 <div class="menu-caption tw-flex tw-justify-between tw-items-baseline">
                     <h2>Игроки</h2>
                 </div>
                 <div class="player-list" id="players">
                     <div class="player-item tw-w-full tw-relative"><input id="input-0" class="editor-input tw-w-full"
-                            maxlength="50" type="text" value=""></div>
+                            maxlength="50" type="text" value="" style="--actions-count: 0;">
+                        <div class="tw-flex editor-actions tw-absolute"></div>
+                    </div>
                 </div>
             </div>
             <div class="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
