@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState}  from "react";
 import SpinnerFrontSvg from "./spinnerFrontSvg";
 import SpinnerBackSvg from "./spinnerBackSvg";
-import { getAngelRunner } from "../helpers/angelRunner";
+import { Wheel } from "../helpers/angelRunner";
 import { getWinnerIndex } from "../helpers/winnerCalc";
 
 interface IProps {
@@ -17,10 +17,10 @@ export default function Spinner(props: IProps) {
     const [angle, setAngle] = useState(0);
     const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
     const requestRef = React.useRef(0);
-    const rotateRef = React.useRef(getAngelRunner(angle));
+    const rotateRef = React.useRef(new Wheel(angle));
 
     const animate = (timeStamp: number) => {
-        setAngle((val) => rotateRef.current.next(timeStamp));
+        setAngle((val) => rotateRef.current.rotate(timeStamp));
 
         if (!rotateRef.current.ended) {
             requestRef.current = requestAnimationFrame(animate);
@@ -31,7 +31,7 @@ export default function Spinner(props: IProps) {
 
     useEffect(() => {
         if (spinnerRunning) {
-            rotateRef.current = getAngelRunner(angle);
+            rotateRef.current = new Wheel(angle);
             requestRef.current = requestAnimationFrame(animate);
         }
         return () => cancelAnimationFrame(requestRef.current);

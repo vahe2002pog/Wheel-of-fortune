@@ -1,68 +1,44 @@
-const accelerationPoint = 31;
-const slowdownPoint = 70;
-const accelerationMax = acceleration(accelerationPoint - 1);
-const slowdownMax = slowdown(slowdownPoint);
+export class Wheel {
+    private startAngle: number;
+    private endAngle: number;
+    private rotationTime: number;
+    private startTime: number | null;
+    private currentAngle: number;
+    ended: boolean;
 
-function acceleration(val: number): number {
-    if (val < 0 ) {
-        return 0
-    }
-    const x = val / 100;
-    return x*x*8;
-}
-
-function slowdown(val: number): number {
-    const x = val - accelerationPoint + 2;
-    return (x > 0.02 ? (Math.log(x)) / 14: 0) + accelerationMax;
-}
-
-function stopping(val: number): number {
-    const x = (val - slowdownPoint) / (100 - slowdownPoint);
-    return slowdownMax + (1 - slowdownMax) * x;
-}
-
-function getPercent(val: number): number {
-    let res = 0;
-    if (val < accelerationPoint) {
-        res = acceleration(val);
-    } else if (val < slowdownPoint) {
-        res = slowdown(val);
-    } else {
-        res = stopping(val);
+    constructor(startAngle: number) {
+        this.startAngle = startAngle;
+        this.endAngle = 360 * 2 + Math.floor(Math.random() * 360);
+        this.rotationTime = 5000;
+        this.startTime = null;
+        this.currentAngle = startAngle;
+        this.ended = false;
     }
 
-    if (res > 1) {
-        console.error('percent > 1');
-    } else if (res < 0) {
-        console.error('percent < 0');
-    }
-    return res;
-}
+    public rotate(previousTime: number): number {
 
-export function getAngelRunner(startAngle: number) {
-    const endAngle = 360 * 2 + Math.floor(Math.random() * 360);
-    const time = 9000;
-    const start = performance.now();
-    return {
-        ended: false,
-        next(timeStamp: number): number {
-            if (this.ended) {
-                console.error('Timer should be cleaned');
-                return (endAngle + startAngle) % 360;
-            }
-
-            let delta = timeStamp - start;
-            const percent = delta ? (delta / time) * 100 : 0;
-
-            if (percent >= 100) {
-                this.ended = true;
-                console.info(`Spinning time: ${Math.floor(performance.now() - start)}ms`)
-                return (endAngle + startAngle) % 360;
-            }
-            const p = getPercent(percent)
-            const res = p * endAngle + startAngle;
-            // console.log(percent, p, res);
-            return res;
+        if (this.ended) {
+            console.error('Timer should be cleaned');
+            return this.currentAngle;
         }
-    };
+
+        if (this.startTime === null) {
+            this.startTime = previousTime;
+        }
+
+        const elapsedTime = previousTime - this.startTime;
+
+        if (elapsedTime >= this.rotationTime) {
+            this.currentAngle = this.endAngle % 360;
+            this.ended = true;
+        } else {
+            const progress = elapsedTime / this.rotationTime;
+            const angleDifference = this.endAngle - this.startAngle;
+            const easingProgress = Math.sin(progress * Math.PI / 2);
+
+            this.currentAngle = this.startAngle + angleDifference * easingProgress;
+        }
+
+        return this.currentAngle;
+    }
 }
