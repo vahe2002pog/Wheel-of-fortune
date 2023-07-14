@@ -28,3 +28,9 @@ export function loadScript(path: string): Promise<boolean> {
         document.body.append(script);
     });
 }
+
+export function isPrivate(): boolean {
+    const href = document.location.href;
+    const url = new URL(href);
+    return url.searchParams.get('private') !== null;
+}

@@ -2,12 +2,8 @@ import { collector } from "./collector";
 import { createPlayer } from "./player";
 
 function getParameterByName(name: string): string {
-    const url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url);
-    if (!results || !results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name) || '';
 }
 
 export function readPlayerFromParams(paramName: string): IPlayer[] {
@@ -24,22 +20,26 @@ export function readDefeatModeFromParams(): boolean {
 }
 
 export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): string {
-    const res = [];
+    const url = new URL(window.location.href);
+    url.searchParams.delete('checked');
+    url.searchParams.delete('list');
+    url.searchParams.delete('des');
+
     if (defeatMode === false) {
-        res.push(`checked=${defeatMode}`);
+        url.searchParams.set('checked', String(defeatMode));
     }
 
     const list = players.map((item) => item.text).filter(Boolean).join('$_$');
     if (list) {
-        res.push(`list=${list}`);
+        url.searchParams.set('list', list);
     }
 
     const des = defeatPlayers.map((item) => item.text).filter(Boolean).join('$_$');
     if (des) {
-        res.push(`des=${des}`);
+        url.searchParams.set('des', des);
     }
 
-    return res.length ? `${window.location.pathname}?${res.join('&')}` : window.location.pathname;
+    return url.href;
 }
 
 export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void => {
@@ -47,7 +47,7 @@ export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer
     const defeatPlayers = des || readPlayerFromParams('des');
     const defeatMode = checked ?? readDefeatModeFromParams();
     const newState = convertToUrl(players, defeatPlayers, defeatMode);
-    const hasChange = `${window.location.pathname}${window.location.search}` !== newState;
+    const hasChange = window.location.href !== newState;
     if (hasChange) {
         window.history.pushState({ list, des }, '', newState);
     }

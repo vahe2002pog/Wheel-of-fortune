@@ -1,8 +1,8 @@
-import { isTouchDevise, isLocalHost, loadScript } from "./utils";
+import { isTouchDevise, isLocalHost, loadScript, isPrivate } from "./utils";
 
 export function initApplication() {
     document.body.classList.add(isTouchDevise() ? 'touch-devise' : 'cursor-devise');
-    if (!isLocalHost()) {
+    if (!isLocalHost() && !isPrivate()) {
         // init Yandex metrika
         loadScript('/ym.js');
         // init Google analytics
