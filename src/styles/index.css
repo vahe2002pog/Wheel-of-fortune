@@ -20,6 +20,10 @@ body {
   overflow: hidden;
 }
 
+input {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 /* past dialog */
 .past-dialog {
   left: 50%;
@@ -81,6 +85,12 @@ header {
 }
 
 /* /Header */
+/* List */
+.player-list {
+  grid-template-columns: min-content 1fr;
+  gap: 2px 5px;
+}
+/* /List */
 /* Content */
 main {
   min-height: 0;
@@ -91,6 +101,12 @@ main {
   padding: 20px;
   max-height: 100%;
 }
+
+.menu-content-center {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
 .menu-caption {
   padding: 10px 0 4px;
 }
@@ -102,10 +118,9 @@ main {
 }
 /* /Menu */
 /* Editor */
-.menu-caption,
-.player-item {
-  max-width: 450px;
-  margin: 0 auto;
+
+.player-item, .player-item input {
+  font-size: 13px;
 }
 
 .cursor-devise .editor-input:focus + .editor-action,
@@ -119,7 +134,6 @@ main {
   min-height: 30px;
   padding: 0 calc(var(--actions-count, 1) * 26px + 8px) 0 10px;
   color: black;
-  margin-bottom: 2px;
 }
 
 .editor-input:focus {

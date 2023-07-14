@@ -14,12 +14,13 @@ interface IProps {
 
 export default function List(props: IProps) {
     return (
-        <div className="player-list" id={props.id}>
+        <div className="player-list tw-grid" id={props.id}>
             {
                 props.items.map((item, index) => {
                     return (
                         <Editor
                             key={item.id}
+                            index={index + 1}
                             item={item}
                             disabled={props.disabled}
                             actions={ props.hideLastAction && index === props.items.length - 1 ? [] : props.actions}

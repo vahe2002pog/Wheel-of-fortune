@@ -8,6 +8,7 @@ interface IProps {
     actions: IAction[];
     onComplete: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
+    index: number;
 }
 
 export default function Editor(props: IProps) {
@@ -52,37 +53,40 @@ export default function Editor(props: IProps) {
     }, [onPaste, item]);
 
     return (
-        <div className="player-item tw-w-full tw-relative" >
-            <input
-                id={`input-${props.item.id}`}
-                style={{ '--actions-count': props.actions.length } as React.CSSProperties}
-                className="editor-input tw-w-full"
-                maxLength={50}
-                type="text"
-                disabled={props.disabled}
-                value={value}
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                onPaste={onPasteHandler}
-            />
+        <div className="player-item tw-w-full tw-contents" >
+            <div className='tw-flex tw-items-center'>{props.index}</div>
+            <div className='tw-relative'>
+                <input
+                    id={`input-${props.item.id}`}
+                    style={{ '--actions-count': props.actions.length } as React.CSSProperties}
+                    className="editor-input tw-w-full"
+                    maxLength={50}
+                    type="text"
+                    disabled={props.disabled}
+                    value={value}
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                    onPaste={onPasteHandler}
+                />
 
-            <div className='tw-flex editor-actions tw-absolute'>
-                {
-                    props.actions.map((action) => {
-                        return (
-                            <img
-                                key={action.id}
-                                src={action.icon}
-                                className="editor-action tw-cursor-pointer"
-                                alt="action"
-                                width="16px"
-                                height="16px"
-                                title={action.title}
-                                onClick={() => action.handler(props.item)}
-                            />
-                        );
-                    })
-                }
+                <div className='tw-flex editor-actions tw-absolute'>
+                    {
+                        props.actions.map((action) => {
+                            return (
+                                <img
+                                    key={action.id}
+                                    src={action.icon}
+                                    className="editor-action tw-cursor-pointer"
+                                    alt="action"
+                                    width="16px"
+                                    height="16px"
+                                    title={action.title}
+                                    onClick={() => action.handler(props.item)}
+                                />
+                            );
+                        })
+                    }
+                </div>
             </div>
 
         </div>

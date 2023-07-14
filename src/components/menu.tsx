@@ -64,54 +64,56 @@ export default function Menu(props: IProps) {
 
     return (
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
-            <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
+            <div className="menu-content-center">
+                <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
 
-            <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
-                <h2>{t('menu.players')}</h2>
+                <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
+                    <h2>{t('menu.players')}</h2>
+                    {
+                        props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div> : null
+                    }
+                </div>
+
+                <List
+                    id="players"
+                    items={players}
+                    disabled={props.disabled}
+                    onItemChange={props.onPlayerChange}
+                    hideLastAction={true}
+                    actions={playersActions}
+                    onComplete={focusPlayer}
+                    onPaste={props.onPaste}
+                />
+
                 {
-                    props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div> : null
+                    props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
+                        <h3>{t('menu.defeat-players')}</h3>
+                        <div className="tw-flex">
+                            <img
+                                src={arrowUpIcon}
+                                className="menu-back-button tw-cursor-pointer"
+                                alt="action"
+                                width="16px"
+                                height="16px"
+                                title={t('menu.backAll')}
+                                onClick={() => props.onBackDefeatPlayers?.()}
+                            />
+                            <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div>
+                        </div>
+                    </div> : null
+                }
+
+                {
+                    props.defeatPlayers.length ? <List
+                        id="defeatPlayers"
+                        items={props.defeatPlayers}
+                        disabled={props.disabled}
+                        onItemChange={props.onDefeatPlayerChange}
+                        actions={defeatPlayersActions}
+                        onComplete={focusDefeatPlayer}
+                    /> : null
                 }
             </div>
-
-            <List
-                id="players"
-                items={players}
-                disabled={props.disabled}
-                onItemChange={props.onPlayerChange}
-                hideLastAction={true}
-                actions={playersActions}
-                onComplete={focusPlayer}
-                onPaste={props.onPaste}
-            />
-
-            {
-                props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
-                    <h3>{t('menu.defeat-players')}</h3>
-                    <div className="tw-flex">
-                        <img
-                            src={arrowUpIcon}
-                            className="menu-back-button tw-cursor-pointer"
-                            alt="action"
-                            width="16px"
-                            height="16px"
-                            title={t('menu.backAll')}
-                            onClick={() => props.onBackDefeatPlayers?.()}
-                        />
-                        <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div>
-                    </div>
-                </div> : null
-            }
-
-            {
-                props.defeatPlayers.length ? <List
-                    id="defeatPlayers"
-                    items={props.defeatPlayers}
-                    disabled={props.disabled}
-                    onItemChange={props.onDefeatPlayerChange}
-                    actions={defeatPlayersActions}
-                    onComplete={focusDefeatPlayer}
-                /> : null
-            }
         </div>
     );
 }
