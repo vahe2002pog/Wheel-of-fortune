@@ -43,3 +43,7 @@ export function focusNext(itemsContainer: string, item: IPlayer): void {
         }
     }, 20);
 }
+
+export function sortById(a: IPlayer, b: IPlayer): number {
+    return Number(a.id) - Number(b.id);
+}

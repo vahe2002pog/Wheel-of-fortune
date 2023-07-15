@@ -3,7 +3,7 @@ import '../styles/tailwind.min.css';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import Spinner from '../components/spinner';
-import { createPlayer, replaceEdited } from '../helpers/player';
+import { createPlayer, replaceEdited, sortById } from '../helpers/player';
 import { copyLink, confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
 import Message from '../components/message';
 import { useKeyboardOpen } from '../hook/keyboard';
@@ -42,7 +42,7 @@ export default function App() {
 
     const onBackDefeatPlayer = useCallback((player: IPlayer) => {
         setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
-        setPlayers((items) => [player, ...items]);
+        setPlayers((items) => [player, ...items].sort(sortById));
     }, [setPlayers, setDefeatPlayers]);
 
     const onRemoveDefeatPlayer = useCallback((player: IPlayer) => {
@@ -53,7 +53,7 @@ export default function App() {
     const onBackDefeatPlayers = useCallback(() => {
         setDefeatPlayers((defeatPlayers) => {
             setPlayers((players) => {
-                return [...defeatPlayers, ...players];
+                return [...defeatPlayers, ...players].sort(sortById);
             });
             return [];
         });
