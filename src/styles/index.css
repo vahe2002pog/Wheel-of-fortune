@@ -71,9 +71,6 @@ input {
 /* Header */
 header {
   padding: 10px 20px;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 25px;
 }
 
 .links-wrapper {
