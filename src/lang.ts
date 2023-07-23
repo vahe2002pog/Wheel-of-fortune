@@ -13,7 +13,7 @@ i18n
         resources: {
             en: {
                 translation: {
-                    'header.title': 'Fortune online',
+                    'header.title': 'Wheel of Fortune online',
                     'header.copy': 'Copy link',
                     'header.paste': 'Paste text from clipboard',
                     'menu.checkbox-label': 'For knockout',
@@ -34,7 +34,7 @@ i18n
             },
             ru: {
                 translation: {
-                    'header.title': 'Фортуна онлайн',
+                    'header.title': 'Колесо Фортуны онлайн',
                     'header.copy': 'Скопировать ссылку',
                     'header.paste': 'Вставить текст из буфера',
                     'menu.checkbox-label': 'На выбывание',

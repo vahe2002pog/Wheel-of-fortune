@@ -18,8 +18,8 @@ export default function Header(props: IProps) {
             <img src={logo} alt={ t('header.title') } height='30px' />
             <Noindex>
                 <div className="links-wrapper">
-                    <img src={pasteIcon} onClick={() => props.onPaste()} className="svg-icon tw-cursor-pointer" alt="paste icon" width="24px" height="24px" title={t('header.paste')} />
-                    <img src={copyIcon} onClick={props.onCopy} className="svg-icon tw-cursor-pointer" alt="copy icon" width="24px" height="24px" title={t('header.copy')} />
+                    <img src={pasteIcon} onClick={() => props.onPaste()} className="svg-icon tw-cursor-pointer" alt={t('header.paste')} width="24px" height="24px" title={t('header.paste')} />
+                    <img src={copyIcon} onClick={props.onCopy} className="svg-icon tw-cursor-pointer" alt={t('header.copy')} width="24px" height="24px" title={t('header.copy')} />
                 </div>
             </Noindex>
         </header>
