@@ -54,7 +54,7 @@ export default function Editor(props: IProps) {
 
     return (
         <div className="player-item tw-w-full tw-contents" >
-            <div className='tw-flex tw-items-center'>{props.index}</div>
+            <div className='player-item-index tw-flex tw-items-center'>{props.index}</div>
             <div className='tw-relative'>
                 <input
                     id={`input-${props.item.id}`}

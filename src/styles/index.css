@@ -105,7 +105,7 @@ main {
 }
 
 .menu-caption {
-  padding: 10px 0 4px;
+  padding: 10px 0 4px 32px;
 }
 
 .menu-back-button {
@@ -115,6 +115,10 @@ main {
 }
 /* /Menu */
 /* Editor */
+
+.player-item-index {
+  min-width: 18px;
+}
 
 .player-item, .player-item input {
   font-size: 13px;
