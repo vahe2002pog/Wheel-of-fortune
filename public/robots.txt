@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
 Sitemap: https://fortune.gagikpog.ru/sitemap.xml
+Clean-param: checked
+Clean-param: list
+Clean-param: des
+
