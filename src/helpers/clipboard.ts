@@ -1,10 +1,7 @@
 import { t } from 'i18next';
-import { convertToUrl } from './urlParams';
 
-export function copyLink(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): Promise<void> {
-    const hostname = `${window.location.protocol}//${window.location.hostname}`;
-    const params = convertToUrl(players, defeatPlayers, defeatMode);
-    return copyTextToClipboard(`${hostname}/${params}`);
+export function copyLink(): Promise<void> {
+    return copyTextToClipboard(window.location.href);
 }
 
 function copyTextToClipboard(text: string): Promise<void> {

@@ -74,12 +74,12 @@ export default function App() {
     }, [setSpinnerRunning, defeatMode, setPlayers, setDefeatPlayers]);
 
     const onCopy = useCallback(() => {
-        copyLink(players, defeatPlayers, defeatMode).then(() => {
+        copyLink().then(() => {
             showMessage(t('main.copy-success'));
         }).catch(() => {
             showMessage(t('main.copy-error'));
         });
-    }, [players, defeatPlayers, defeatMode, showMessage, t]);
+    }, [showMessage, t]);
 
     const onPaste = useCallback((player?: IPlayer, str?: string) => {
         const inputData = str ? splitText(str, false) : [];

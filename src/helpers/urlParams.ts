@@ -1,9 +1,14 @@
-import { collector } from "./collector";
-import { createPlayer } from "./player";
+import { collector } from './collector';
+import { createPlayer } from './player';
 
 function getParameterByName(name: string): string {
     const url = new URL(window.location.href);
-    return url.searchParams.get(name) || '';
+    try {
+        return decodeURIComponent(url.searchParams.get(name) || '');
+    } catch (e) {
+        console.error(e);
+        return '';
+    }
 }
 
 export function readPlayerFromParams(paramName: string): IPlayer[] {
@@ -39,7 +44,7 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
         url.searchParams.set('des', des);
     }
 
-    return url.href;
+    return url.href.replaceAll('+', ' ');
 }
 
 export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void => {
@@ -47,7 +52,7 @@ export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer
     const defeatPlayers = des || readPlayerFromParams('des');
     const defeatMode = checked ?? readDefeatModeFromParams();
     const newState = convertToUrl(players, defeatPlayers, defeatMode);
-    const hasChange = window.location.href !== newState;
+    const hasChange = new URL(window.location.href).href !== new URL(newState).href;
     if (hasChange) {
         window.history.pushState({ list, des }, '', newState);
     }
