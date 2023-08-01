@@ -16,7 +16,7 @@ i18n
                     'header.title': 'Wheel of Fortune online',
                     'header.copy': 'Copy link',
                     'header.paste': 'Paste text from clipboard',
-                    'menu.checkbox-label': 'For knockout',
+                    'menu.checkbox-label': 'Elimination mode',
                     'menu.players': 'Players',
                     'menu.clear': 'Clear',
                     'menu.remove': 'Remove',
