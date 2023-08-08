@@ -13,7 +13,9 @@ i18n
         resources: {
             en: {
                 translation: {
-                    'header.title': 'Wheel of Fortune online',
+                    'header.title.logo': 'Wheel of Fortune online',
+                    'header.title.info': 'Help',
+                    'header.title.setting': 'Settings',
                     'header.copy': 'Copy link',
                     'header.paste': 'Paste text from clipboard',
                     'menu.checkbox-label': 'Elimination mode',
@@ -29,12 +31,15 @@ i18n
                     'clipboard.paste-end-msg': 'Insert items?',
                     'clipboard.paste-replace-msg': 'Replace items?',
                     'clipboard.dialog-yes-btn': 'Yes',
-                    'clipboard.dialog-no-btn': 'No'
+                    'clipboard.dialog-no-btn': 'No',
+                    'panel.close': 'Close'
                 }
             },
             ru: {
                 translation: {
-                    'header.title': 'Колесо Фортуны онлайн',
+                    'header.title.logo': 'Колесо Фортуны онлайн',
+                    'header.title.info': 'Справка',
+                    'header.title.setting': 'Настройки',
                     'header.copy': 'Скопировать ссылку',
                     'header.paste': 'Вставить текст из буфера',
                     'menu.checkbox-label': 'На выбывание',
@@ -50,7 +55,8 @@ i18n
                     'clipboard.paste-end-msg': 'Вставить элементы?',
                     'clipboard.paste-replace-msg': 'Заменить элементы?',
                     'clipboard.dialog-yes-btn': 'Да',
-                    'clipboard.dialog-no-btn': 'Нет'
+                    'clipboard.dialog-no-btn': 'Нет',
+                    'panel.close': 'Закрыть'
                 }
             }
         },

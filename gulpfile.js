@@ -11,6 +11,8 @@ gulp.task('default', function() {
         .pipe(replace('Игроки', 'Players'))
         .pipe(replace('Вставить текст из буфера', 'Paste text from clipboard'))
         .pipe(replace('Скопировать ссылку', 'Copy link'))
+        .pipe(replace('Справка', 'Help'))
+        .pipe(replace('Настройки', 'Settings'))
         .pipe(replace('.webmanifest', '.webmanifest_en'))
         .pipe(gulp.dest('./build/en/'));
 });

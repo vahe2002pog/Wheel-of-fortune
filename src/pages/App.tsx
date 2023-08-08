@@ -9,6 +9,7 @@ import Message from '../components/message';
 import { useKeyboardOpen } from '../hook/keyboard';
 import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
 import { useTranslation } from 'react-i18next';
+import { useOpener } from '../hook/useOpener';
 
 export default function App() {
 
@@ -19,6 +20,7 @@ export default function App() {
     const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
     const isKeyboardOpen = useKeyboardOpen();
     const { t } = useTranslation();
+    const [ opener, setOpen ] = useOpener();
 
     const showMessage = useCallback((msg: string) => {
         setMessage(msg);
@@ -102,7 +104,7 @@ export default function App() {
 
     return (
         <>
-            <Header onCopy={onCopy} onPaste={onPaste}/>
+            <Header onCopy={onCopy} onPaste={onPaste} setOpen={setOpen}/>
             <main className={`tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ${isKeyboardOpen ? 'keyboard-opened' : ''}`}>
                 <Menu
                     players={players}
@@ -127,6 +129,7 @@ export default function App() {
                     runSpinner={runSpinner}
                     stopSpinner={stopSpinner}
                 />
+                { opener }
             </main>
             { message ? <Message text={message} /> : null}
         </>
