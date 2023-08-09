@@ -1,9 +1,7 @@
-import { getRandomColor } from "./randomColor";
+import { getRandomColor } from './randomColor';
+import { keyCounter } from './utils';
 
-const getId = (() => {
-    let index = 0;
-    return () => String(index++);
-})();
+const getId = keyCounter();
 
 export function createPlayer(ext?: Partial<IPlayer>): IPlayer {
     return {

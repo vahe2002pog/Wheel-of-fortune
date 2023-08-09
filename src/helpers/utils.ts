@@ -34,3 +34,8 @@ export function isPrivate(): boolean {
     const url = new URL(href);
     return url.searchParams.get('private') !== null;
 }
+
+export const keyCounter = (() => {
+    let index = 0;
+    return () => String(index++);
+});

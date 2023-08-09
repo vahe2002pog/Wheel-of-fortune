@@ -1,35 +1,60 @@
 import { useCallback, useState, lazy, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-const Panel = lazy(() => import('../components/panel'));
+import { keyCounter } from '../helpers/utils';
+const popupContainer = {
+    panel: lazy(() => import('../components/popup/panel')),
+    dialog: lazy(() => import('../components/popup/dialog'))
+};
 const contents = {
-    setting: lazy(() => import('../components/dialog/settings')),
-    info: lazy(() => import('../components/dialog/info'))
+    setting: lazy(() => import('../components/popup/settings')),
+    info: lazy(() => import('../components/popup/info'))
 };
 
-export type IAsyncComponents = keyof typeof contents;
-export type TSetOpen = (component: IAsyncComponents) => void;
+const getId = keyCounter();
+
+interface IPopupOpener {
+    id: string;
+    componentId: TAsyncComponents;
+    popupId: TAsyncPopup;
+}
+
+export type TAsyncPopup = keyof typeof popupContainer;
+export type TAsyncComponents = keyof typeof contents;
+export type TSetOpen = (component: TAsyncComponents, popupId: TAsyncPopup) => void;
 
 export function useOpener() {
     const { t } = useTranslation();
-    const [isOpen, setOpen] = useState(false);
-    const [componentId, setComponentId] = useState('info' as IAsyncComponents);
-    const onClose = useCallback(() => setOpen(false), []);
-    const Component = contents[componentId];
-    const fallback = <div></div>;
+    const [popups, setPopups] = useState<IPopupOpener[]>([]);
+    const onClose = useCallback((id: string) => {
+        setPopups((items) => {
+            return items.filter((item) => item.id !== id);
+        });
+    }, []);
 
-    const content = isOpen ? (
-      <Suspense fallback={fallback}>
-        <Panel onClose={onClose} caption={t(`header.title.${componentId}`)}>
-          <Component />
-        </Panel>
-      </Suspense>
-    ) : (
-      fallback
+    const content = (
+        <div>
+            {
+                popups.map((item) => {
+                    const close = () => onClose(item.id);
+                    const Component = contents[item.componentId];
+                    // const Panel = popupContainer[item.popupId];
+                    const Panel = popupContainer['dialog'];
+                    return (
+                        <Suspense key={item.id} fallback={<div></div>}>
+                            <Panel onClose={close} caption={t(`header.title.${item.componentId}`)}>
+                                <Component />
+                            </Panel>
+                        </Suspense>
+                    );
+                })
+            }
+        </div>
     );
 
-    const open: TSetOpen = useCallback((componentId: IAsyncComponents) => {
-        setOpen(true);
-        setComponentId(componentId);
+    const open: TSetOpen = useCallback((componentId: TAsyncComponents, popupId: TAsyncPopup) => {
+        setPopups((items) => {
+            return [...items, { componentId, id: getId(), popupId }];
+        });
     }, []);
 
     return [content, open] as [JSX.Element, TSetOpen];

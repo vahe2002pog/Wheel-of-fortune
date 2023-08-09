@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import '../styles/panel.css';
-import closeIcon from '../img/close.svg';
+import '../../styles/panel.css';
+import closeIcon from '../../img/close.svg';
 import { useTranslation } from 'react-i18next';
-import Icon from './icon';
+import Icon from '../icon';
 
 interface IProps {
     children: any;
