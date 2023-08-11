@@ -19,7 +19,7 @@ export default function Header(props: IProps) {
     const { t } = useTranslation();
     return (
         <header className="tw-flex">
-            <img src={logo} alt={ t('header.title.logo') } height='30px' />
+            <img src={logo} alt={ t('header.title.logo') } height='30px' width="auto" />
             <Noindex>
                 <div className="links-wrapper">
                     {/* <Icon src={infoIcon} onClick={() => props.setOpen('info', 'panel')} alt={t('header.title.info')} />

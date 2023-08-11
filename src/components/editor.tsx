@@ -1,5 +1,6 @@
 import React, { useCallback, ChangeEvent, KeyboardEvent, ClipboardEvent, useState, useEffect } from 'react';
 import { debounce } from '../helpers/debounce';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
     item: IPlayer;
@@ -14,6 +15,7 @@ interface IProps {
 export default function Editor(props: IProps) {
 
     const { item, onChange: onChangeProps, onComplete, onPaste } = props;
+    const { t } = useTranslation();
 
     const [value, setValue] = useState(props.item.text || '');
 
@@ -52,18 +54,21 @@ export default function Editor(props: IProps) {
         return onPaste?.(item, pastString);
     }, [onPaste, item]);
 
+    const id = `input-${props.item.id}`;
+
     return (
         <div className="player-item tw-w-full tw-contents" >
-            <div className='player-item-index tw-flex tw-items-center'>{props.index}</div>
+            <label htmlFor={id} className='player-item-index tw-flex tw-items-center'>{props.index}</label>
             <div className='tw-relative'>
                 <input
-                    id={`input-${props.item.id}`}
+                    id={id}
                     style={{ '--actions-count': props.actions.length } as React.CSSProperties}
                     className="editor-input tw-w-full"
                     maxLength={50}
                     type="text"
                     disabled={props.disabled}
                     value={value}
+                    placeholder={t('editor.placeholder')}
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                     onPaste={onPasteHandler}

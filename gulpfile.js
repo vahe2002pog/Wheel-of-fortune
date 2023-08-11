@@ -9,6 +9,7 @@ gulp.task('default', function() {
         .pipe(replace('Колесо Фортуны онлайн', 'Wheel of Fortune online'))
         .pipe(replace('На выбывание', 'Elimination mode'))
         .pipe(replace('Игроки', 'Players'))
+        .pipe(replace('Введите игрока', 'Enter player'))
         .pipe(replace('Вставить текст из буфера', 'Paste text from clipboard'))
         .pipe(replace('Скопировать ссылку', 'Copy link'))
         .pipe(replace('Справка', 'Help'))

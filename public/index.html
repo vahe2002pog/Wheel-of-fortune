@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Колесо фортуны «Колесо удачи или рандома»</title>
     <meta name="description" content="Колесо удачи или фортуны онлайн. Простой способ не делать выбор самому и надеется на случай. Выбор из нескольких вариантов или выбор с помощью исключения вариантов">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#1E1E1E" />
     <link rel="manifest" href="%PUBLIC_URL%/.webmanifest">
 
@@ -37,7 +37,7 @@
 <body class="tw-h-full tw-w-full">
     <div id="root" class="tw-h-full tw-flex tw-flex-col">
         <header class="tw-flex"><img src="/static/media/logo.4542f66f2f59ce5f02f8d3f26d2de3df.svg"
-                alt="Колесо Фортуны онлайн" height="30px"><!--noindex-->
+                alt="Колесо Фортуны онлайн" height="30px" width="auto"><!--noindex-->
             <div class="links-wrapper"><img src="/static/media/paste.cf5459828d3112cc806511b3f0c37325.svg"
                     class="svg-icon tw-cursor-pointer" alt="Вставить текст из буфера" width="24px" height="24px"
                     title="Вставить текст из буфера"><img src="/static/media/copy.6db701e33b8bf1d69221b183b80e1865.svg"
@@ -53,10 +53,10 @@
                         <h2>Игроки</h2>
                     </div>
                     <div class="player-list tw-grid" id="players">
-                        <div class="player-item tw-w-full tw-contents">
-                            <div class="player-item-index tw-flex tw-items-center">1</div>
+                        <div class="player-item tw-w-full tw-contents"><label for="input-1"
+                                class="player-item-index tw-flex tw-items-center">1</label>
                             <div class="tw-relative"><input id="input-1" class="editor-input tw-w-full" maxlength="50"
-                                    type="text" value="" style="--actions-count: 0;">
+                                    type="text" placeholder="Введите игрока" value="" style="--actions-count: 0;">
                                 <div class="tw-flex editor-actions tw-absolute"></div>
                             </div>
                         </div>
