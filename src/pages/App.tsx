@@ -5,7 +5,6 @@ import Menu from '../components/menu';
 import Spinner from '../components/spinner';
 import { createPlayer, replaceEdited, sortById } from '../helpers/player';
 import { copyLink, confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
-import Message from '../components/message';
 import { useKeyboardOpen } from '../hook/keyboard';
 import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,6 @@ import { useOpener } from '../hook/useOpener';
 export default function App() {
 
     const [spinnerRunning, setSpinnerRunning] = useState(false);
-    const [message, setMessage] = useState('');
     const [defeatMode, setDefeatMode] = useHistoryStateDefeatMode();
     const [players, setPlayers] = useHistoryStatePlayer('list');
     const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
@@ -23,9 +21,8 @@ export default function App() {
     const [ opener, setOpen ] = useOpener();
 
     const showMessage = useCallback((msg: string) => {
-        setMessage(msg);
-        setTimeout(setMessage, 3000, '');
-    }, [setMessage]);
+        setOpen({componentId: 'none', popupId: 'message', templateOptions: {message: msg}})
+    }, [setOpen]);
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), [setDefeatMode]);
     const onPlayerChange = useCallback((player: IPlayer) => {
@@ -131,7 +128,6 @@ export default function App() {
                 />
                 { opener }
             </main>
-            { message ? <Message text={message} /> : null}
         </>
     );
 }

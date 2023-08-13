@@ -3,14 +3,13 @@ import '../../styles/dialog.css';
 import closeIcon from '../../img/close.svg';
 import { useTranslation } from 'react-i18next';
 import Icon from '../icon';
+import { IPopupProps } from './interfaces';
 
-interface IProps {
-    children: any;
-    onClose: () => void;
-    caption: string;
+interface IProps extends IPopupProps {
+
 }
 
-export default function Dialog({ children, onClose, caption }: IProps) {
+export default function Dialog({ children, onClose, caption, style, className }: IProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useTranslation();
 
@@ -24,7 +23,7 @@ export default function Dialog({ children, onClose, caption }: IProps) {
     }, []);
 
     return (
-        <div>
+        <div style={style} className={ className }>
             <div className='dialog-overlay' onClick={close}></div>
             <div className={`dialog ${ isOpen ? 'open' : '' }`}>
                 <div className='header'>
@@ -35,7 +34,6 @@ export default function Dialog({ children, onClose, caption }: IProps) {
                     { children }
                 </div>
             </div>
-            
         </div>
     );
 };

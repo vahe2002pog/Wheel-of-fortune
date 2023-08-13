@@ -22,8 +22,8 @@ export default function Header(props: IProps) {
             <img src={logo} alt={ t('header.title.logo') } height='30px' width="auto" />
             <Noindex>
                 <div className="links-wrapper">
-                    {/* <Icon src={infoIcon} onClick={() => props.setOpen('info', 'panel')} alt={t('header.title.info')} />
-                    <Icon src={settingIcon} onClick={() => props.setOpen('setting', 'panel')} alt={t('header.title.setting')} /> */}
+                    {/* <Icon src={infoIcon} onClick={() => props.setOpen({ componentId: 'info', popupId: 'panel'})} alt={t('header.title.info')} />
+                    <Icon src={settingIcon} onClick={() => props.setOpen({ componentId: 'setting', popupId: 'panel'})} alt={t('header.title.setting')} /> */}
                     <Icon src={pasteIcon} onClick={() => props.onPaste()} alt={t('header.paste')} />
                     <Icon src={copyIcon} onClick={props.onCopy} alt={t('header.copy')} />
                 </div>

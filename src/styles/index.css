@@ -184,16 +184,6 @@ main {
   left: 0;
 }
 /* /Spinner */
-/* Message */
-.message {
-  right: 20px;
-  bottom: 20px;
-  background-color: #7ee3ff;
-  color: #1E1E1E;
-  padding: 10px;
-  border-radius: 20px 20px 4px;
-}
-/* /Message */
 /* Keyboard */
 .keyboard-opened {
   background-color: #222;

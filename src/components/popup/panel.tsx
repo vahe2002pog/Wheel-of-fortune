@@ -3,14 +3,13 @@ import '../../styles/panel.css';
 import closeIcon from '../../img/close.svg';
 import { useTranslation } from 'react-i18next';
 import Icon from '../icon';
+import { IPopupProps } from './interfaces';
 
-interface IProps {
-    children: any;
-    onClose: () => void;
-    caption: string;
+interface IProps extends IPopupProps {
+
 }
 
-const Panel = ({ children, onClose, caption }: IProps) => {
+const Panel = ({ children, onClose, caption, style, className }: IProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const { t } = useTranslation();
 
@@ -24,7 +23,7 @@ const Panel = ({ children, onClose, caption }: IProps) => {
     }, []);
 
     return (
-        <div>
+        <div style={style} className={className}>
             <div className='panel-overlay' onClick={close}></div>
             <div className={`panel ${ isOpen ? 'open' : '' }`}>
                 <div className='header'>
