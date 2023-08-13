@@ -1,10 +1,11 @@
-import React, { useMemo, useCallback } from "react";
-import List from "./list";
-import Defeat from "./defeat";
+import React, { useMemo, useCallback } from 'react';
+import List from './list';
+import Defeat from './defeat';
 import rmIcon from '../img/rm.svg';
 import arrowUpIcon from '../img/arrow-up.svg';
-import { createPlayer, focusNext } from "../helpers/player";
+import { createPlayer, focusNext } from '../helpers/player';
 import { useTranslation } from 'react-i18next';
+import { useClipboard } from '../hook/useClipboard';
 
 interface IProps {
     players: IPlayer[];
@@ -20,7 +21,6 @@ interface IProps {
     onBackDefeatPlayers: () => void;
     onBackDefeatPlayer: (item: IPlayer) => void;
     onRemoveDefeatPlayer: (item: IPlayer) => void;
-    onPaste?: (item: IPlayer, text: string) => boolean;
 }
 
 export default function Menu(props: IProps) {
@@ -33,6 +33,7 @@ export default function Menu(props: IProps) {
         return items;
     }, [props.players]);
 
+    const { paste } = useClipboard();
     const { t } = useTranslation();
 
     const focusPlayer = useCallback((item: IPlayer) => focusNext('players', item), []);
@@ -61,7 +62,6 @@ export default function Menu(props: IProps) {
         }]
     }, [t, props.onRemoveDefeatPlayer, props.onBackDefeatPlayer]);
 
-
     return (
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
             <div className="menu-content-center">
@@ -82,7 +82,7 @@ export default function Menu(props: IProps) {
                     hideLastAction={true}
                     actions={playersActions}
                     onComplete={focusPlayer}
-                    onPaste={props.onPaste}
+                    onPaste={paste}
                 />
 
                 {

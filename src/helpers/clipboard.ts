@@ -1,4 +1,5 @@
 import { t } from 'i18next';
+import { normalizeStrToEditor } from './utils';
 
 export function copyLink(): Promise<void> {
     return copyTextToClipboard(window.location.href);
@@ -109,9 +110,7 @@ export async function confirmDialog(pastItems: string[], fromInput?: boolean): P
 
 export function splitText(text: string, spaces: boolean = true): string[] {
     const clear = (items: string[]) => {
-        return items.map((item) => {
-            return item.trim();
-        }).filter(Boolean);
+        return items.map(normalizeStrToEditor).filter(Boolean);
     };
 
     if (text.search(/\n/) !== -1) {

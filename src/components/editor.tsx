@@ -1,6 +1,7 @@
 import React, { useCallback, ChangeEvent, KeyboardEvent, ClipboardEvent, useState, useEffect } from 'react';
 import { debounce } from '../helpers/debounce';
 import { useTranslation } from 'react-i18next';
+import { EDITOR_MAX_LENGTH } from '../helpers/utils';
 
 interface IProps {
     item: IPlayer;
@@ -64,7 +65,7 @@ export default function Editor(props: IProps) {
                     id={id}
                     style={{ '--actions-count': props.actions.length } as React.CSSProperties}
                     className="editor-input tw-w-full"
-                    maxLength={50}
+                    maxLength={EDITOR_MAX_LENGTH}
                     type="text"
                     disabled={props.disabled}
                     value={value}

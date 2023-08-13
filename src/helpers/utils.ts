@@ -1,3 +1,5 @@
+export const EDITOR_MAX_LENGTH = 50;
+
 export function isLocalHost(): boolean {
     return (window.location.hostname === 'localhost' || /^(\d{0,3}\.){3}\d{0,3}$/.test(window.location.hostname));
 }
@@ -39,3 +41,7 @@ export const keyCounter = (() => {
     let index = 0;
     return () => String(index++);
 });
+
+export function normalizeStrToEditor(str: string): string {
+    return str.trim().substring(0, EDITOR_MAX_LENGTH);
+}

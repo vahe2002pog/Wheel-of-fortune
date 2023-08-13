@@ -3,26 +3,20 @@ import '../styles/tailwind.min.css';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import Spinner from '../components/spinner';
-import { createPlayer, replaceEdited, sortById } from '../helpers/player';
-import { confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
+import { replaceEdited, sortById } from '../helpers/player';
 import { useKeyboardOpen } from '../hook/keyboard';
-import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
-import { useTranslation } from 'react-i18next';
-import { PopupContext } from '../context/popupContext';
+import { PlayersContext } from '../context/PlayersContext';
 
 export default function App() {
 
     const [spinnerRunning, setSpinnerRunning] = useState(false);
-    const [defeatMode, setDefeatMode] = useHistoryStateDefeatMode();
-    const [players, setPlayers] = useHistoryStatePlayer('list');
-    const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
-    const isKeyboardOpen = useKeyboardOpen();
-    const { t } = useTranslation();
-    const { openPopup } = useContext(PopupContext);
+    const {
+        defeatMode, setDefeatMode,
+        players, setPlayers,
+        defeatPlayers, setDefeatPlayers
+    } = useContext(PlayersContext);
 
-    const showMessage = useCallback((msg: string) => {
-        openPopup({componentId: 'none', popupId: 'message', templateOptions: {message: msg}});
-    }, [openPopup]);
+    const isKeyboardOpen = useKeyboardOpen();
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), [setDefeatMode]);
     const onPlayerChange = useCallback((player: IPlayer) => {
@@ -72,28 +66,9 @@ export default function App() {
         }
     }, [setSpinnerRunning, defeatMode, setPlayers, setDefeatPlayers]);
 
-    const onPaste = useCallback((player?: IPlayer, str?: string) => {
-        const inputData = str ? splitText(str, false) : [];
-        const dataResolver = str ? confirmDialog(inputData, true) : pastFromBuffer().then(splitText).then(confirmDialog);
-        Promise.resolve(dataResolver).then((items) => {
-            if (str) {
-                setPlayers((cur) => [...cur, ...items.map((text) => createPlayer({text}))]);
-            } else {
-                setPlayers(items.map((text) => createPlayer({text})));
-            }
-        }).catch(() => {
-            if (!str) {
-                showMessage(t('main.paste-error'));
-            } else if (player) {
-                setPlayers((items) => replaceEdited(items, {...player, text: player.text + str}));
-            }
-        });
-        return inputData.length > 1;
-    }, [showMessage, setPlayers, t]);
-
     return (
         <>
-            <Header onPaste={onPaste} />
+            <Header />
             <main className={`tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ${isKeyboardOpen ? 'keyboard-opened' : ''}`}>
                 <Menu
                     players={players}
@@ -109,7 +84,6 @@ export default function App() {
                     onRemoveDefeatPlayer={onRemoveDefeatPlayer}
                     onBackDefeatPlayer={onBackDefeatPlayer}
                     onBackDefeatPlayers={onBackDefeatPlayers}
-                    onPaste={onPaste}
                 />
 
                 <Spinner

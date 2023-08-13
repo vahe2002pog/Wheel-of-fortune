@@ -11,13 +11,12 @@ import { PopupContext } from '../context/popupContext';
 import { useClipboard } from '../hook/useClipboard';
 
 interface IProps {
-    onPaste: () => void;
 }
 
 export default function Header(props: IProps) {
     const { t } = useTranslation();
     const { openPopup } = useContext(PopupContext);
-    const { copy } = useClipboard();
+    const { copy, paste } = useClipboard();
     return (
         <header className="tw-flex">
             <img src={logo} alt={ t('header.title.logo') } height='30px' width="auto" />
@@ -25,7 +24,7 @@ export default function Header(props: IProps) {
                 <div className="links-wrapper">
                     {/* <Icon src={infoIcon} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={t('header.title.info')} />
                     <Icon src={settingIcon} onClick={() => openPopup({ componentId: 'setting', popupId: 'panel'})} alt={t('header.title.setting')} /> */}
-                    <Icon src={pasteIcon} onClick={() => props.onPaste()} alt={t('header.paste')} />
+                    <Icon src={pasteIcon} onClick={paste} alt={t('header.paste')} />
                     <Icon src={copyIcon} onClick={copy} alt={t('header.copy')} />
                 </div>
             </Noindex>
