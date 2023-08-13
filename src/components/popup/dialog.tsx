@@ -23,9 +23,9 @@ export default function Dialog({ children, onClose, caption, style, className }:
     }, []);
 
     return (
-        <div style={style} className={ className }>
+        <div className={ className }>
             <div className='dialog-overlay' onClick={close}></div>
-            <div className={`dialog ${ isOpen ? 'open' : '' }`}>
+            <div className={`dialog ${ isOpen ? 'open' : '' }`} style={style}>
                 <div className='header'>
                     <div>{ caption }</div>
                     <Icon src={closeIcon} onClick={close} alt={t('dialog.close')} />

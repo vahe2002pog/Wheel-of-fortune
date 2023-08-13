@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import '../styles/tailwind.min.css';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import Spinner from '../components/spinner';
 import { createPlayer, replaceEdited, sortById } from '../helpers/player';
-import { copyLink, confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
+import { confirmDialog, pastFromBuffer, splitText } from '../helpers/clipboard';
 import { useKeyboardOpen } from '../hook/keyboard';
 import { useHistoryStateDefeatMode, useHistoryStatePlayer } from '../hook/historyState';
 import { useTranslation } from 'react-i18next';
-import { useOpener } from '../hook/useOpener';
+import { PopupContext } from '../context/popupContext';
 
 export default function App() {
 
@@ -18,11 +18,11 @@ export default function App() {
     const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
     const isKeyboardOpen = useKeyboardOpen();
     const { t } = useTranslation();
-    const [ opener, setOpen ] = useOpener();
+    const { openPopup } = useContext(PopupContext);
 
     const showMessage = useCallback((msg: string) => {
-        setOpen({componentId: 'none', popupId: 'message', templateOptions: {message: msg}})
-    }, [setOpen]);
+        openPopup({componentId: 'none', popupId: 'message', templateOptions: {message: msg}});
+    }, [openPopup]);
 
     const onDefeatChange = useCallback((value: boolean) => setDefeatMode(value), [setDefeatMode]);
     const onPlayerChange = useCallback((player: IPlayer) => {
@@ -72,14 +72,6 @@ export default function App() {
         }
     }, [setSpinnerRunning, defeatMode, setPlayers, setDefeatPlayers]);
 
-    const onCopy = useCallback(() => {
-        copyLink().then(() => {
-            showMessage(t('main.copy-success'));
-        }).catch(() => {
-            showMessage(t('main.copy-error'));
-        });
-    }, [showMessage, t]);
-
     const onPaste = useCallback((player?: IPlayer, str?: string) => {
         const inputData = str ? splitText(str, false) : [];
         const dataResolver = str ? confirmDialog(inputData, true) : pastFromBuffer().then(splitText).then(confirmDialog);
@@ -101,7 +93,7 @@ export default function App() {
 
     return (
         <>
-            <Header onCopy={onCopy} onPaste={onPaste} setOpen={setOpen}/>
+            <Header onPaste={onPaste} />
             <main className={`tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ${isKeyboardOpen ? 'keyboard-opened' : ''}`}>
                 <Menu
                     players={players}
@@ -126,7 +118,6 @@ export default function App() {
                     runSpinner={runSpinner}
                     stopSpinner={stopSpinner}
                 />
-                { opener }
             </main>
         </>
     );

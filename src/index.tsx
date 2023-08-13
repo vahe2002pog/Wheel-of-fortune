@@ -4,12 +4,15 @@ import './styles/index.css';
 import App from './pages/App';
 import { initApplication } from './helpers/initApplication';
 import './lang';
+import { PopupContextProvider } from './context/popupContext';
 
 initApplication();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <PopupContextProvider>
+            <App />
+        </PopupContextProvider>
+    </React.StrictMode>
 );

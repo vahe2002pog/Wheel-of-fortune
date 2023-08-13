@@ -23,9 +23,9 @@ const Panel = ({ children, onClose, caption, style, className }: IProps) => {
     }, []);
 
     return (
-        <div style={style} className={className}>
+        <div className={className}>
             <div className='panel-overlay' onClick={close}></div>
-            <div className={`panel ${ isOpen ? 'open' : '' }`}>
+            <div className={`panel ${ isOpen ? 'open' : '' }`} style={style} >
                 <div className='header'>
                     <div>{ caption }</div>
                     <Icon src={closeIcon} onClick={close} alt={t('panel.close')} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import copyIcon from '../img/copy.svg';
 import pasteIcon from '../img/paste.svg';
 // import settingIcon from '../img/setting.svg';
@@ -6,26 +6,27 @@ import pasteIcon from '../img/paste.svg';
 import logo from '../img/logo.svg';
 import { useTranslation } from 'react-i18next';
 import Noindex from './noindex';
-import { TSetOpen } from '../hook/useOpener';
 import Icon from './icon';
+import { PopupContext } from '../context/popupContext';
+import { useClipboard } from '../hook/useClipboard';
 
 interface IProps {
-    onCopy: () => void;
     onPaste: () => void;
-    setOpen: TSetOpen;
 }
 
 export default function Header(props: IProps) {
     const { t } = useTranslation();
+    const { openPopup } = useContext(PopupContext);
+    const { copy } = useClipboard();
     return (
         <header className="tw-flex">
             <img src={logo} alt={ t('header.title.logo') } height='30px' width="auto" />
             <Noindex>
                 <div className="links-wrapper">
-                    {/* <Icon src={infoIcon} onClick={() => props.setOpen({ componentId: 'info', popupId: 'panel'})} alt={t('header.title.info')} />
-                    <Icon src={settingIcon} onClick={() => props.setOpen({ componentId: 'setting', popupId: 'panel'})} alt={t('header.title.setting')} /> */}
+                    {/* <Icon src={infoIcon} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={t('header.title.info')} />
+                    <Icon src={settingIcon} onClick={() => openPopup({ componentId: 'setting', popupId: 'panel'})} alt={t('header.title.setting')} /> */}
                     <Icon src={pasteIcon} onClick={() => props.onPaste()} alt={t('header.paste')} />
-                    <Icon src={copyIcon} onClick={props.onCopy} alt={t('header.copy')} />
+                    <Icon src={copyIcon} onClick={copy} alt={t('header.copy')} />
                 </div>
             </Noindex>
         </header>
