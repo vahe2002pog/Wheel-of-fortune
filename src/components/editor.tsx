@@ -1,6 +1,6 @@
 import React, { useCallback, ChangeEvent, KeyboardEvent, ClipboardEvent, useState, useEffect } from 'react';
 import { debounce } from '../helpers/debounce';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../hook/useTranslation';
 import { EDITOR_MAX_LENGTH } from '../helpers/utils';
 
 interface IProps {
@@ -16,7 +16,7 @@ interface IProps {
 export default function Editor(props: IProps) {
 
     const { item, onChange: onChangeProps, onComplete, onPaste } = props;
-    const { t } = useTranslation();
+    const { tr } = useTranslation();
 
     const [value, setValue] = useState(props.item.text || '');
 
@@ -69,7 +69,7 @@ export default function Editor(props: IProps) {
                     type="text"
                     disabled={props.disabled}
                     value={value}
-                    placeholder={t('editor.placeholder')}
+                    placeholder={tr('editor.placeholder')}
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                     onPaste={onPasteHandler}

@@ -1,9 +1,11 @@
-import { t } from 'i18next';
+import { translation } from '../context/LangContext';
 import { normalizeStrToEditor } from './utils';
 
 export function copyLink(): Promise<void> {
     return copyTextToClipboard(window.location.href);
 }
+
+const tr = translation.tr;
 
 function copyTextToClipboard(text: string): Promise<void> {
     if (!navigator.clipboard) {
@@ -69,9 +71,9 @@ export async function confirmDialog(pastItems: string[], fromInput?: boolean): P
 
     if (pastList && pastDialog && yesBtn && noBtn && dialogTitle) {
 
-        dialogTitle.textContent = fromInput ? t('clipboard.paste-end-msg') : t('clipboard.paste-replace-msg');
-        yesBtn.textContent = t('clipboard.dialog-yes-btn');
-        noBtn.textContent = t('clipboard.dialog-no-btn');
+        dialogTitle.textContent = fromInput ? tr('clipboard.paste-end-msg') : tr('clipboard.paste-replace-msg');
+        yesBtn.textContent = tr('clipboard.dialog-yes-btn');
+        noBtn.textContent = tr('clipboard.dialog-no-btn');
         pastList.innerHTML = '';
         pastItems.forEach((item) => {
             const div = document.createElement('div');

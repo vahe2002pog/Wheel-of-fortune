@@ -4,7 +4,7 @@ import Defeat from './defeat';
 import rmIcon from '../img/rm.svg';
 import arrowUpIcon from '../img/arrow-up.svg';
 import { createPlayer, focusNext } from '../helpers/player';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../hook/useTranslation';
 import { useClipboard } from '../hook/useClipboard';
 
 interface IProps {
@@ -34,7 +34,7 @@ export default function Menu(props: IProps) {
     }, [props.players]);
 
     const { paste } = useClipboard();
-    const { t } = useTranslation();
+    const { tr } = useTranslation();
 
     const focusPlayer = useCallback((item: IPlayer) => focusNext('players', item), []);
     const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('defeatPlayers', item), []);
@@ -42,25 +42,25 @@ export default function Menu(props: IProps) {
     const playersActions = useMemo((): IAction[] => {
         return [{
             id: 'remove',
-            title: t('menu.remove'),
+            title: tr('menu.remove'),
             icon: rmIcon,
             handler: props.onRemovePlayer
         }]
-    }, [t, props.onRemovePlayer])
+    }, [tr, props.onRemovePlayer])
 
     const defeatPlayersActions = useMemo((): IAction[] => {
         return [{
             id: 'back',
-            title: t('menu.back'),
+            title: tr('menu.back'),
             icon: arrowUpIcon,
             handler: props.onBackDefeatPlayer
         }, {
             id: 'remove',
-            title: t('menu.remove'),
+            title: tr('menu.remove'),
             icon: rmIcon,
             handler: props.onRemoveDefeatPlayer
         }]
-    }, [t, props.onRemoveDefeatPlayer, props.onBackDefeatPlayer]);
+    }, [tr, props.onRemoveDefeatPlayer, props.onBackDefeatPlayer]);
 
     return (
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
@@ -68,9 +68,9 @@ export default function Menu(props: IProps) {
                 <Defeat defeatMode={props.defeatMode} disabled={props.disabled} onChange={props.onDefeatChange} />
 
                 <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
-                    <h2>{t('menu.players')}</h2>
+                    <h2>{tr('menu.players')}</h2>
                     {
-                        props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div> : null
+                        props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">{tr('menu.clear')}</div> : null
                     }
                 </div>
 
@@ -87,7 +87,7 @@ export default function Menu(props: IProps) {
 
                 {
                     props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
-                        <h3>{t('menu.defeat-players')}</h3>
+                        <h3>{tr('menu.defeat-players')}</h3>
                         <div className="tw-flex">
                             <img
                                 src={arrowUpIcon}
@@ -95,10 +95,10 @@ export default function Menu(props: IProps) {
                                 alt="action"
                                 width="16px"
                                 height="16px"
-                                title={t('menu.backAll')}
+                                title={tr('menu.backAll')}
                                 onClick={() => props.onBackDefeatPlayers?.()}
                             />
-                            <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{t('menu.clear')}</div>
+                            <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{tr('menu.clear')}</div>
                         </div>
                     </div> : null
                 }

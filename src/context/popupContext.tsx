@@ -14,7 +14,7 @@ export const PopupContextProvider = ({children}: { children: JSX.Element }) => {
     const value = useMemo(() => {
         return {
             openPopup: openPopup
-        }
+        };
     }, [openPopup]);
 
     return (

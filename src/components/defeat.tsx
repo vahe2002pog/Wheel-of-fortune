@@ -1,5 +1,5 @@
 import React, { useId, ChangeEvent } from "react";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../hook/useTranslation';
 
 interface IProps {
     defeatMode: boolean;
@@ -9,7 +9,7 @@ interface IProps {
 
 export default function Defeat(props: IProps) {
     const id = useId();
-    const { t } = useTranslation();
+    const { tr } = useTranslation();
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         props.onChange(event.target.checked);
@@ -18,7 +18,7 @@ export default function Defeat(props: IProps) {
     return (
         <div className="tw-flex tw-justify-center tw-items-center">
             <input type="checkbox" id={id} disabled={props.disabled} checked={props.defeatMode} onChange={onChange} />
-            <label htmlFor={id} style={{ marginLeft: "8px" }}>{t('menu.checkbox-label')}</label>
+            <label htmlFor={id} style={{ marginLeft: "8px" }}>{tr('menu.checkbox-label')}</label>
         </div>
     );
 }

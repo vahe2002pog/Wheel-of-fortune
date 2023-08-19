@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import '../../styles/panel.css';
 import closeIcon from '../../img/close.svg';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../hook/useTranslation';
 import Icon from '../icon';
 import { IPopupProps } from './interfaces';
 
@@ -11,7 +11,7 @@ interface IProps extends IPopupProps {
 
 const Panel = ({ children, onClose, caption, style, className }: IProps) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { t } = useTranslation();
+    const { tr } = useTranslation();
 
     const close = useCallback(() => {
         setIsOpen(!isOpen);
@@ -28,7 +28,7 @@ const Panel = ({ children, onClose, caption, style, className }: IProps) => {
             <div className={`panel ${ isOpen ? 'open' : '' }`} style={style} >
                 <div className='header'>
                     <div>{ caption }</div>
-                    <Icon src={closeIcon} onClick={close} alt={t('panel.close')} />
+                    <Icon src={closeIcon} onClick={close} alt={tr('panel.close')} />
                 </div>
                 <div className='content scroll'>
                     { children }

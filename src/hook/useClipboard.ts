@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { PopupContext } from '../context/popupContext';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from './useTranslation';
 import { PlayersContext } from '../context/PlayersContext';
 import { createPlayer, replaceEdited } from '../helpers/player';
 import { normalizeStrToEditor } from '../helpers/utils';
@@ -9,7 +9,7 @@ export function useClipboard() {
 
     const { openPopup } = useContext(PopupContext);
     const { setPlayers } = useContext(PlayersContext);
-    const { t } = useTranslation();
+    const { tr } = useTranslation();
 
     const showMessage = useCallback((msg: string) => {
         openPopup({componentId: 'none', popupId: 'message', templateOptions: {message: msg}});
@@ -18,12 +18,12 @@ export function useClipboard() {
     const copy = useCallback(() => {
         import('../helpers/clipboard').then(({ copyLink }) => {
             copyLink().then(() => {
-                showMessage(t('main.copy-success'));
+                showMessage(tr('main.copy-success'));
             }).catch(() => {
-                showMessage(t('main.copy-error'));
+                showMessage(tr('main.copy-error'));
             });
         });
-    }, [showMessage, t]);
+    }, [showMessage, tr]);
 
     const paste = useCallback((player?: IPlayer, str?: string) => {
         import('../helpers/clipboard').then(({ splitText, confirmDialog, pastFromBuffer }) => {
@@ -38,14 +38,14 @@ export function useClipboard() {
                 }
             }).catch(() => {
                 if (!str) {
-                    showMessage(t('main.paste-error'));
+                    showMessage(tr('main.paste-error'));
                 } else if (player) {
                     setPlayers((items) => replaceEdited(items, {...player, text: normalizeStrToEditor(player.text + str)}));
                 }
             });
         });
         return true;
-    }, [showMessage, setPlayers, t]);
+    }, [showMessage, setPlayers, tr]);
 
     return {copy, paste};
 }
