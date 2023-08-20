@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
+import { SettingsContext } from '../context/SettingsContext';
 
-const rotationTime = 5000;
 export enum AnimationState {
     running = 'r',
     ended = 'e',
@@ -10,6 +10,7 @@ export enum AnimationState {
 export function useAngleAnimation(initAngle: number): [number, () => void, AnimationState] {
     const [currentAngle, setCurrentAngle] = useState(initAngle);
     const requestRef = useRef(0);
+    const { rotationTime } = useContext(SettingsContext);
     const stateRef = useRef({ startAngle: initAngle, endAngle: 0, startTime: 0, state: AnimationState.unset, currentAngle: initAngle });
 
     const rotate = useCallback((previousTime: number) => {
@@ -42,7 +43,7 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         } else {
             cancelAnimationFrame(requestRef.current);
         }
-    }, []);
+    }, [rotationTime]);
 
     const run = useCallback(() => {
         if (stateRef.current.state === AnimationState.running) {

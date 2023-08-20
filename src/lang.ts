@@ -26,7 +26,10 @@ export const LangMap = {
         'clipboard.paste-replace-msg': 'Replace items?',
         'clipboard.dialog-yes-btn': 'Yes',
         'clipboard.dialog-no-btn': 'No',
-        'panel.close': 'Close'
+        'panel.close': 'Close',
+        'settings.rotation-time': 'Rotation time',
+        'settings.rotation-s': 's',
+        'settings.reset-all': 'Reset'
     },
     ru: {
         'header.title.logo': 'Колесо Фортуны онлайн',
@@ -50,6 +53,9 @@ export const LangMap = {
         'clipboard.paste-replace-msg': 'Заменить элементы?',
         'clipboard.dialog-yes-btn': 'Да',
         'clipboard.dialog-no-btn': 'Нет',
-        'panel.close': 'Закрыть'
+        'panel.close': 'Закрыть',
+        'settings.rotation-time': 'Время вращения',
+        'settings.rotation-s': 'с',
+        'settings.reset-all': 'Сбросить'
     }
 };

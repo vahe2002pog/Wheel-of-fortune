@@ -1,0 +1,11 @@
+.settings-row {
+    margin-bottom: 12px;
+}
+
+.settings-label {
+    font-size: 12px;
+}
+
+.settings_rotation-time__value {
+    min-width: 42px;
+}

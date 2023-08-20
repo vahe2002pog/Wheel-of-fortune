@@ -28,6 +28,11 @@ input {
   color: #8f8f8f;
 }
 
+.touch-device .text-clickable,
+.text-clickable:hover {
+  text-decoration: underline;
+}
+
 /* past dialog */
 .past-dialog {
   left: 50%;
@@ -132,16 +137,16 @@ main {
   font-size: 13px;
 }
 
-.cursor-devise .editor-input:focus:not(:disabled) + .editor-actions,
-.cursor-devise .player-item:hover .editor-input:not(:disabled) + .editor-actions {
+.cursor-device .editor-input:focus:not(:disabled) + .editor-actions,
+.cursor-device .player-item:hover .editor-input:not(:disabled) + .editor-actions {
   visibility: visible;
 }
 
-.cursor-devise .editor-actions {
+.cursor-device .editor-actions {
   visibility: hidden;
 }
 
-.touch-devise .editor-input:disabled + .editor-actions {
+.touch-device .editor-input:disabled + .editor-actions {
   visibility: hidden;
 }
 

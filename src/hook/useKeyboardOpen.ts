@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { isTouchDevise } from '../helpers/utils';
+import { isTouchDevice } from '../helpers/utils';
 import { debounce } from '../helpers/debounce';
 export function useKeyboardOpen() {
 
@@ -16,7 +16,7 @@ export function useKeyboardOpen() {
             setOpenDebounce(element?.tagName === 'INPUT' && element?.type === 'text');
         }
 
-        if (isTouchDevise()) {
+        if (isTouchDevice()) {
             window.addEventListener ? window.addEventListener('focus', activeElementChanged, true) :
                 // @ts-ignore
                 window.attachEvent('onfocusout', activeElementChanged);

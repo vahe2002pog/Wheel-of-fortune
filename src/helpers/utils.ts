@@ -11,7 +11,7 @@ export function isPhone(): boolean {
     return check;
 }
 
-export function isTouchDevise(): boolean {
+export function isTouchDevice(): boolean {
     try {
         return window.matchMedia('(pointer: coarse)').matches;
     } catch (error) {
