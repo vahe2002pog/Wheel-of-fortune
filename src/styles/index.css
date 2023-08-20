@@ -24,6 +24,10 @@ input {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.text-disabled {
+  color: #8f8f8f;
+}
+
 /* past dialog */
 .past-dialog {
   left: 50%;
@@ -81,6 +85,10 @@ header {
   margin-left: 10px;
 }
 
+.svg-icon-disabled {
+  opacity: 0.5;
+}
+
 /* /Header */
 /* List */
 .player-list {
@@ -124,9 +132,17 @@ main {
   font-size: 13px;
 }
 
-.cursor-devise .editor-input:focus + .editor-action,
-.cursor-devise .player-item:hover .editor-action {
+.cursor-devise .editor-input:focus:not(:disabled) + .editor-actions,
+.cursor-devise .player-item:hover .editor-input:not(:disabled) + .editor-actions {
   visibility: visible;
+}
+
+.cursor-devise .editor-actions {
+  visibility: hidden;
+}
+
+.touch-devise .editor-input:disabled + .editor-actions {
+  visibility: hidden;
 }
 
 .editor-input {
@@ -139,10 +155,6 @@ main {
 
 .editor-input:focus {
   outline: none;
-}
-
-.cursor-devise .editor-action {
-  visibility: hidden;
 }
 
 .editor-action {

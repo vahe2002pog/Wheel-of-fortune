@@ -6,6 +6,8 @@ import arrowUpIcon from '../img/arrow-up.svg';
 import { createPlayer, focusNext } from '../helpers/player';
 import { useTranslation } from '../hook/useTranslation';
 import { useClipboard } from '../hook/useClipboard';
+import Icon from './icon';
+import { Text } from './text';
 
 interface IProps {
     players: IPlayer[];
@@ -70,7 +72,7 @@ export default function Menu(props: IProps) {
                 <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
                     <h2>{tr('menu.players')}</h2>
                     {
-                        props.players.length ? <div onClick={props.onClearPlayers} className="tw-cursor-pointer noselect">{tr('menu.clear')}</div> : null
+                        props.players.length ? <Text onClick={props.onClearPlayers} text={tr('menu.clear')} disabled={props.disabled} /> : null
                     }
                 </div>
 
@@ -89,16 +91,15 @@ export default function Menu(props: IProps) {
                     props.defeatPlayers.length ? <div className="menu-caption tw-flex tw-justify-between tw-items-baseline">
                         <h3>{tr('menu.defeat-players')}</h3>
                         <div className="tw-flex">
-                            <img
+                            <Icon
                                 src={arrowUpIcon}
-                                className="menu-back-button tw-cursor-pointer"
-                                alt="action"
-                                width="16px"
-                                height="16px"
-                                title={tr('menu.backAll')}
-                                onClick={() => props.onBackDefeatPlayers?.()}
+                                className="menu-back-button"
+                                alt={tr('menu.backAll')}
+                                size="16px"
+                                disabled={props.disabled}
+                                onClick={props.onBackDefeatPlayers}
                             />
-                            <div onClick={props.onClearDefeatPlayers} className="tw-cursor-pointer noselect">{tr('menu.clear')}</div>
+                            <Text text={tr('menu.clear')} onClick={props.onClearDefeatPlayers} disabled={props.disabled} />
                         </div>
                     </div> : null
                 }

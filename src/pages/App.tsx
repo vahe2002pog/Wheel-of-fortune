@@ -61,7 +61,7 @@ export default function App() {
 
     return (
         <>
-            <Header />
+            <Header disabled={disabled}/>
             <main className={`tw-flex tw-flex-1 tw-w-full tw-items-center tw-relative ${isKeyboardOpen ? 'keyboard-opened' : ''}`}>
                 <Menu
                     players={players}

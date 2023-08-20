@@ -11,9 +11,10 @@ import { PopupContext } from '../context/popupContext';
 import { useClipboard } from '../hook/useClipboard';
 
 interface IProps {
+    disabled?: boolean;
 }
 
-export default function Header(props: IProps) {
+export default function Header({disabled}: IProps) {
     const { tr } = useTranslation();
     const { openPopup } = useContext(PopupContext);
     const { copy, paste } = useClipboard();
@@ -22,10 +23,10 @@ export default function Header(props: IProps) {
             <img src={logo} alt={ tr('header.title.logo') } height='30px' width="auto" />
             <Noindex>
                 <div className="links-wrapper">
-                    {/* <Icon src={infoIcon} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={tr('header.title.info')} />
-                    <Icon src={settingIcon} onClick={() => openPopup({ componentId: 'setting', popupId: 'panel'})} alt={tr('header.title.setting')} /> */}
-                    <Icon src={pasteIcon} onClick={paste} alt={tr('header.paste')} />
-                    <Icon src={copyIcon} onClick={copy} alt={tr('header.copy')} />
+                    {/* <Icon src={infoIcon} disabled={disabled} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={tr('header.title.info')} />
+                    <Icon src={settingIcon} disabled={disabled} onClick={() => openPopup({ componentId: 'setting', popupId: 'panel'})} alt={tr('header.title.setting')} /> */}
+                    <Icon src={pasteIcon} disabled={disabled} onClick={paste} alt={tr('header.paste')} />
+                    <Icon src={copyIcon} disabled={disabled} onClick={copy} alt={tr('header.copy')} />
                 </div>
             </Noindex>
         </header>
