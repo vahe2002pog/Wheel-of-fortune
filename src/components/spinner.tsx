@@ -1,61 +1,40 @@
-import React, {useCallback, useEffect, useMemo, useState}  from "react";
-import SpinnerFrontSvg from "./spinnerFrontSvg";
-import SpinnerBackSvg from "./spinnerBackSvg";
-import { Wheel } from "../helpers/angelRunner";
-import { getWinnerIndex } from "../helpers/winnerCalc";
+import React, {useCallback, useEffect, useMemo}  from 'react';
+import SpinnerFrontSvg from './spinnerFrontSvg';
+import SpinnerBackSvg from './spinnerBackSvg';
+import { getWinnerIndex } from '../helpers/winnerCalc';
+import { AnimationState, useAngleAnimation } from '../hook/useAngleAnimation';
 
 interface IProps {
-    spinnerRunning: boolean;
     items: IPlayer[];
-    runSpinner?: () => void;
+    setDisabled?: (disabled: boolean) => void;
     stopSpinner?: (winner: IPlayer) => void;
 }
 
 export default function Spinner(props: IProps) {
 
-    const {spinnerRunning, runSpinner: onRunSpinner, items } = props;
-    const [angle, setAngle] = useState(0);
+    const {setDisabled, items } = props;
+    const [angle, run, animationState] = useAngleAnimation(0);
     const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
-    const requestRef = React.useRef(0);
-    const rotateRef = React.useRef(new Wheel(angle));
 
-    const animate = (timeStamp: number) => {
-        setAngle((val) => rotateRef.current.rotate(timeStamp));
+    const [winnerName, winnerIndex] = useMemo(() => {
+        const index = getWinnerIndex(angle, displayItems.length);
+        return [displayItems[index]?.text, index];
+    }, [angle, displayItems]);
 
-        if (!rotateRef.current.ended) {
-            requestRef.current = requestAnimationFrame(animate);
-        } else {
-            cancelAnimationFrame(requestRef.current);
-        }
-    }
 
     useEffect(() => {
-        if (spinnerRunning) {
-            rotateRef.current = new Wheel(angle);
-            requestRef.current = requestAnimationFrame(animate);
+        if (animationState === AnimationState.ended) {
+            props.stopSpinner?.(displayItems[winnerIndex]);
+            setDisabled?.(false);
         }
-        return () => cancelAnimationFrame(requestRef.current);
-    }, [spinnerRunning]);
-
-    useEffect(() => {
-        if (requestRef.current && rotateRef.current.ended) {
-            const index = getWinnerIndex(angle, displayItems.length);
-            const winner = displayItems[index];
-            props.stopSpinner?.(winner);
-        }
-    }, [rotateRef.current, rotateRef.current.ended]);
+    }, [animationState, setDisabled]);
 
     const runSpinner = useCallback(() => {
         if (displayItems.length > 1) {
-            onRunSpinner?.();
+            run();
+            setDisabled?.(true);
         }
-    }, [displayItems, onRunSpinner]);
-
-    const winnerName = useMemo(() => {
-        const index = getWinnerIndex(angle, displayItems.length);
-        return displayItems[index]?.text;
-    }, [angle, displayItems]);
-
+    }, [displayItems, setDisabled, run]);
 
     return (
         <div className="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">

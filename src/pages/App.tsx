@@ -9,7 +9,7 @@ import { PlayersContext } from '../context/PlayersContext';
 
 export default function App() {
 
-    const [spinnerRunning, setSpinnerRunning] = useState(false);
+    const [disabled, setDisabled] = useState(false);
     const {
         defeatMode, setDefeatMode,
         players, setPlayers,
@@ -52,19 +52,12 @@ export default function App() {
         });
     }, [setDefeatPlayers, setPlayers]);
 
-    const runSpinner = useCallback(() => setSpinnerRunning(true), [setSpinnerRunning]);
     const stopSpinner = useCallback((winner: IPlayer) => {
-        setSpinnerRunning((val) => {
-            if (!val) {
-                console.error('Double stop spinner');
-            }
-            return false;
-        });
         if (defeatMode) {
             setPlayers((items) => items.filter(({id}) => id !== winner.id));
             setDefeatPlayers((items) => [winner, ...items]);
         }
-    }, [setSpinnerRunning, defeatMode, setPlayers, setDefeatPlayers]);
+    }, [defeatMode, setPlayers, setDefeatPlayers]);
 
     return (
         <>
@@ -74,7 +67,7 @@ export default function App() {
                     players={players}
                     defeatPlayers={defeatPlayers}
                     defeatMode={defeatMode}
-                    disabled={spinnerRunning}
+                    disabled={disabled}
                     onDefeatChange={onDefeatChange}
                     onPlayerChange={onPlayerChange}
                     onDefeatPlayerChange={onDefeatPlayerChange}
@@ -87,9 +80,8 @@ export default function App() {
                 />
 
                 <Spinner
-                    spinnerRunning={spinnerRunning}
                     items={players}
-                    runSpinner={runSpinner}
+                    setDisabled={setDisabled}
                     stopSpinner={stopSpinner}
                 />
             </main>
