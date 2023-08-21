@@ -1,6 +1,5 @@
 import { useCallback, useContext, useRef, useState } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
-
 export enum AnimationState {
     running = 'r',
     ended = 'e',
@@ -32,7 +31,7 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         } else {
             const progress = elapsedTime / rotationTime;
             const angleDifference = stateRef.current.endAngle - stateRef.current.startAngle;
-            const easingProgress = Math.sin(progress * Math.PI / 2);
+            const easingProgress = Math.pow(Math.sin(Math.PI*(progress + 7)/2),7)+1;
             stateRef.current.currentAngle = stateRef.current.startAngle + angleDifference * easingProgress;
         }
 
@@ -49,7 +48,7 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         if (stateRef.current.state === AnimationState.running) {
             console.warn('Spinner already running');
         } else {
-            stateRef.current.endAngle = 360 * 2 + Math.floor(Math.random() * 360);
+            stateRef.current.endAngle = 360 * (Math.floor(rotationTime / 1000) + 2) + Math.floor(Math.random() * 360);
             stateRef.current.startAngle = stateRef.current.currentAngle;
             stateRef.current.state = AnimationState.running;
             stateRef.current.startTime = 0;

@@ -6,7 +6,7 @@ function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number,
     const props = useMemo(() => {
         const angle = 180 + (start + (end - start) / 2) * 180 / Math.PI;
         const transform = `rotate(${angle} ${cx} ${cy})`;
-        return { x: cx - 105, y: cy + 1, fontSize: '6px', fontFamily: 'MonospaceBold', transform };
+        return { x: cx - 105, y: cy + 1, fontSize: '6px', fontFamily: 'IBM Plex Mono', transform, fill: "#FFF" };
     }, [cx, cy, start, end]);
 
     const displayText = useMemo(() => {
@@ -15,7 +15,7 @@ function Text({cx, cy, r, start, end, text}: {cx: number, cy: number, r: number,
 
     return (
         <>
-            <text {...props} stroke="#fff" strokeWidth="1" >{displayText}</text>
+            {/* <text {...props} stroke="#ffffff80" strokeWidth="1" >{displayText}</text> */}
             <text {...props}>{displayText}</text>
         </>
     );
