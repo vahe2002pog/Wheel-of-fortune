@@ -9,8 +9,8 @@ html {
 }
 
 @font-face {
-  font-family: 'MonospaceBold';
-  src: url('/src/font/MonospaceBold.ttf');
+  font-family: 'IBM Plex Mono';
+  src: url('/src/font/IBMPlexMono-Bold.ttf');
 }
 
 body {

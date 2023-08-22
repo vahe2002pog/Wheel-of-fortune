@@ -1,21 +1,17 @@
-function * randomGenerator(previous: number = 0, max: number) {
+function * randomGenerator(previous: number = 0) {
     while (true) {
         previous = previous * 16807 % 2147483647
-        yield previous % max;
+        yield previous;
     }
 }
 
-const r = randomGenerator(1, 16);
+const r = randomGenerator(2);
 
-function random(): number {
-    return r.next().value as number;
+function random(min: number, max: number): number {
+    const val: number = r.next().value as number;
+    return Math.round(val % max ) + min;
 }
 
 export function getRandomColor(): string {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(random())];
-    }
-    return color;
+    return `hsl(${random(0, 359)}deg ${random(40, 100)}% ${random(20, 50)}%)`;
 }
