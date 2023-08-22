@@ -31,7 +31,7 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         } else {
             const progress = elapsedTime / rotationTime;
             const angleDifference = stateRef.current.endAngle - stateRef.current.startAngle;
-            const easingProgress = Math.pow(Math.sin(Math.PI*(progress + 7)/2),7)+1;
+            const easingProgress = Math.pow(Math.sin(Math.PI * (progress + 7) / 2), 7) + 1;
             stateRef.current.currentAngle = stateRef.current.startAngle + angleDifference * easingProgress;
         }
 
@@ -48,13 +48,13 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         if (stateRef.current.state === AnimationState.running) {
             console.warn('Spinner already running');
         } else {
-            stateRef.current.endAngle = 360 * (Math.floor(rotationTime / 1000) + 2) + Math.floor(Math.random() * 360);
+            stateRef.current.endAngle = 360 * Math.ceil(rotationTime / 1000) + Math.floor(Math.random() * 360);
             stateRef.current.startAngle = stateRef.current.currentAngle;
             stateRef.current.state = AnimationState.running;
             stateRef.current.startTime = 0;
             requestRef.current = requestAnimationFrame(rotate);
         }
-    }, [rotate]);
+    }, [rotate, rotationTime]);
 
     return [currentAngle, run, stateRef.current.state];
 }
