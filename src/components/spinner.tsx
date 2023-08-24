@@ -3,6 +3,7 @@ import SpinnerFrontSvg from './spinnerFrontSvg';
 import SpinnerBackSvg from './spinnerBackSvg';
 import { getWinnerIndex } from '../helpers/winnerCalc';
 import { AnimationState, useAngleAnimation } from '../hook/useAngleAnimation';
+import { DEFAULT_SPINNER_ITEMS } from '../helpers/constants';
 
 interface IProps {
     items: IPlayer[];
@@ -13,8 +14,11 @@ interface IProps {
 export default function Spinner(props: IProps) {
 
     const {setDisabled, items } = props;
-    const [angle, run, animationState] = useAngleAnimation(0);
-    const displayItems = useMemo(() => items.filter(({text}) => text), [items]);
+    const [angle, run, animationState] = useAngleAnimation(items.length ? 0 : 90);
+    const displayItems = useMemo(() => {
+        const res = items.filter(({text}) => text.trim());
+        return res.length ? res : DEFAULT_SPINNER_ITEMS
+    }, [items]);
 
     const [winnerName, winnerIndex] = useMemo(() => {
         const index = getWinnerIndex(angle, displayItems.length);
@@ -24,7 +28,9 @@ export default function Spinner(props: IProps) {
 
     useEffect(() => {
         if (animationState === AnimationState.ended) {
-            props.stopSpinner?.(displayItems[winnerIndex]);
+            if (DEFAULT_SPINNER_ITEMS !== displayItems) {
+                props.stopSpinner?.(displayItems[winnerIndex]);
+            }
             setDisabled?.(false);
         }
     }, [animationState, setDisabled]);

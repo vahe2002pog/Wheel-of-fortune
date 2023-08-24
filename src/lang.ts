@@ -29,7 +29,9 @@ export const LangMap = {
         'panel.close': 'Close',
         'settings.rotation-time': 'Rotation time',
         'settings.rotation-s': 's',
-        'settings.reset-all': 'Reset'
+        'settings.reset-all': 'Reset',
+        'spinner-default-1': 'Yes',
+        'spinner-default-2': 'No'
     },
     ru: {
         'header.title.logo': 'Колесо Фортуны онлайн',
@@ -56,6 +58,8 @@ export const LangMap = {
         'panel.close': 'Закрыть',
         'settings.rotation-time': 'Время вращения',
         'settings.rotation-s': 'с',
-        'settings.reset-all': 'Сбросить'
+        'settings.reset-all': 'Сбросить',
+        'spinner-default-1': 'Да',
+        'spinner-default-2': 'Нет'
     }
 };

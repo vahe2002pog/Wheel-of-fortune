@@ -15,5 +15,7 @@ gulp.task('default', function() {
         .pipe(replace('Справка', 'Help'))
         .pipe(replace('Настройки', 'Settings'))
         .pipe(replace('.webmanifest', '.webmanifest_en'))
+        .pipe(replace('Да', 'Yes'))
+        .pipe(replace('Нет', 'No'))
         .pipe(gulp.dest('./build/en/'));
 });

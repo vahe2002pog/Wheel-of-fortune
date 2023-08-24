@@ -13,7 +13,7 @@ export default memo(function SpinnerFrontSvg({className, runSpinner}: IProps) {
                 <text x="103" y="124" stroke="#fff" strokeWidth="3" fontSize="16px" fontFamily="Comic Sans MS">Spin</text>
                 <text x="103" y="124" fontSize="16px" fontFamily="Comic Sans MS">Spin</text>
             </g>
-            <polygon points="113,0 127,0 120,20" style={{ fill: 'orange', stroke: '#3a3a3a', strokeWidth: '1' }} />
+            <polygon points="115,0 125,0 120,14" style={{ fill: 'orange', stroke: '#3a3a3a', strokeWidth: '1' }} />
         </svg>
     );
 });
