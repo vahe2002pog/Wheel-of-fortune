@@ -48,8 +48,9 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         if (stateRef.current.state === AnimationState.running) {
             console.warn('Spinner already running');
         } else {
-            stateRef.current.endAngle = 360 * Math.ceil(rotationTime / 1000) + Math.floor(Math.random() * 360);
+            const additionalAngle = Math.max(3, Math.ceil(360 * rotationTime / 800)) + Math.floor(Math.random() * 360);
             stateRef.current.startAngle = stateRef.current.currentAngle;
+            stateRef.current.endAngle = stateRef.current.startAngle + additionalAngle;
             stateRef.current.state = AnimationState.running;
             stateRef.current.startTime = 0;
             requestRef.current = requestAnimationFrame(rotate);
