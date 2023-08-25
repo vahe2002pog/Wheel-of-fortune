@@ -31,7 +31,7 @@ export function useAngleAnimation(initAngle: number): [number, () => void, Anima
         } else {
             const progress = elapsedTime / rotationTime;
             const angleDifference = stateRef.current.endAngle - stateRef.current.startAngle;
-            const easingProgress = Math.pow(Math.sin(Math.PI * (progress + 7) / 2), 7) + 1;
+            const easingProgress = Math.pow(Math.sin(Math.PI * (progress + 7) / 2), 3) + 1;
             stateRef.current.currentAngle = stateRef.current.startAngle + angleDifference * easingProgress;
         }
 
