@@ -8,6 +8,7 @@ interface IProps {
     onItemChange: (item: IPlayer) => void;
     hideLastAction?: boolean;
     actions: IAction[];
+    indexVisible?: boolean;
     onComplete: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
 }
@@ -27,6 +28,7 @@ export default function List(props: IProps) {
                             onChange={props.onItemChange}
                             onComplete={props.onComplete}
                             onPaste={props.onPaste}
+                            indexVisible={props.indexVisible}
                         />
                     );
                 })

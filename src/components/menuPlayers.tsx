@@ -6,6 +6,7 @@ import { useTranslation } from '../hook/useTranslation';
 import { useClipboard } from '../hook/useClipboard';
 import { Text } from './text';
 import { PlayersContext } from '../context/PlayersContext';
+import { SettingsContext } from '../context/SettingsContext';
 
 interface IProps {
     disabled: boolean;
@@ -14,6 +15,7 @@ interface IProps {
 export default function MenuPlayers({disabled}: IProps) {
 
     const { players, setPlayers } = useContext(PlayersContext);
+    const { playersIndexVisible } = useContext(SettingsContext);
 
     const onClear = useCallback(() => setPlayers([]), [setPlayers]);
 
@@ -63,6 +65,7 @@ export default function MenuPlayers({disabled}: IProps) {
                 onItemChange={onChange}
                 hideLastAction={true}
                 actions={playersActions}
+                indexVisible={playersIndexVisible}
                 onComplete={focusPlayer}
                 onPaste={paste}
             />

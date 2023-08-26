@@ -31,7 +31,8 @@ export const LangMap = {
         'settings.rotation-s': 's',
         'settings.reset-all': 'Reset',
         'spinner-default-1': 'Yes',
-        'spinner-default-2': 'No'
+        'spinner-default-2': 'No',
+        'settings.players-index-visible': 'Show line index'
     },
     ru: {
         'header.title.logo': 'Колесо Фортуны онлайн',
@@ -60,6 +61,7 @@ export const LangMap = {
         'settings.rotation-s': 'с',
         'settings.reset-all': 'Сбросить',
         'spinner-default-1': 'Да',
-        'spinner-default-2': 'Нет'
+        'spinner-default-2': 'Нет',
+        'settings.players-index-visible': 'Показать индекс строки'
     }
 };

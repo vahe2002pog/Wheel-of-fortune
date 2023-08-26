@@ -11,11 +11,15 @@ interface IProps {
 export default function Settings(props: IProps) {
 
     const {tr} = useTranslation();
-    const { rotationTime, setRotationTime } = useContext(SettingsContext);
+    const {
+        rotationTime, setRotationTime,
+        playersIndexVisible, setPlayersIndexVisible
+    } = useContext(SettingsContext);
 
     const reset = useCallback(() => {
         setRotationTime(ROTATION_TIME);
-    }, [setRotationTime]);
+        setPlayersIndexVisible(true);
+    }, [setRotationTime, setPlayersIndexVisible]);
 
     return (
         <div>
@@ -36,6 +40,15 @@ export default function Settings(props: IProps) {
                         {rotationTime / 1000} {tr('settings.rotation-s')}
                     </span>
                 </div>
+            </div>
+            <div className='settings-row tw-flex'>
+                <label className='settings-label noselect' htmlFor='players-index-visible'>{tr('settings.players-index-visible')}</label>
+                <input
+                    type='checkbox'
+                    id='players-index-visible'
+                    checked={playersIndexVisible}
+                    onChange={(e) => setPlayersIndexVisible(e.target.checked)}
+                />
             </div>
             <div className='settings-row tw-flex tw-justify-end'>
                 <Text text={tr('settings.reset-all')} onClick={reset} />

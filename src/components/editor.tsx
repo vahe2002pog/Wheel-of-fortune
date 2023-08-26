@@ -11,6 +11,7 @@ interface IProps {
     onComplete: (item: IPlayer) => void;
     onPaste?: (item: IPlayer, text: string) => boolean;
     index: number;
+    indexVisible?: boolean;
 }
 
 export default function Editor(props: IProps) {
@@ -59,7 +60,9 @@ export default function Editor(props: IProps) {
 
     return (
         <div className="player-item tw-w-full tw-contents" >
-            <label htmlFor={id} className='player-item-index tw-flex tw-items-center'>{props.index}</label>
+            {
+                props.indexVisible ? <label htmlFor={id} className='player-item-index tw-flex tw-items-center'>{props.index}</label> : <span></span>
+            }
             <div className='tw-relative'>
                 <input
                     id={id}

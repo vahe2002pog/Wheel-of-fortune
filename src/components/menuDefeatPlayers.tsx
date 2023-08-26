@@ -7,6 +7,7 @@ import { useTranslation } from '../hook/useTranslation';
 import Icon from './icon';
 import { Text } from './text';
 import { PlayersContext } from '../context/PlayersContext';
+import { SettingsContext } from '../context/SettingsContext';
 
 interface IProps {
     disabled: boolean;
@@ -17,6 +18,7 @@ export default function MenuDefeatPlayers(props: IProps) {
     const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('defeatPlayers', item), []);
 
     const { setPlayers, defeatPlayers, setDefeatPlayers } = useContext(PlayersContext);
+    const { playersIndexVisible } = useContext(SettingsContext);
 
     const onClear = useCallback(() => setDefeatPlayers([]), [setDefeatPlayers]);
 
@@ -77,6 +79,7 @@ export default function MenuDefeatPlayers(props: IProps) {
                 items={defeatPlayers}
                 disabled={props.disabled}
                 onItemChange={onChange}
+                indexVisible={playersIndexVisible}
                 actions={defeatPlayersActions}
                 onComplete={focusDefeatPlayer}
             />
