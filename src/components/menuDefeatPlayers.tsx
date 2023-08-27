@@ -30,6 +30,10 @@ export default function MenuDefeatPlayers(props: IProps) {
         setDefeatPlayers((items) => replaceEdited(items, player));
     }, [setDefeatPlayers]);
 
+    const onItemsChange = useCallback((players: IPlayer[]) => {
+        setDefeatPlayers((items) => players);
+    }, [setDefeatPlayers]);
+
     const onBack = useCallback((player?: IPlayer) => {
         if (player) {
             setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
@@ -79,6 +83,7 @@ export default function MenuDefeatPlayers(props: IProps) {
                 items={defeatPlayers}
                 disabled={props.disabled}
                 onItemChange={onChange}
+                onItemsChange={onItemsChange}
                 indexVisible={playersIndexVisible}
                 actions={defeatPlayersActions}
                 onComplete={focusDefeatPlayer}

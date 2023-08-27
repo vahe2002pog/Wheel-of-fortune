@@ -9,6 +9,7 @@ import Noindex from './noindex';
 import Icon from './icon';
 import { PopupContext } from '../context/popupContext';
 import { useClipboard } from '../hook/useClipboard';
+import { SettingsContext } from '../context/SettingsContext';
 
 interface IProps {
     disabled?: boolean;
@@ -17,6 +18,7 @@ interface IProps {
 export default function Header({disabled}: IProps) {
     const { tr } = useTranslation();
     const { openPopup } = useContext(PopupContext);
+    const { newEditor } = useContext(SettingsContext);
     const { copy, paste } = useClipboard();
     return (
         <header className="tw-flex">
@@ -25,7 +27,7 @@ export default function Header({disabled}: IProps) {
                 <div className="links-wrapper">
                     {/* <Icon src={infoIcon} disabled={disabled} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={tr('header.title.info')} /> */}
                     <Icon src={settingIcon} disabled={disabled} onClick={() => openPopup({ componentId: 'setting', popupId: 'panel'})} alt={tr('header.title.setting')} />
-                    <Icon src={pasteIcon} disabled={disabled} onClick={paste} alt={tr('header.paste')} />
+                    { newEditor || <Icon src={pasteIcon} disabled={disabled} onClick={paste} alt={tr('header.paste')} /> }
                     <Icon src={copyIcon} disabled={disabled} onClick={copy} alt={tr('header.copy')} />
                 </div>
             </Noindex>

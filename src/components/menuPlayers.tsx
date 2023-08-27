@@ -15,12 +15,16 @@ interface IProps {
 export default function MenuPlayers({disabled}: IProps) {
 
     const { players, setPlayers } = useContext(PlayersContext);
-    const { playersIndexVisible } = useContext(SettingsContext);
+    const { playersIndexVisible, newEditor } = useContext(SettingsContext);
 
     const onClear = useCallback(() => setPlayers([]), [setPlayers]);
 
     const onChange = useCallback((player: IPlayer) => {
         setPlayers((items) => replaceEdited(items, player));
+    }, [setPlayers]);
+
+    const onItemsChange = useCallback((players: IPlayer[]) => {
+        setPlayers(() => players);
     }, [setPlayers]);
 
     const onRemove = useCallback((player: IPlayer) => {
@@ -43,11 +47,11 @@ export default function MenuPlayers({disabled}: IProps) {
 
     const playersWithAdditionalInput = useMemo(() => {
         const items = [...players];
-        if (!items[items.length - 1] || items[items.length - 1].text) {
+        if (!newEditor && (!items[items.length - 1] || items[items.length - 1].text)) {
             items.push(createPlayer());
         }
         return items;
-    }, [players]);
+    }, [players, newEditor]);
 
     return (
         <>
@@ -63,6 +67,7 @@ export default function MenuPlayers({disabled}: IProps) {
                 items={playersWithAdditionalInput}
                 disabled={disabled}
                 onItemChange={onChange}
+                onItemsChange={onItemsChange}
                 hideLastAction={true}
                 actions={playersActions}
                 indexVisible={playersIndexVisible}

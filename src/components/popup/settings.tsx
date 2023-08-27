@@ -13,13 +13,15 @@ export default function Settings(props: IProps) {
     const {tr} = useTranslation();
     const {
         rotationTime, setRotationTime,
-        playersIndexVisible, setPlayersIndexVisible
+        playersIndexVisible, setPlayersIndexVisible,
+        newEditor, setNewEditor
     } = useContext(SettingsContext);
 
     const reset = useCallback(() => {
         setRotationTime(ROTATION_TIME);
         setPlayersIndexVisible(true);
-    }, [setRotationTime, setPlayersIndexVisible]);
+        setNewEditor(false);
+    }, [setRotationTime, setPlayersIndexVisible, setNewEditor]);
 
     return (
         <div>
@@ -48,6 +50,15 @@ export default function Settings(props: IProps) {
                     id='players-index-visible'
                     checked={playersIndexVisible}
                     onChange={(e) => setPlayersIndexVisible(e.target.checked)}
+                />
+            </div>
+            <div className='settings-row tw-flex'>
+                <label className='settings-label noselect' htmlFor='players-index-visible'>Многострочный редактор</label>
+                <input
+                    type='checkbox'
+                    id='players-index-visible'
+                    checked={newEditor}
+                    onChange={(e) => setNewEditor(e.target.checked)}
                 />
             </div>
             <div className='settings-row tw-flex tw-justify-end'>

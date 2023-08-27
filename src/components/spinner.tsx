@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useMemo}  from 'react';
+import React, {useCallback, useEffect, useMemo, useContext}  from 'react';
 import SpinnerFrontSvg from './spinnerFrontSvg';
 import SpinnerBackSvg from './spinnerBackSvg';
 import { getWinnerIndex } from '../helpers/winnerCalc';
 import { AnimationState, useAngleAnimation } from '../hook/useAngleAnimation';
 import { DEFAULT_SPINNER_ITEMS } from '../helpers/constants';
+import { SettingsContext } from '../context/SettingsContext';
 
 interface IProps {
     items: IPlayer[];
@@ -14,11 +15,22 @@ interface IProps {
 export default function Spinner(props: IProps) {
 
     const {setDisabled, items } = props;
+    const { newEditor } = useContext(SettingsContext);
     const [angle, run, animationState] = useAngleAnimation(items.length ? 0 : 90);
     const displayItems = useMemo(() => {
-        const res = items.filter(({text}) => text.trim());
+        let res = items.filter(({text}) => text.trim());
+        if (newEditor) {
+            res = res.map((item, i) => {
+                const s = res.length % 3 === 1 ? (res.length - 1 === i ? 1 : 0): 0;
+                const index = (i + s) % 3;
+                return {
+                    ...item,
+                    color: index === 0 ? '#111' : index === 1 ? '#333' : '#222'
+                }
+            });
+        }
         return res.length ? res : DEFAULT_SPINNER_ITEMS
-    }, [items]);
+    }, [items, newEditor]);
 
     const [winnerName, winnerIndex] = useMemo(() => {
         const index = getWinnerIndex(angle, displayItems.length);

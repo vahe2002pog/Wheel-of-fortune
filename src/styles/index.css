@@ -171,6 +171,38 @@ main {
   right: 8px;
 }
 
+.editor-area {
+  padding: 10px calc(var(--actions-count, 1) * 26px + 8px) 10px calc(20px + 7px * var(--index-length));
+  border: none;
+  resize: none;
+  outline: none;
+  font-size: 16px;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: scroll;
+  line-height: 18px;
+  background-color: #262727;
+  border-radius: 8px;
+  color: #dadada;
+  font-weight: 700;
+}
+
+.editor-area-indexes {
+  top: 0;
+  left: 0;
+  line-height: 18px;
+  z-index: 1;
+  color: #1E1E1E;
+  border-right: 1px solid #5c5c5c;
+  padding: 9px 4px;
+  font-size: 11px;
+  min-width: 24px;
+  background-color: #2f3030;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  color: #dadada;
+}
+
 /*/ Editor */
 /* Spinner */
 .winner-field {
@@ -235,6 +267,7 @@ main {
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
