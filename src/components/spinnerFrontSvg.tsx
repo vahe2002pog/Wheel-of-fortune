@@ -7,6 +7,7 @@ interface IProps {
 export default memo(function SpinnerFrontSvg({className, runSpinner}: IProps) {
     return (
         <svg className={className} viewBox="0 0 240 240" version="1.1" xmlns="http://www.w3.org/2000/svg" style={{userSelect: 'none'}}>
+            <title>Spinner</title>
             <circle fill="#0000" cx="120" cy="120" r="110" stroke="#3a3a3a" strokeWidth="1"/>
             <g onClick={runSpinner} cursor="pointer">
                 <circle fill="orange" cx="120" cy="120" r="20" stroke="#3a3a3a" strokeWidth="1"/>

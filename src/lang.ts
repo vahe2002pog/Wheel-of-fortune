@@ -5,7 +5,7 @@ export enum Langs {
 
 export const LangMap = {
     en: {
-        'header.title.logo': 'Wheel of Fortune online',
+        'header.title.logo': 'Wheel of Fortune Spinner online',
         'header.title.info': 'Help',
         'header.title.setting': 'Settings',
         'header.title.none': '',
