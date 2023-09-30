@@ -212,6 +212,7 @@ main {
   font-family: "IBM Plex Mono", cursive, sans-serif;
   font-weight: bold;
   height: 45px;
+  max-width: calc(100vw / 3 * 2 - 30px);
 }
 
 .spinner-wrapper {
@@ -262,6 +263,9 @@ main {
   }
   .menu {
     width: 100%;
+  }
+  .winner-field {
+    max-width: 100%;
   }
 }
 

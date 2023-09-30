@@ -2,6 +2,7 @@ interface IPlayer {
     id: string;
     color: string;
     text: string;
+    isLink?: boolean;
 }
 
 interface IAction {

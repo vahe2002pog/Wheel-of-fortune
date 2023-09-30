@@ -5,6 +5,7 @@ import { getWinnerIndex } from '../helpers/winnerCalc';
 import { AnimationState, useAngleAnimation } from '../hook/useAngleAnimation';
 import { DEFAULT_SPINNER_ITEMS } from '../helpers/constants';
 import { SettingsContext } from '../context/SettingsContext';
+import { isLink } from '../helpers/utils';
 
 interface IProps {
     items: IPlayer[];
@@ -25,9 +26,12 @@ export default function Spinner(props: IProps) {
                 const index = (i + s) % 3;
                 return {
                     ...item,
+                    isLink: isLink(item.text),
                     color: index === 0 ? '#111' : index === 1 ? '#333' : '#222'
-                }
+                };
             });
+        } else {
+            res = res.map((item, i) => ({ ...item, isLink: isLink(item.text) }));
         }
         return res.length ? res : DEFAULT_SPINNER_ITEMS
     }, [items, newEditor]);
@@ -37,6 +41,7 @@ export default function Spinner(props: IProps) {
         return [displayItems[index]?.text, index];
     }, [angle, displayItems]);
 
+    const showLink = displayItems[winnerIndex].isLink;
 
     useEffect(() => {
         if (animationState === AnimationState.ended) {
@@ -57,7 +62,7 @@ export default function Spinner(props: IProps) {
     return (
         <div className="spinner tw-flex tw-flex-col tw-h-full tw-w-full tw-flex-2">
             <div className="winner-field tw-truncate tw-w-full tw-flex-shrink-0">
-                {winnerName}
+                {showLink ? <a href={winnerName} target='_blank' rel="noreferrer" >{winnerName}</a> : winnerName}
             </div>
             <div className="spinner-wrapper tw-relative tw-flex-1 tw-overflow-hidden" style={{'--spinner-angle': `${angle}deg`} as React.CSSProperties}>
                 <SpinnerBackSvg className="spinner-back tw-absolute tw-h-full tw-w-full" items={displayItems} />

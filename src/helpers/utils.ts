@@ -1,4 +1,4 @@
-export const EDITOR_MAX_LENGTH = 50;
+import { EDITOR_MAX_LENGTH } from './constants';
 
 export function isLocalHost(): boolean {
     return (window.location.hostname === 'localhost' || /^(\d{0,3}\.){3}\d{0,3}$/.test(window.location.hostname));
@@ -44,4 +44,8 @@ export const keyCounter = (() => {
 
 export function normalizeStrToEditor(str: string): string {
     return str.trim().substring(0, EDITOR_MAX_LENGTH);
+}
+
+export function isLink(str: string): boolean {
+    return /^https?:\/\/(\w+\.){0,}\w+.*/.test(str);
 }

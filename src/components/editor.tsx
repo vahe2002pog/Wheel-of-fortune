@@ -1,7 +1,7 @@
 import React, { useCallback, ChangeEvent, KeyboardEvent, ClipboardEvent, useState, useEffect } from 'react';
 import { debounce } from '../helpers/debounce';
 import { useTranslation } from '../hook/useTranslation';
-import { EDITOR_MAX_LENGTH } from '../helpers/utils';
+import { EDITOR_MAX_LENGTH } from '../helpers/constants';
 
 interface IProps {
     item: IPlayer;
