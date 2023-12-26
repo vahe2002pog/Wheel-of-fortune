@@ -1,4 +1,4 @@
-import { isTouchDevice, isLocalHost, loadScript, isPrivate } from './utils';
+import { isTouchDevice, isLocalHost, loadScript, isPrivate, dayOfYear } from './utils';
 
 export function initApplication() {
     document.body.classList.add(isTouchDevice() ? 'touch-device' : 'cursor-device');
@@ -20,6 +20,11 @@ export function initApplication() {
             }).catch((error) => {
                 console.log('Registration failed with ' + error);
             });
+    }
+
+    const day = dayOfYear();
+    if (day > 350 || day < 15) {
+        loadScript('https://gagikpog.ru/data/libs/snow.js');
     }
 
 }

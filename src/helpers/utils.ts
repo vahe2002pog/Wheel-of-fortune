@@ -49,3 +49,11 @@ export function normalizeStrToEditor(str: string): string {
 export function isLink(str: string): boolean {
     return /^https?:\/\/(\w+\.){0,}\w+.*/.test(str);
 }
+
+export function dayOfYear(): number {
+    const now = new Date();
+    var j1= new Date();
+    j1.setMonth(0, 0);
+    // @ts-ignore
+    return Math.round((now - j1) / 8.64e7);
+}
