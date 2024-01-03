@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { debounce } from '../helpers/debounce';
 import { useTranslation } from '../hook/useTranslation';
+import { getRandomColor, resetRandomize } from '../helpers/randomColor';
 
 interface IProps {
     items: IPlayer[];
@@ -26,11 +27,12 @@ export default function EditorNew(props: IProps) {
     const { tr } = useTranslation();
 
     const onChange = useCallback((value: string) => {
+        resetRandomize();
         const res = value.split('\n').map((text, index): IPlayer => {
             return {
                 id: String(index),
                 text,
-                color: '#333'
+                color: getRandomColor()
             };
         });
 

@@ -5,11 +5,15 @@ function * randomGenerator(previous: number = 0) {
     }
 }
 
-const r = randomGenerator(2);
+let r = randomGenerator(2);
 
 function random(min: number, max: number): number {
     const val: number = r.next().value as number;
     return Math.round(val % max ) + min;
+}
+
+export function resetRandomize() {
+    r = randomGenerator(2);
 }
 
 export function getRandomColor(): string {
