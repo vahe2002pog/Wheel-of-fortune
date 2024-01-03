@@ -16,11 +16,11 @@ interface IProps {
 export default function Spinner(props: IProps) {
 
     const {setDisabled, items } = props;
-    const { newEditor } = useContext(SettingsContext);
+    const { monochromeWheel } = useContext(SettingsContext);
     const [angle, run, animationState] = useAngleAnimation(items.length ? 0 : 90);
     const displayItems = useMemo(() => {
         let res = items.filter(({text}) => text.trim());
-        if (newEditor) {
+        if (monochromeWheel) {
             res = res.map((item, i) => {
                 const s = res.length % 3 === 1 ? (res.length - 1 === i ? 1 : 0): 0;
                 const index = (i + s) % 3;
@@ -34,7 +34,7 @@ export default function Spinner(props: IProps) {
             res = res.map((item, i) => ({ ...item, isLink: isLink(item.text) }));
         }
         return res.length ? res : DEFAULT_SPINNER_ITEMS
-    }, [items, newEditor]);
+    }, [items, monochromeWheel]);
 
     const [winnerName, winnerIndex] = useMemo(() => {
         const index = getWinnerIndex(angle, displayItems.length);

@@ -27,12 +27,14 @@ export const LangMap = {
         'clipboard.dialog-yes-btn': 'Yes',
         'clipboard.dialog-no-btn': 'No',
         'panel.close': 'Close',
+        'spinner-default-1': 'Yes',
+        'spinner-default-2': 'No',
         'settings.rotation-time': 'Rotation time',
         'settings.rotation-s': 's',
         'settings.reset-all': 'Reset',
-        'spinner-default-1': 'Yes',
-        'spinner-default-2': 'No',
-        'settings.players-index-visible': 'Show line index'
+        'settings.players-index-visible': 'Show line index',
+        'settings.new-editor-switcher': 'Multiline editor',
+        'settings.monochrome-wheel': 'Monochrome wheel'
     },
     ru: {
         'header.title.logo': 'Колесо Фортуны онлайн',
@@ -57,11 +59,13 @@ export const LangMap = {
         'clipboard.dialog-yes-btn': 'Да',
         'clipboard.dialog-no-btn': 'Нет',
         'panel.close': 'Закрыть',
+        'spinner-default-1': 'Да',
+        'spinner-default-2': 'Нет',
         'settings.rotation-time': 'Время вращения',
         'settings.rotation-s': 'с',
         'settings.reset-all': 'Сбросить',
-        'spinner-default-1': 'Да',
-        'spinner-default-2': 'Нет',
-        'settings.players-index-visible': 'Показать индекс строки'
+        'settings.players-index-visible': 'Показать индекс строки',
+        'settings.new-editor-switcher': 'Многострочный редактор',
+        'settings.monochrome-wheel': 'Монохромное колесо'
     }
 };
