@@ -22,7 +22,7 @@ export default function Header({disabled}: IProps) {
     const { copy, paste } = useClipboard();
     return (
         <header className="tw-flex">
-            <img src={logo} alt={ tr('header.title.logo') } height='30px' width="auto" />
+            <img src={logo} alt={ tr('header.title.logo') } height='30'/>
             <Noindex>
                 <div className="links-wrapper">
                     {/* <Icon src={infoIcon} disabled={disabled} onClick={() => openPopup({ componentId: 'info', popupId: 'panel'})} alt={tr('header.title.info')} /> */}

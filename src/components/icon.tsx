@@ -7,7 +7,7 @@ interface IProps {
     disabled?: boolean;
 }
 
-export default function Icon({src, alt, onClick, size = '24px', className, disabled}: IProps) {
+export default function Icon({src, alt, onClick, size = '24', className, disabled}: IProps) {
     return (
         <img
             src={src} onClick={disabled ? () => {} : onClick}
