@@ -34,7 +34,6 @@ const Panel = ({ children, onClose, caption, style, className }: IProps) => {
                     { children }
                 </div>
             </div>
-            
         </div>
     );
 };
