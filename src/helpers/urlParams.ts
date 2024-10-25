@@ -24,14 +24,23 @@ export function readDefeatModeFromParams(): boolean {
     return checkedParams ? checkedParams === 'true' : true;
 }
 
-export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean): string {
+export function readLegendFromParams(): string {
+    return getParameterByName('legend') || '';
+}
+
+function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defeatMode: boolean, legend: string): string {
     const url = new URL(window.location.href);
     url.searchParams.delete('checked');
     url.searchParams.delete('list');
     url.searchParams.delete('des');
+    url.searchParams.delete('legend');
 
     if (defeatMode === false) {
         url.searchParams.set('checked', String(defeatMode));
+    }
+
+    if (legend) {
+        url.searchParams.set('legend', legend);
     }
 
     const list = players.map((item) => item.text).filter(Boolean).join('$_$');
@@ -47,11 +56,12 @@ export function convertToUrl(players: IPlayer[], defeatPlayers: IPlayer[], defea
     return url.href.replaceAll('+', ' ');
 }
 
-export const updateUrlPartial = collector(({list, des, checked}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean}): void => {
+export const updateUrlPartial = collector(({list, des, checked, legend}: {list?: IPlayer[], des?: IPlayer[], checked?: boolean, legend?: string}): void => {
     const players = list || readPlayerFromParams('list');
     const defeatPlayers = des || readPlayerFromParams('des');
     const defeatMode = checked ?? readDefeatModeFromParams();
-    const newState = convertToUrl(players, defeatPlayers, defeatMode);
+    const legendRes = legend ?? readLegendFromParams();
+    const newState = convertToUrl(players, defeatPlayers, defeatMode, legendRes);
     const hasChange = new URL(window.location.href).href !== new URL(newState).href;
     if (hasChange) {
         window.history.pushState({ list, des }, '', newState);

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import Defeat from './defeat';
+import Legend from './legend';
 import MenuPlayers from './menuPlayers';
 import MenuDefeatPlayers from './menuDefeatPlayers';
 import { PlayersContext } from '../context/PlayersContext';
@@ -13,6 +14,7 @@ export default function Menu({disabled}: IProps) {
     return (
         <div className="menu tw-flex-1 tw-overflow-y-scroll">
             <div className="menu-content-center">
+                <Legend disabled={disabled} />
                 <Defeat defeatMode={defeatMode} disabled={disabled} onChange={setDefeatMode} />
                 <MenuPlayers disabled={disabled} />
                 <MenuDefeatPlayers disabled={disabled} />

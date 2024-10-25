@@ -137,6 +137,23 @@ main {
   font-size: 13px;
 }
 
+.legend-wrapper {
+  margin-left: 4px;
+  margin-bottom: 10px;
+}
+
+.legend-wrapper-with-index {
+  margin-left: 24px;
+}
+
+.legend-input {
+  border: 1px solid #3a3a3a;
+  min-height: 30px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: black;
+}
+
 .cursor-device .editor-input:focus:not(:disabled) + .editor-actions,
 .cursor-device .player-item:hover .editor-input:not(:disabled) + .editor-actions {
   visibility: visible;
@@ -158,7 +175,7 @@ main {
   color: black;
 }
 
-.editor-input:focus {
+input:focus {
   outline: none;
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { readDefeatModeFromParams, readPlayerFromParams, updateUrlPartial } from '../helpers/urlParams';
+import { readDefeatModeFromParams, readLegendFromParams, readPlayerFromParams, updateUrlPartial } from '../helpers/urlParams';
 
 export function useHistoryStatePlayer(paramName: string): [IPlayer[], React.Dispatch<React.SetStateAction<IPlayer[]>>] {
     const [players, setPlayer] = useState(readPlayerFromParams(paramName));
@@ -51,4 +51,18 @@ export function useHistoryStateDefeatMode(): [boolean, React.Dispatch<React.SetS
     }, []);
 
     return [checked, setChecked];
+}
+
+export function useHistoryStateLegend(): [string, React.Dispatch<React.SetStateAction<string>>] {
+    const [legend, setLegend] = useState(readLegendFromParams());
+
+    useEffect(() => updateUrlPartial({ legend }), [legend]);
+
+    useEffect(() => {
+        const onChange = (event: PopStateEvent) => setLegend(readLegendFromParams());
+        window.addEventListener('popstate', onChange);
+        return () => window.removeEventListener('popstate', onChange);
+    }, []);
+
+    return [legend, setLegend];
 }
