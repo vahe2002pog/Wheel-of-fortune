@@ -1,4 +1,4 @@
-import { translation } from "../context/LangContext";
+import { translation } from '../context/LangContext';
 
 export const STORE_KEY = 'fortune';
 export const ROTATION_TIME = 2000;

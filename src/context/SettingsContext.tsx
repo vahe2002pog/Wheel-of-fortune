@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLocalStorage } from '../hook/useLocalStorage';
 import { ROTATION_TIME } from '../helpers/constants';
+import { Snow } from '../helpers/snow';
 
 interface ISettingContext {
     rotationTime: number;
@@ -13,8 +14,12 @@ interface ISettingContext {
     setMonochromeWheel: (newEditor: boolean) => void;
     legend: boolean;
     setLegend: (newLegend: boolean) => void;
+    snowAvailable: boolean;
+    snow: boolean;
+    setSnow: (newLegend: boolean) => void;
 }
 
+const snowModel = new Snow();
 export const SettingsContext = React.createContext({} as ISettingContext);
 
 export const SettingsContextProvider = ({children}: { children: JSX.Element }) => {
@@ -24,6 +29,12 @@ export const SettingsContextProvider = ({children}: { children: JSX.Element }) =
     const [newEditor, setNewEditor] = useLocalStorage('newEditor', false);
     const [monochromeWheel, setMonochromeWheel] = useLocalStorage('monochromeWheel', false);
     const [legend, setLegend] = useLocalStorage('legend', true);
+    const [snow, setSnowVisible] = useLocalStorage('snow', true);
+
+    const setSnow = useCallback((visible: boolean) => {
+        setSnowVisible(visible);
+        snowModel.toggle(visible);
+    }, [setSnowVisible])
 
     const value = useMemo((): ISettingContext => {
         return {
@@ -31,13 +42,16 @@ export const SettingsContextProvider = ({children}: { children: JSX.Element }) =
             playersIndexVisible, setPlayersIndexVisible,
             newEditor, setNewEditor,
             monochromeWheel, setMonochromeWheel,
-            legend, setLegend
+            legend, setLegend,
+            snow, setSnow,
+            snowAvailable: snowModel.snowAvailable
         };
     }, [rotationTime, setRotationTime,
         playersIndexVisible, setPlayersIndexVisible,
         newEditor, setNewEditor,
         monochromeWheel, setMonochromeWheel,
-        legend, setLegend
+        legend, setLegend,
+        snow, setSnow
     ]);
 
     return (

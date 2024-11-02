@@ -16,7 +16,8 @@ export default function Settings(props: IProps) {
         playersIndexVisible, setPlayersIndexVisible,
         newEditor, setNewEditor,
         monochromeWheel, setMonochromeWheel,
-        legend, setLegend
+        legend, setLegend,
+        snowAvailable, snow, setSnow
     } = useContext(SettingsContext);
 
     const reset = useCallback(() => {
@@ -82,6 +83,19 @@ export default function Settings(props: IProps) {
                     onChange={(e) => setLegend(e.target.checked)}
                 />
             </div>
+            {
+                snowAvailable ? (
+                    <div className='settings-row tw-flex'>
+                        <label className='settings-label noselect' htmlFor='monochrome-wheel'>{tr('settings.snow')}</label>
+                        <input
+                            type='checkbox'
+                            id='monochrome-wheel'
+                            checked={snow}
+                            onChange={(e) => setSnow(e.target.checked)}
+                        />
+                    </div>
+                ) : null
+            }
             <div className='settings-row tw-flex tw-justify-end'>
                 <Text text={tr('settings.reset-all')} onClick={reset} />
             </div>
