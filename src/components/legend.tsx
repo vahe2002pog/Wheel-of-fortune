@@ -9,20 +9,23 @@ interface IProps {
 
 export default function Legend(props: IProps) {
     const { tr } = useTranslation();
+    const { legend: legendVisible } = useContext(SettingsContext);
     const { legend, setLegend } = useContext(PlayersContext);
     const { playersIndexVisible } = useContext(SettingsContext);
 
     return (
-        <div className={`legend-wrapper ${playersIndexVisible ? 'legend-wrapper-with-index' : ''}`}>
-            <input
-                type="input"
-                className='legend-input tw-w-full'
-                value={legend}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setLegend(event.target.value)}
-                placeholder={tr('menu.legend.placeholder')}
-                maxLength={50}
-                disabled={props.disabled}
-            />
-        </div>
+        legendVisible ? (
+            <div className={`legend-wrapper ${playersIndexVisible ? 'legend-wrapper-with-index' : ''}`}>
+                <input
+                    type="input"
+                    className='legend-input tw-w-full'
+                    value={legend}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => setLegend(event.target.value)}
+                    placeholder={tr('menu.legend.placeholder')}
+                    maxLength={50}
+                    disabled={props.disabled}
+                />
+            </div>
+        ) : null
     );
 }

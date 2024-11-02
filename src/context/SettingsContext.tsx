@@ -11,6 +11,8 @@ interface ISettingContext {
     setNewEditor: (newEditor: boolean) => void;
     monochromeWheel: boolean;
     setMonochromeWheel: (newEditor: boolean) => void;
+    legend: boolean;
+    setLegend: (newLegend: boolean) => void;
 }
 
 export const SettingsContext = React.createContext({} as ISettingContext);
@@ -21,18 +23,21 @@ export const SettingsContextProvider = ({children}: { children: JSX.Element }) =
     const [playersIndexVisible, setPlayersIndexVisible] = useLocalStorage('playersIndexVisible', true);
     const [newEditor, setNewEditor] = useLocalStorage('newEditor', false);
     const [monochromeWheel, setMonochromeWheel] = useLocalStorage('monochromeWheel', false);
+    const [legend, setLegend] = useLocalStorage('legend', true);
 
     const value = useMemo((): ISettingContext => {
         return {
             rotationTime, setRotationTime,
             playersIndexVisible, setPlayersIndexVisible,
             newEditor, setNewEditor,
-            monochromeWheel, setMonochromeWheel
+            monochromeWheel, setMonochromeWheel,
+            legend, setLegend
         };
     }, [rotationTime, setRotationTime,
         playersIndexVisible, setPlayersIndexVisible,
         newEditor, setNewEditor,
-        monochromeWheel, setMonochromeWheel
+        monochromeWheel, setMonochromeWheel,
+        legend, setLegend
     ]);
 
     return (

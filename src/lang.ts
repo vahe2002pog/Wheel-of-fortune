@@ -35,6 +35,7 @@ export const LangMap = {
         'settings.reset-all': 'Reset',
         'settings.players-index-visible': 'Show line index',
         'settings.new-editor-switcher': 'Multiline editor',
+        "settings.legend": 'Legend',
         'settings.monochrome-wheel': 'Monochrome wheel'
     },
     ru: {
@@ -68,6 +69,7 @@ export const LangMap = {
         'settings.reset-all': 'Сбросить',
         'settings.players-index-visible': 'Показать индекс строки',
         'settings.new-editor-switcher': 'Многострочный редактор',
+        "settings.legend": 'Легенда',
         'settings.monochrome-wheel': 'Монохромное колесо'
     }
 };
