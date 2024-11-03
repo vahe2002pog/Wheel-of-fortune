@@ -75,10 +75,10 @@ export default function Settings(props: IProps) {
                 />
             </div>
             <div className='settings-row tw-flex'>
-                <label className='settings-label noselect' htmlFor='monochrome-wheel'>{tr('settings.legend')}</label>
+                <label className='settings-label noselect' htmlFor='legend-check'>{tr('settings.legend')}</label>
                 <input
                     type='checkbox'
-                    id='monochrome-wheel'
+                    id='legend-check'
                     checked={legend}
                     onChange={(e) => setLegend(e.target.checked)}
                 />
@@ -86,10 +86,10 @@ export default function Settings(props: IProps) {
             {
                 snowAvailable ? (
                     <div className='settings-row tw-flex'>
-                        <label className='settings-label noselect' htmlFor='monochrome-wheel'>{tr('settings.snow')}</label>
+                        <label className='settings-label noselect' htmlFor='snow-check'>{tr('settings.snow')}</label>
                         <input
                             type='checkbox'
-                            id='monochrome-wheel'
+                            id='snow-check'
                             checked={snow}
                             onChange={(e) => setSnow(e.target.checked)}
                         />
