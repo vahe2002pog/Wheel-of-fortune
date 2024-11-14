@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /Wheel-of-fortune/
 Sitemap: https://fortune.gagikpog.ru/sitemap.xml
+Clean-param: legend
 Clean-param: checked
 Clean-param: list
 Clean-param: des

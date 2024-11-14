@@ -9,4 +9,4 @@ Header always set X-Robots-Tag noindex env=NO_INDEX_ON
 RewriteCond %{HTTP_HOST} ^gagikpog.ru [nc]
 RewriteRule ^(.*)$ https://fortune.gagikpog.ru/$1 [r=301,nc]
 
-ErrorDocument 404 https://fortune.gagikpog.ru/?list=404%20Not%20Found
+ErrorDocument 404 https://fortune.gagikpog.ru/?legend=Oops&list=404%20Not%20Found
