@@ -1,0 +1,17 @@
+.list-title {
+    font-weight: bold;
+    margin-top: 16px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.list-link {
+    display: block;
+    padding-left: 16px;
+    color: #fff;
+    text-decoration: underline;
+}
+
+.list-link:hover {
+    color: #e6e6e6;
+}
