@@ -1,6 +1,6 @@
 interface IProps {
     src: string;
-    onClick: () => void;
+    onClick?: () => void;
     alt: string;
     size?: string;
     className?: string;

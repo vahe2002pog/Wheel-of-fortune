@@ -6,8 +6,8 @@ interface IContextValue {
     setDefeatMode: React.Dispatch<React.SetStateAction<boolean>>,
     players: IPlayer[],
     setPlayers: React.Dispatch<React.SetStateAction<IPlayer[]>>,
-    defeatPlayers: IPlayer[],
-    setDefeatPlayers: React.Dispatch<React.SetStateAction<IPlayer[]>>
+    outPlayers: IPlayer[],
+    setOutPlayers: React.Dispatch<React.SetStateAction<IPlayer[]>>
     legend: string,
     setLegend: React.Dispatch<React.SetStateAction<string>>
 }
@@ -18,14 +18,16 @@ export const PlayersContextProvider = ({children}: { children: JSX.Element }) =>
 
     const [defeatMode, setDefeatMode] = useHistoryStateDefeatMode();
     const [legend, setLegend] = useHistoryStateLegend();
-    const [players, setPlayers] = useHistoryStatePlayer('list');
-    const [defeatPlayers, setDefeatPlayers] = useHistoryStatePlayer('des');
+    const [list] = useHistoryStatePlayer('list');
+    const [players, setPlayers] = useHistoryStatePlayer('items');
+    const [defeatPlayers] = useHistoryStatePlayer('des');
+    const [outPlayers, setOutPlayers] = useHistoryStatePlayer('out');
 
     const value = useMemo(() => {
         return {
-            defeatMode, setDefeatMode, players, setPlayers, defeatPlayers, setDefeatPlayers, legend, setLegend
+            defeatMode, setDefeatMode, players: list.length ? list : players, setPlayers, outPlayers: defeatPlayers?.length ? defeatPlayers : outPlayers, setOutPlayers, legend, setLegend
         };
-    }, [ defeatMode, setDefeatMode, players, setPlayers, defeatPlayers, setDefeatPlayers, legend, setLegend ]);
+    }, [ defeatMode, setDefeatMode, players, setPlayers, defeatPlayers, outPlayers, list, setOutPlayers, legend, setLegend ]);
 
     return (
         <PlayersContext.Provider value={value}>

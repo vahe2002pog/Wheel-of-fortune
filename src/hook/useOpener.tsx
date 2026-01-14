@@ -9,7 +9,6 @@ const popupContainer = {
 const contents = {
     setting: lazy(() => import('../components/popup/settings')),
     list: lazy(() => import('../components/popup/list')),
-    info: lazy(() => import('../components/popup/info')),
     none: () => <span></span>
 };
 

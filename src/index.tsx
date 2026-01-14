@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
+import './styles/tailwind.min.css';
 import App from './pages/App';
 import { initApplication } from './helpers/initApplication';
 import { LangContextProvider } from './context/LangContext';

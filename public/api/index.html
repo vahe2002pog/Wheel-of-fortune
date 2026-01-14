@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fortune URL API — документация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Документация Fortune URL API. Создание колеса фортуны через параметры URL." />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --border: #dddddd;
+      --code-bg: #f3f4f6;
+      --table-head: #f5f5f5;
+      --accent: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    .home-link {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 1.3rem;
+    }
+
+    .home-link:hover {
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 32px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 8px 0 12px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    code {
+      background: #eeeeee;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--table-head);
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .example {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-top: 12px;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* 📱 Mobile */
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      pre {
+        font-size: 0.8rem;
+      }
+
+      th, td {
+        font-size: 0.85rem;
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <a href="/" class="home-link">← На главную</a>
+      <h1>Fortune URL API</h1>
+    </header>
+
+    <p>
+      Fortune URL API позволяет создавать колесо фортуны, полностью управляя
+      его состоянием через URL. Ссылку можно сохранить, передать другим или
+      сгенерировать автоматически из кода.
+    </p>
+
+    <section>
+      <h2>Endpoint</h2>
+      <pre>GET https://fortune.gagikpog.ru/</pre>
+    </section>
+
+    <section>
+      <h2>Параметры URL</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Параметр</th>
+            <th>Тип</th>
+            <th>Описание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>legend</code></td>
+            <td>string</td>
+            <td>Заголовок фортуны</td>
+          </tr>
+          <tr>
+            <td><code>items</code></td>
+            <td>string</td>
+            <td>Список элементов, разделённых строкой <code>$_$</code></td>
+          </tr>
+          <tr>
+            <td><code>elim</code></td>
+            <td>boolean</td>
+            <td>Режим «на выбывание» (<code>true</code> / <code>false</code>)</td>
+          </tr>
+          <tr>
+            <td><code>out</code></td>
+            <td>string</td>
+            <td>Элементы, которые уже выбыли</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="note">
+        Также поддерживаются устаревшие параметры:
+        <code>list</code>, <code>des</code>, <code>checked</code>.
+        Если указаны новые параметры — они имеют приоритет.
+      </p>
+    </section>
+
+    <section>
+      <h2>Пример ссылки</h2>
+      <div class="example">
+        <pre>https://fortune.gagikpog.ru/?
+legend=Комедии&
+items=Один%20дома$_$Маска$_$Борат&
+elim=true&
+out=Один%20дома</pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Формат списка</h2>
+      <p>
+        В параметрах <code>items</code> и <code>out</code> элементы разделяются
+        строкой <code>$_$</code>.
+      </p>
+      <p>
+        Все значения параметров должны быть закодированы с помощью
+        <code>encodeURIComponent</code>, чтобы корректно поддерживалась
+        кириллица и специальные символы.
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Репозиторий проекта:
+        <a href="https://github.com/vahe2002pog/Wheel-of-fortune" target="_blank" rel="noopener">
+          github.com/vahe2002pog/Wheel-of-fortune
+        </a>
+      </p>
+      <p>
+        Поддержка:
+        <a href="mailto:fortune@gagikpog.ru">fortune@gagikpog.ru</a>
+      </p>
+      <p>
+        Fortune URL API — URL-based API без серверной логики.
+        Состояние колеса полностью хранится в ссылке.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -15,38 +15,38 @@ interface IProps {
 
 export default function MenuDefeatPlayers(props: IProps) {
     const { tr } = useTranslation();
-    const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('defeatPlayers', item), []);
+    const focusDefeatPlayer = useCallback((item: IPlayer) => focusNext('outPlayers', item), []);
 
-    const { setPlayers, defeatPlayers, setDefeatPlayers } = useContext(PlayersContext);
+    const { setPlayers, outPlayers, setOutPlayers } = useContext(PlayersContext);
     const { playersIndexVisible } = useContext(SettingsContext);
 
-    const onClear = useCallback(() => setDefeatPlayers([]), [setDefeatPlayers]);
+    const onClear = useCallback(() => setOutPlayers([]), [setOutPlayers]);
 
     const onRemove = useCallback((player: IPlayer) => {
-        setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
-    }, [setDefeatPlayers]);
+        setOutPlayers((items) => items.filter(({id}) => id !== player.id));
+    }, [setOutPlayers]);
 
     const onChange = useCallback((player: IPlayer) => {
-        setDefeatPlayers((items) => replaceEdited(items, player));
-    }, [setDefeatPlayers]);
+        setOutPlayers((items) => replaceEdited(items, player));
+    }, [setOutPlayers]);
 
     const onItemsChange = useCallback((players: IPlayer[]) => {
-        setDefeatPlayers((items) => players);
-    }, [setDefeatPlayers]);
+        setOutPlayers((items) => players);
+    }, [setOutPlayers]);
 
     const onBack = useCallback((player?: IPlayer) => {
         if (player) {
-            setDefeatPlayers((items) => items.filter(({id}) => id !== player.id));
+            setOutPlayers((items) => items.filter(({id}) => id !== player.id));
             setPlayers((items) => [player, ...items].sort(sortById));
         } else {
-            setDefeatPlayers((defeatPlayers) => {
+            setOutPlayers((outPlayers) => {
                 setPlayers((players) => {
-                    return [...defeatPlayers, ...players].sort(sortById);
+                    return [...outPlayers, ...players].sort(sortById);
                 });
                 return [];
             });
         }
-    }, [setPlayers, setDefeatPlayers]);
+    }, [setPlayers, setOutPlayers]);
 
     const defeatPlayersActions = useMemo((): IAction[] => {
         return [{
@@ -63,7 +63,7 @@ export default function MenuDefeatPlayers(props: IProps) {
     }, [tr, onRemove, onBack]);
 
     return (
-        defeatPlayers.length ? <>
+        outPlayers.length ? <>
             <div className='menu-caption tw-flex tw-justify-between tw-items-baseline'>
                 <h3>{tr('menu.defeat-players')}</h3>
                 <div className='tw-flex'>
@@ -79,8 +79,8 @@ export default function MenuDefeatPlayers(props: IProps) {
                 </div>
             </div>
             <List
-                id='defeatPlayers'
-                items={defeatPlayers}
+                id='outPlayers'
+                items={outPlayers}
                 disabled={props.disabled}
                 onItemChange={onChange}
                 onItemsChange={onItemsChange}

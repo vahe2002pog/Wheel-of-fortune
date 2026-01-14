@@ -4,6 +4,7 @@
 /next-env.d.ts
 /.pnp
 .pnp.js
+.vscode/
 
 # testing
 /coverage

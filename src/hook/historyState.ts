@@ -40,17 +40,17 @@ export function useHistoryStatePlayer(paramName: string): [IPlayer[], React.Disp
 }
 
 export function useHistoryStateDefeatMode(): [boolean, React.Dispatch<React.SetStateAction<boolean>>] {
-    const [checked, setChecked] = useState(readDefeatModeFromParams());
+    const [elim, setElim] = useState(readDefeatModeFromParams());
 
-    useEffect(() => updateUrlPartial({ checked }), [checked]);
+    useEffect(() => updateUrlPartial({ elim }), [elim]);
 
     useEffect(() => {
-        const onChange = (event: PopStateEvent) => setChecked(readDefeatModeFromParams());
+        const onChange = (event: PopStateEvent) => setElim(readDefeatModeFromParams());
         window.addEventListener('popstate', onChange);
         return () => window.removeEventListener('popstate', onChange);
     }, []);
 
-    return [checked, setChecked];
+    return [elim, setElim];
 }
 
 export function useHistoryStateLegend(): [string, React.Dispatch<React.SetStateAction<string>>] {

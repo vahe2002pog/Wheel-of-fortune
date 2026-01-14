@@ -6,6 +6,10 @@ import { AnimationState, useAngleAnimation } from '../hook/useAngleAnimation';
 import { DEFAULT_SPINNER_ITEMS } from '../helpers/constants';
 import { SettingsContext } from '../context/SettingsContext';
 import { isLink } from '../helpers/utils';
+import Icon from './icon';
+import infoIcon from '../img/info.svg';
+import { useTranslation } from '../hook/useTranslation';
+
 
 interface IProps {
     items: IPlayer[];
@@ -17,6 +21,7 @@ export default function Spinner(props: IProps) {
 
     const {setDisabled, items } = props;
     const { monochromeWheel } = useContext(SettingsContext);
+    const { tr } = useTranslation();
     const [angle, run, animationState] = useAngleAnimation(items.length ? 0 : 90);
     const displayItems = useMemo(() => {
         let res = items.filter(({text}) => text.trim());
@@ -68,6 +73,9 @@ export default function Spinner(props: IProps) {
                 <SpinnerBackSvg className="spinner-back tw-absolute tw-h-full tw-w-full" items={displayItems} />
                 <SpinnerFrontSvg className="spinner-front tw-absolute tw-h-full tw-w-full" runSpinner={runSpinner} />
             </div>
+            <a href="/api" className='link-doc' target="_blank" rel="noreferrer">
+                <Icon src={infoIcon} alt={tr('header.title.info')} />
+            </a>
         </div>
     );
 }

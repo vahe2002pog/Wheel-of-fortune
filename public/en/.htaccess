@@ -1,0 +1,8 @@
+# RewriteEngine On
+# RewriteBase /
+
+# RewriteCond %{HTTP_HOST} ^fortune.gagikpog.ru [nc]
+# RewriteCond %{REQUEST_URI} ^/Wheel-of-fortune/en/.*$
+# RewriteRule ^(.*)$ https://fortune.gagikpog.ru/1/$1 [r=301,nc]
+
+# Redirect 301 https://fortune.gagikpog.ru/Wheel-of-fortune/en/ https://fortune.gagikpog.ru/en/

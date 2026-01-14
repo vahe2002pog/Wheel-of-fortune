@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useContext } from 'react';
-import '../styles/tailwind.min.css';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import Spinner from '../components/spinner';
@@ -12,7 +11,7 @@ export default function App() {
     const {
         defeatMode,
         players, setPlayers,
-        setDefeatPlayers
+        setOutPlayers
     } = useContext(PlayersContext);
 
     const isKeyboardOpen = useKeyboardOpen();
@@ -20,9 +19,9 @@ export default function App() {
     const stopSpinner = useCallback((winner: IPlayer) => {
         if (defeatMode) {
             setPlayers((items) => items.filter(({id}) => id !== winner.id));
-            setDefeatPlayers((items) => [winner, ...items]);
+            setOutPlayers((items) => [winner, ...items]);
         }
-    }, [defeatMode, setPlayers, setDefeatPlayers]);
+    }, [defeatMode, setPlayers, setOutPlayers]);
 
     return (
         <>
